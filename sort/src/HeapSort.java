@@ -1,4 +1,3 @@
-package com.test;
 
 //https://www.cnblogs.com/chengxiao/p/6129630.html
 public class HeapSort {

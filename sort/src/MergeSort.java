@@ -1,4 +1,3 @@
-package com.test;
 
 import java.util.Arrays;
 
