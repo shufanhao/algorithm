@@ -32,7 +32,7 @@ public class HeapSort {
             } else {
                 break;
             }
-        }Å
+        }
         arr[i] = temp; //将 temp 放到最终位置
     }
 
