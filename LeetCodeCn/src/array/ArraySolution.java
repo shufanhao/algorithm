@@ -12,7 +12,7 @@ import java.util.Map;
  * 3. 考虑异或，可以知道重复的元素
  * 4. 两个数组交集，考虑两个指针
  */
-public class Solution {
+public class ArraySolution {
 
     /**
      * 题目1: 从排序数组中删除重复项
