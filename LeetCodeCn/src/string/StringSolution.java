@@ -219,6 +219,7 @@ public class StringSolution {
 
     /**
      * 题目9：最长公共前缀
+     * 思路：先排序，然后用字符串数组的第一个和最后一个比较
      */
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0) {
