@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 /**
- * 字符串问题
+ * 字符串问题, 注意双指针
  */
 public class StringSolution {
 
