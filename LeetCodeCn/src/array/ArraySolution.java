@@ -18,18 +18,18 @@ public class ArraySolution {
      * 题目1: 从排序数组中删除重复项
      * 分别用两个指针，i,j 去移动，不相等的话，指针i++
      */
-    public static int remoeDuplicates(int [] nums) {
+    public static int remoeDuplicates(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        int i= 0;
-        for (int j=0; j<nums.length; j++) {
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
             if (nums[i] != nums[j]) {
                 i++;
                 nums[i] = nums[j];
             }
         }
-        return i+1;
+        return i + 1;
     }
 
     /**
@@ -40,10 +40,10 @@ public class ArraySolution {
         if (prices == null || prices.length == 0) {
             return 0;
         }
-        int sum =0;
-        for (int i=0; i<prices.length -1; i++) {
-            if (prices[i] < prices[i+1]) {
-                sum += prices[i+1] - prices[i];
+        int sum = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            if (prices[i] < prices[i + 1]) {
+                sum += prices[i + 1] - prices[i];
             }
         }
         return sum;
@@ -53,10 +53,9 @@ public class ArraySolution {
      * 题目3：旋转数组
      * 解法1：利用o(n)的空间复杂度
      * 解法2：空间复杂度是o(1)，先反转前n-k个元素，再反转后k个元素，再整个数组反转
-     *
      */
     public static void rotate(int[] nums, int k) {
-        if (nums == null ||  nums.length == 0) {
+        if (nums == null || nums.length == 0) {
             return;
         }
         // 解法1：
@@ -70,16 +69,16 @@ public class ArraySolution {
         }*/
 
         // 解法2：
-        reverse(nums, 0, nums.length -1 -k);
-        reverse(nums, nums.length -k, nums.length -1);
-        reverse(nums, 0 , nums.length -1);
+        reverse(nums, 0, nums.length - 1 - k);
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - 1);
     }
 
     public static void reverse(int[] nums, int start, int end) {
         while (start < end) {
             int tmp = nums[start];
             nums[start++] = nums[end];
-            nums[end --] = tmp;
+            nums[end--] = tmp;
         }
     }
 
@@ -93,8 +92,8 @@ public class ArraySolution {
             return false;
         }
         Arrays.sort(nums);
-        for (int i=0; i<nums.length -1;i++) {
-            if (nums[i] == nums[i+1]) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] == nums[i + 1]) {
                 return true;
             }
         }
@@ -111,7 +110,7 @@ public class ArraySolution {
             return 0;
         }
         int temp = 0;
-        for (int i = 0; i<nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             temp = temp ^ nums[i];
         }
         return temp;
@@ -127,10 +126,10 @@ public class ArraySolution {
         }
         Arrays.sort(nums1);
         Arrays.sort(nums2);
-        int len = nums1.length > nums2.length ? nums2.length:nums1.length;
-        int [] temp = new int[len];
-        int i =0; // i 指向nums1
-        int j=0; // j 指向nums2
+        int len = nums1.length > nums2.length ? nums2.length : nums1.length;
+        int[] temp = new int[len];
+        int i = 0; // i 指向nums1
+        int j = 0; // j 指向nums2
         int k = 0;
         while (i < nums1.length && j < nums2.length) {
             if (nums1[i] < nums2[j]) {
@@ -151,14 +150,14 @@ public class ArraySolution {
      * 题目7： 加一
      */
     public static int[] plusOne(int[] digits) {
-        for (int i=digits.length -1; i>0; i--) {
+        for (int i = digits.length - 1; i > 0; i--) {
             if (digits[i] < 9) {
-                digits[i] ++;
+                digits[i]++;
                 return digits;
             }
             digits[i] = 0;
         }
-        int[] newDigits = new int[digits.length +1];
+        int[] newDigits = new int[digits.length + 1];
         newDigits[0] = 1;
         return newDigits;
     }
@@ -171,12 +170,12 @@ public class ArraySolution {
             return null;
         }
         int post = 0;
-        for (int i=0; i< nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
                 nums[post++] = nums[i];
             }
         }
-        for (int i= post; i<nums.length; i++) {
+        for (int i = post; i < nums.length; i++) {
             nums[i] = 0;
         }
         return nums;
@@ -186,8 +185,8 @@ public class ArraySolution {
      * 题目9： 两数之和
      * 1. 常规思路：o(n的平方) 的时间复杂度，类似于冒泡排序
      * 2. 简单思路：将数组的元素和对赢的index，存到Map中
-     *    用target 减去 数组的每一个元素，然后将结果在map中检查是否有对应的key
-     *    如果有，则返回
+     * 用target 减去 数组的每一个元素，然后将结果在map中检查是否有对应的key
+     * 如果有，则返回
      */
     public static int[] twoSum(int[] nums, int target) {
         if (nums == null) {
@@ -195,7 +194,7 @@ public class ArraySolution {
         }
         Map<Integer, Integer> filter = new HashMap<>(nums.length);
         int tmp;
-        for (int i=0; i<nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             tmp = target - nums[i];
             if (filter.containsKey(tmp)) {
                 return new int[]{i, filter.get(tmp)};
@@ -219,8 +218,8 @@ public class ArraySolution {
         boolean[][] colFlag = new boolean[len][len];
         boolean[][] cellFlag = new boolean[len][len];
 
-        for (int i=0; i< len; i++) {
-            for (int j=0; j< len; j++) {
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
                 if (board[i][j] >= '1' && board[i][j] <= '9') {
                     int c = board[i][j] - '1';
                     if (rowFlag[i][c] || colFlag[c][j] || cellFlag[3 * (i / 3) + j / 3][c]) {
@@ -266,40 +265,40 @@ public class ArraySolution {
 
     public static void main(String args[]) {
         // 题目1：
-        int [] nums = {0,0,1,1,1,2,2,3,3,4};
+        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         System.out.println("题目1 从排序数组中删除重复项: " + remoeDuplicates(nums));
 
         // 题目2：
-        int [] prices = {1,2,3,4,5};
+        int[] prices = {1, 2, 3, 4, 5};
         System.out.println("题目2：买卖股票的最佳时机：" + maxProfit(prices));
 
         // 题目3：
-        int [] rotate = {1,2,3,4,5,6,7};
-        rotate(rotate,2);
+        int[] rotate = {1, 2, 3, 4, 5, 6, 7};
+        rotate(rotate, 2);
         System.out.println("题目3：旋转数组： " + Arrays.toString(rotate));
 
         // 题目4：
         System.out.println("题目4：存在重复： " + (containsDuplicate(nums)));
 
         // 题目5：
-        int single[] = {4,1,2,1,2};
+        int single[] = {4, 1, 2, 1, 2};
         System.out.println("题目5：只出现一次的数字： " + singleNumber(single));
 
         // 题目6：
-        int [] nums1 = {1, 2, 2, 1};
-        int [] nums2 = {2, 2};
+        int[] nums1 = {1, 2, 2, 1};
+        int[] nums2 = {2, 2};
         System.out.println("题目6： 两个数组的交集： " + Arrays.toString(intersect(nums1, nums2)));
 
         // 题目7：
-        int [] plusOne = {1,2,9};
+        int[] plusOne = {1, 2, 9};
         System.out.println("题目7： 加一： " + Arrays.toString(plusOne(plusOne)));
 
         // 题目8：
-        int [] move = {0,1,0,3,12};
+        int[] move = {0, 1, 0, 3, 12};
         System.out.println("题目8： 移动0 " + Arrays.toString(moveZeroes(move)));
 
         // 题目9：
-        int [] twosSumArr = {2,7,11,15};
+        int[] twosSumArr = {2, 7, 11, 15};
         System.out.println("题目9： 两数之和 " + Arrays.toString(twoSum(twosSumArr, 9)));
 
         // 题目10：
@@ -323,7 +322,7 @@ public class ArraySolution {
                 {7, 8, 9}
         };
         rotate(rotateArr);
-        for (int i=0; i<rotateArr.length; i++) {
+        for (int i = 0; i < rotateArr.length; i++) {
             System.out.println("题目11： 旋转图像 " + Arrays.toString(rotateArr[i]));
         }
 

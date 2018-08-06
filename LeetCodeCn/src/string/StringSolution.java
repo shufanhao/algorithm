@@ -31,10 +31,10 @@ public class StringSolution {
         return new String(sChar);*/
         // 解法2：
         char[] sChar = s.toCharArray();
-        for (int i=0; i<s.length()/2; i++) {
+        for (int i = 0; i < s.length() / 2; i++) {
             char temp = sChar[i];
-            sChar[i] = sChar[s.length() - i -1];
-            sChar[s.length() - i -1] = temp;
+            sChar[i] = sChar[s.length() - i - 1];
+            sChar[s.length() - i - 1] = temp;
         }
         return new String((sChar));
     }
@@ -50,10 +50,11 @@ public class StringSolution {
             int tail = x % 10; //取尾数
             int newResult = result * 10 + tail;
             //下面这行code 是为了cover case: 1000
-            if ((newResult - tail) / 10 != result)
-            { return 0; }
+            if ((newResult - tail) / 10 != result) {
+                return 0;
+            }
             result = newResult;
-            x = x /10;
+            x = x / 10;
         }
         return result;
     }
@@ -68,10 +69,10 @@ public class StringSolution {
             return -1;
         }
         int[] array = new int[26];
-        for (int i=0; i<s.length(); i++) {
-            array[s.charAt(i) - 'a'] ++;
+        for (int i = 0; i < s.length(); i++) {
+            array[s.charAt(i) - 'a']++;
         }
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             if (array[s.charAt(i) - 'a'] == 1) {
                 return i;
             }
@@ -85,14 +86,14 @@ public class StringSolution {
      * 然后遍历26个英文字母判断是否有不是0的case
      */
     public boolean isAnagram(String s, String t) {
-        int [] array = new int[26];
-        for (int i=0;i<s.length(); i++) {
+        int[] array = new int[26];
+        for (int i = 0; i < s.length(); i++) {
             array[s.charAt(i) - 'a']++;
         }
-        for (int i=0;i<t.length(); i++) {
+        for (int i = 0; i < t.length(); i++) {
             array[t.charAt(i) - 'a']--;
         }
-        for (int i=0; i<array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             if (array[i] != 0) {
                 return false;
             }
@@ -109,16 +110,14 @@ public class StringSolution {
             return true;
         }
         int left = 0;
-        int right = s.length() -1;
+        int right = s.length() - 1;
         while (left < right) {
             if (!isNumOrAlph(s.charAt(left))) {
                 left++;
-            }
-            else if (!isNumOrAlph(s.charAt(right))) {
+            } else if (!isNumOrAlph(s.charAt(right))) {
                 right--;
-            }
-            else if (((s.charAt(left) + 32 - 'a') % 32) !=
-            ((s.charAt(right) + 32 - 'a') % 32)) {
+            } else if (((s.charAt(left) + 32 - 'a') % 32) !=
+                    ((s.charAt(right) + 32 - 'a') % 32)) {
                 return false;
             } else {
                 left++;
@@ -129,9 +128,9 @@ public class StringSolution {
     }
 
     public boolean isNumOrAlph(char s) {
-        if (s >= 'a'&& s <= 'z') return true;
-        else if (s >= 'A' && s<='Z') return true;
-        else if (s >='0' && s<='9') return true;
+        if (s >= 'a' && s <= 'z') return true;
+        else if (s >= 'A' && s <= 'Z') return true;
+        else if (s >= '0' && s <= '9') return true;
         else return false;
     }
 
@@ -149,17 +148,17 @@ public class StringSolution {
         while (i < str.length() && str.charAt(i) == ' ') {
             i++;
         }
-        if (i<str.length() && (str.charAt(i) == '-' || str.charAt(i) == '+')) {
-            sign = str.charAt(i++) == '-' ? -1:1;
+        if (i < str.length() && (str.charAt(i) == '-' || str.charAt(i) == '+')) {
+            sign = str.charAt(i++) == '-' ? -1 : 1;
         }
-        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <='9') {
-            if (base > Integer.MAX_VALUE/10 || (base == Integer.MAX_VALUE/10 &&
-            str.charAt(i) - '0' > 7)) {
+        while (i < str.length() && str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+            if (base > Integer.MAX_VALUE / 10 || (base == Integer.MAX_VALUE / 10 &&
+                    str.charAt(i) - '0' > 7)) {
                 return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
             base = base * 10 + (str.charAt(i++) - '0');
         }
-        return sign*base;
+        return sign * base;
     }
 
     /**
@@ -174,7 +173,7 @@ public class StringSolution {
             return 0;
         }
 
-        for (int i=0 ; i<=haystack.length() - needle.length(); i++) {
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
             if (haystack.substring(i, needle.length() + i).equals(needle)) {
                 return i;
             }
@@ -229,7 +228,7 @@ public class StringSolution {
         StringBuilder sb = new StringBuilder();
         char[] first = strs[0].toCharArray();
         char[] last = strs[strs.length - 1].toCharArray();
-        for (int i=0; i<first.length; i++) {
+        for (int i = 0; i < first.length; i++) {
             if (last.length > i && first[i] == last[i]) {
                 sb.append(first[i]);
             } else {
@@ -257,7 +256,7 @@ public class StringSolution {
 
         System.out.println("题目8： " + ss.countAndSay(4));
 
-        String[] s = {"flower","flow","flight"};
+        String[] s = {"flower", "flow", "flight"};
         System.out.println("题目9： " + ss.longestCommonPrefix(s));
     }
 }

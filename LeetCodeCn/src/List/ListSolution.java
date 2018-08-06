@@ -1,8 +1,5 @@
 package List;
 
-
-import java.util.List;
-
 /**
  * 链表问题，
  * 1. 注意双指针解法，双指针：快慢指针和首尾指针 （一般用于使用额外空间的情况）
@@ -28,8 +25,8 @@ public class ListSolution {
     /**
      * 题目2: 删除链表的倒数第N个几点，并返回链表的头结点，尝试用一次扫描
      * 思路：如果题目不要求一次扫描的话，比较容易处理
-     *      如果一次扫描：双指针让前指针先走N步，再让两个在指针同时后移，
-     *      直到前指针到达尾部，此时，后指针的下一个节点就是要被删除的节点了
+     * 如果一次扫描：双指针让前指针先走N步，再让两个在指针同时后移，
+     * 直到前指针到达尾部，此时，后指针的下一个节点就是要被删除的节点了
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head == null || n == 0) {
@@ -37,7 +34,7 @@ public class ListSolution {
         }
         ListNode curHead = head; //后指针
         ListNode preHead = head; // 前指针
-        for (int i=0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             preHead = preHead.next;
         }
         while (preHead != null) {
@@ -75,7 +72,8 @@ public class ListSolution {
 
     /**
      * 题目4：合并两个有序链表，新链表是通过拼接给定的两个链表的所有节点组成的
-     *       输入的是递增排序的
+     * 输入的是递增排序的
+     *
      * @return 合并后的链表
      */
     public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
@@ -128,7 +126,7 @@ public class ListSolution {
         }
         ListNode slowP = head;
         ListNode fastP = head;
-        while (fastP.next!= null && fastP.next.next != null) {
+        while (fastP.next != null && fastP.next.next != null) {
             slowP = slowP.next;
             fastP = fastP.next.next;
         }
@@ -165,7 +163,7 @@ public class ListSolution {
      * 思路：快慢指针，如果最后快慢指针指向相同则说明是环形链表
      */
     public boolean hasCycle(ListNode head) {
-        if (head== null || head.next == null) {
+        if (head == null || head.next == null) {
             return false;
         }
         ListNode pSlow, pFast;
@@ -202,7 +200,7 @@ public class ListSolution {
 
     public static void main(String args[]) {
         ListSolution c = new ListSolution();
-        int [] input = {4,5,1,9};
+        int[] input = {4, 5, 1, 9};
         ListNode headQ1 = c.createList(input);
         c.deleteNode(headQ1.next);
         c.printList(headQ1, "题目1");
@@ -216,13 +214,13 @@ public class ListSolution {
         head.next = new ListNode(1);
         head = c.reverseList(head);
         c.printList(head, "题目3");
-        int [] input_1 = {1,2,4,5};
-        int [] input_2 = {2,3,4,6};
+        int[] input_1 = {1, 2, 4, 5};
+        int[] input_2 = {2, 3, 4, 6};
         ListNode headQ4 = c.mergeTwoLists(c.createList(input_1),
                 c.createList(input_2));
         c.printList(headQ4, "题目4");
 
-        int[] input_5 = {1,2,2,1};
+        int[] input_5 = {1, 2, 2, 1};
         ListNode headQ5 = c.createList(input_5);
         System.out.println("题目5：" + c.isPalindrome(headQ5));
 
