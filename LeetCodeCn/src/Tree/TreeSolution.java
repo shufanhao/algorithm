@@ -1,4 +1,4 @@
-package Tree;
+package tree;
 
 import java.util.*;
 
@@ -177,7 +177,7 @@ public class TreeSolution {
     }
 
     /**
-     * Build Tree Node
+     * Build tree Node
      * 3
      * / \
      * 9  20

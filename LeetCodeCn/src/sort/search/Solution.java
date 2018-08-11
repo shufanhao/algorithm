@@ -26,11 +26,11 @@ public class Solution {
         int min = 1, max = n, mid = 0;
         while (min <= max) {
             min = min + (max - min) / 2;
-            if (isBadVersion(mid)) {
+            /*if (isBadVersion(mid)) {
                 max = mid - 1;
             } else {
                 min = mid + 1;
-            }
+            }*/
         }
         return mid;
     }

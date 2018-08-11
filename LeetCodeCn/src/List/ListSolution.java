@@ -1,4 +1,4 @@
-package List;
+package list;
 
 /**
  * 链表问题，
@@ -181,7 +181,7 @@ public class ListSolution {
     }
 
     private ListNode createList(int[] input) {
-        // List is: 4 -> 5 -> 1 -> 9
+        // list is: 4 -> 5 -> 1 -> 9
         ListNode head = new ListNode(input[0]);
         head.next = new ListNode(input[1]);
         head.next.next = new ListNode(input[2]);
