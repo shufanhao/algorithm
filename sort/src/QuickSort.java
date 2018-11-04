@@ -41,10 +41,12 @@ public class QuickSort {
         // 交换和基准位置的元素
         int temp = nums[i];
         nums[i] = privot;
+        // 犯错的地方：写成了privot = temp
         nums[left] = temp;
 
         // 犯错的地方：写成了quickSort(nums, left, i);
         quickSort(nums, left, i-1);
+        // 犯错的地方：写成了quickSort(nums, i, right)
         quickSort(nums, i+1, right);
     }
     public static void main(String args[]) {

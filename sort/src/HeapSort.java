@@ -15,11 +15,13 @@ public class HeapSort {
      * */
     public static void sort(int[] arr) {
         // 构建大顶堆
+        // 从第一个非叶子节点开始执行
         for (int j=arr.length/2 -1; j>=0; j--) {
             adjustHeap(arr, j, arr.length);
         }
 
         for (int j=arr.length -1; j>0; j--) {
+            // 将堆顶元素与末尾元素进行交换，将最大元素沉到数组末端
             swap(arr, 0, j);
             adjustHeap(arr, 0, j);
         }
