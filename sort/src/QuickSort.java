@@ -14,9 +14,6 @@ public class QuickSort {
      */
 
     void quickSort(int nums[], int left, int right) {
-        if (nums == null || nums.length == 0) {
-            return;
-        }
         if (left >= right) {
             return;
         }
@@ -25,10 +22,10 @@ public class QuickSort {
         int privot = nums[i];
         // 犯错的地方：写成了while(i >= j)
         while (i != j) {
-            while (j>i && nums[j] > privot) {
+            while (j>i && nums[j] >= privot) {
                 j --;
             }
-            while (j > i && nums[i] < privot) {
+            while (j > i && nums[i] <= privot) {
                 i ++;
             }
             if (j > i) {

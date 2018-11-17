@@ -122,6 +122,44 @@ public class Solution {
         return miss;
     }
 
+    /**
+     * 题目7.1 ：IP 地址和 32 位无符号数转换
+     * 字符串ip 转成 32位无符号数。思路：
+     * 1. 通过String split 转成一个数组
+     * 2. 通过左移运算，第一个左移24位，第二个16位，第三个8位，最后不移位
+     */
+    public long ipToLong(String strIp) {
+        String[] ipArr = strIp.split("\\.");
+        long ipNumbers = 0;
+        for (int i = 0; i < 4; i++) {
+            ipNumbers += (Long.valueOf(ipArr[i]) << (24 - (8 * i)));
+        }
+        return ipNumbers;
+    }
+
+    /**
+     * 题目7.2：32位无符号数转成字符串
+     * 1. 依次右移24位, 得到第一个数是第一段ip
+     * 2. 通过与操作符（&）将整数值的高8位设为0，再右移16位，得到的数字即为第二段IP。
+     * 3. 通过与操作符吧整数值的高16位设为0，再右移8位，得到的数字即为第三段IP。
+     * 4. 通过与操作符吧整数值的高24位设为0，得到的数字即为第四段IP。
+     */
+    public String longToIP(long longIp) {
+        StringBuffer sb = new StringBuffer("");
+        // 直接右移24位
+        sb.append(String.valueOf((longIp >>> 24)));
+        sb.append(".");
+        // 将高8位置0，然后右移16位
+        sb.append(String.valueOf((longIp & 0x00FFFFFF) >>> 16));
+        sb.append(".");
+        // 将高16位置0，然后右移8位
+        sb.append(String.valueOf((longIp & 0x0000FFFF) >>> 8));
+        sb.append(".");
+        // 将高24位置0
+        sb.append(String.valueOf((longIp & 0x000000FF)));
+        return sb.toString();
+    }
+
     public static void main(String args[]) {
         Solution s = new Solution();
         System.out.println("题目1：" + s.hammingWeight(128));
@@ -136,5 +174,13 @@ public class Solution {
 
         int[] nums = {3, 0, 1};
         System.out.println("题目6： " + s.missingNumber(nums));
+
+        System.out.println("题目7.1： " + s.ipToLong("219.239.110.138"));
+        System.out.println("题目7.2： " + s.longToIP(18537472));
+
+        for (;;) {
+            System.out.println("haofan");
+            return;
+        }
     }
 }

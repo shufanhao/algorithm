@@ -3,7 +3,7 @@
 1. 快速排序--QuickSort
 2. 归并排序--MergeSort
 3. 堆排序-- HeapSort， 堆排序不是很容易理解
-
+4. 冒泡排序-- BubbleSort
 ## LeetCode
 https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/
 #### 1. 数组
@@ -67,3 +67,5 @@ https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/
 3. 颠倒二进制位。思路：向右移动一位，取到这一位然后将其移动到相反位置，再进行下一次循环
 4. 帕斯卡三角形。思路：要理解逻辑，具体看code
 5. 有效的括号。思路：充分利用栈，先进后出。如果是 (,{,[则入栈，如果是),}，]的话，则取出栈顶元素，判断是否是(,{,[。如果是，则取出栈顶元素，最后判断栈是否是空
+6. 缺失数字
+7. String 和 IP 地址转换，成分利用左移右移的位运算
