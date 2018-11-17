@@ -34,6 +34,32 @@ public class Solution {
         }
         return mid;
     }
+
+    /**
+     * 题目3： 二分查找
+     * @param nums 输入的有序数组
+     * @param k    输入的要找的元素
+     * @return  要找的元素的下标
+     */
+    public int binarySearch(int nums[], int k) {
+        int low = 0;
+        int high = nums.length - 1;
+        int middle = 0;
+        if ( k < nums[low] || k > nums[high] || low > high) {
+            return -1;
+        }
+        while (low <= high) {
+            middle = (low + high) / 2;
+            if (nums[middle] > k) {
+                high = middle -1;
+            } else if (nums[middle] < k) {
+                low = middle + 1;
+            } else {
+                return middle;
+            }
+        }
+        return -1;
+    }
     public static void main(String args[]) {
         int [] nums1 = {1,2,3,0,0,0};
         int [] nums2 = {2,5,6};
@@ -43,5 +69,7 @@ public class Solution {
         for (int i = 0; i <nums1.length ; i++) {
             System.out.print(nums1[i] + ",");
         }
+
+        System.out.println("题目3： " + s.binarySearch(nums2, 5));
     }
 }

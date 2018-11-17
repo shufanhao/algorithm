@@ -263,6 +263,34 @@ public class ArraySolution {
         }
     }
 
+    /**
+     * 题目12：输出数组中最大的连续子序列的长度
+     */
+    public static int getOnsecutiveMaxLen(int arr[]) {
+        int maxCount = 0;
+        for (int i=0; i<arr.length; i++) {
+            int preCount = 1;
+            if (((i+1) < arr.length -1 ) && (arr[i] != arr[i+1])) {
+                i++;
+            } else {
+                maxCount ++;
+            }
+            if (maxCount < preCount) {
+                maxCount = preCount;
+            }
+        }
+        return maxCount;
+    }
+    /**
+     * 题目12：https://blog.csdn.net/zhjali123/article/details/72871261
+     * 输出数字矩形，输入N，输出：
+     * 1， 2， 3， 4
+     * 12，13，14，5
+     * 11，16，15，6
+     * 10，9， 8， 7
+     * @param args
+     */
+
     public static void main(String args[]) {
         // 题目1：
         int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
@@ -326,5 +354,8 @@ public class ArraySolution {
             System.out.println("题目11： 旋转图像 " + Arrays.toString(rotateArr[i]));
         }
 
+        // 题目12：
+        int arr[] = {1,1,2,2,3,3,1,1,1,1};
+        System.out.println("题目12：" + getOnsecutiveMaxLen(arr));
     }
 }
