@@ -19,7 +19,7 @@ public class DynamicPlanning {
 
     /**
      * 买卖股票的最佳时机
-     * 动态规划：选取最小的卖，最大的买，这样利润最大
+     * 动态规划：选取最小的买，最大的卖，这样利润最大
      */
     public int maxProfit(int[] prices) {
         int result = 0; // 利润

@@ -1,6 +1,9 @@
 ## LeetCode
 https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/
 #### 1. 数组
+
+1,2,3（空间复杂度是1的没有想到）,6,8,9, 以后重点看这几个
+
 - 如果要空间复杂度是o(1)的话，应该是肯定有两个指针，start,end,
 分别指向数组的第一个元素和最后一个元素，然后分别start ++, end--
 - 考虑先排序
@@ -18,6 +21,7 @@ https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/
 10. 有效的数独
 11. 旋转图像。
 #### 2. 字符串
+2，5
 1. 反转字符串。思路：栈
 2. 颠倒整数。思路：根据 x % 10 = 个位数，x/10 = 除了个位数的前面几个数，还要考虑是100的这种情况
 3. 字符串中唯一字符。思路：26个英文字母放到数组中，然后遍历string, 让数组中的26个英文字母加1，最后循环check哪个是1，返回即

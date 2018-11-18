@@ -15,7 +15,7 @@ import java.util.Map;
 public class ArraySolution {
 
     /**
-     * 题目1: 从排序数组中删除重复项
+     * 题目1: 从排序数组中删除重复项, 快慢指针
      * 分别用两个指针，i,j 去移动，不相等的话，指针i++
      */
     public static int remoeDuplicates(int[] nums) {

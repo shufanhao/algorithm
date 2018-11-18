@@ -81,7 +81,7 @@ public class StringSolution {
     }
 
     /**
-     * 题目4：有效的字母异位词
+     * 题目4：有效的字母异位词，两个单词如果包含相同的字母
      * 思路：同上一个题目，26个英文字母反倒数组中，然分别遍历两个字符串，执行++，--
      * 然后遍历26个英文字母判断是否有不是0的case
      */
@@ -242,7 +242,7 @@ public class StringSolution {
         StringSolution ss = new StringSolution();
         System.out.println("题目1： " + ss.reverseString("haofan"));
 
-        System.out.println("题目2： " + ss.reverse(100));
+        System.out.println("题目2： " + ss.reverse(-102));
 
         System.out.println("题目3： " + ss.firstUniqChar("loveleetcode"));
 
