@@ -15,7 +15,7 @@ import java.util.Map;
 public class ArraySolution {
 
     /**
-     * 题目1: 从排序数组中删除重复项, 快慢指针
+     * 题目1.1: 从排序数组中删除重复项, 快慢指针
      * 分别用两个指针，i,j 去移动，不相等的话，指针i++
      */
     public static int remoeDuplicates(int[] nums) {
@@ -33,7 +33,28 @@ public class ArraySolution {
     }
 
     /**
-     * 题目2：买卖股票的最佳时机
+     * 题目1.2：颜色排序
+     * http://www.cnblogs.com/grandyang/p/4341243.html
+     * 思路：
+     * 1. 遍历一遍原数组，分别记录0，1，2的个数， 更新原数组，按个数分别赋上0，1，2
+     * 2. 定义两个指针，start,end; 从头开始遍历数组，如果遇到0，则交换改值和start指向的值，
+     * 并将start后移一位。若遇到2，则交换改值和end指向的值，并将end前移一位，若遇到1则继续遍历
+     */
+    public static void sortColors(int nums[]) {
+        int start  = 0;
+        int end = nums.length - 1;
+        for (int i=0; i<=end; i++) {
+            if (nums[i] == 0) {
+                swap(nums, i, start++);
+            } else if (nums[i] == 2) { //这个地方容易忘记
+                swap(nums, i--, end --);
+            }
+        }
+    }
+
+
+    /**
+     * 题目2.1：买卖股票的最佳时机 II(直接求和)
      * 其实就是就一个和：下一天的价格减去前一天的价格差，这个差求和
      **/
     public static int maxProfit(int[] prices) {
@@ -49,6 +70,23 @@ public class ArraySolution {
         return sum;
     }
 
+    /**
+     * 题目2.2：买卖股票的最佳时机 III(动态规划)
+     * 设计一个算法计算获取的最大利润，只能完成一笔交易。
+     * 其实最小买入，最大卖出
+     */
+    public static int maxProfitIII(int [] prices) {
+        int result = 0;
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+        int minBuy = prices[0];
+        for (int i=1; i<prices.length; i++) {
+            result = Math.max(result, prices[i] - minBuy);
+            minBuy = Math.min(prices[i], minBuy);
+        }
+        return result;
+    }
     /**
      * 题目3：旋转数组
      * 解法1：利用o(n)的空间复杂度
@@ -281,6 +319,38 @@ public class ArraySolution {
         }
         return maxCount;
     }
+
+    private static void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+
+    /**
+     * 题目13：长度最小的子数组, 滑动窗口方法
+     * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，控制窗口的大小得到想要的结果
+     */
+    public static int minSubArrayLen(int s, int[] nums) {
+        int l = 0; // left
+        int r = 0;// right
+        int sum = 0;
+        int minLen = nums.length + 1; //不存在的case
+        while (l < nums.length) {
+            if (r < nums.length && sum < s) {
+                sum += nums[r++];
+            } else {
+                sum -= nums[l++];
+            }
+            if (sum >= s) {
+                minLen = Math.min(minLen, r-l);
+            }
+        }
+        if (minLen == nums.length + 1) {
+            return 0;
+        }
+        return minLen;
+    }
+
     /**
      * 题目12：https://blog.csdn.net/zhjali123/article/details/72871261
      * 输出数字矩形，输入N，输出：
@@ -295,10 +365,18 @@ public class ArraySolution {
         // 题目1：
         int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         System.out.println("题目1 从排序数组中删除重复项: " + remoeDuplicates(nums));
+        // 题目1.2
+        //int arr_13[] = {1,1,1,0,0,0,1,2,2};
+        int arr_1_2[] = {2,0,1};
+        sortColors(arr_1_2);
+        System.out.println("题目1.2：" + Arrays.toString(arr_1_2));
+        // 题目2.1：
+        int[] prices_1 = {1, 2, 3, 4, 5};
+        System.out.println("题目2.1：买卖股票的最佳时机：" + maxProfit(prices_1));
 
-        // 题目2：
-        int[] prices = {1, 2, 3, 4, 5};
-        System.out.println("题目2：买卖股票的最佳时机：" + maxProfit(prices));
+        // 题目2.2：
+        int[] prices_2 = {7,1,5,3,6,4};
+        System.out.println("题目2.2：买卖股票的最佳时机：" + maxProfitIII(prices_2));
 
         // 题目3：
         int[] rotate = {1, 2, 3, 4, 5, 6, 7};
@@ -357,5 +435,10 @@ public class ArraySolution {
         // 题目12：
         int arr[] = {1,1,2,2,3,3,1,1,1,1};
         System.out.println("题目12：" + getOnsecutiveMaxLen(arr));
+
+        // 题目13：
+        int arr_13[] = {2,3,1,2,4,3};
+        System.out.println("题目13：" + minSubArrayLen(7, arr_13));
+
     }
 }

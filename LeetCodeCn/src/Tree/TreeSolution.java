@@ -177,12 +177,30 @@ public class TreeSolution {
     }
 
     /**
+     * 题目附加3：二叉树的前序遍历：
+     */
+    public void prorderTraversalStack(TreeNode root) {
+        // 先序遍历
+        Stack<TreeNode> stack = new Stack<>();
+        if (root == null) {
+            return;
+        }
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode temp = stack.pop();
+            System.out.print(temp.val + " ");
+            if (temp.right != null) stack.push(temp.right);
+            if (temp.left != null) stack.push(temp.left); //后进先出，所以后压left
+        }
+    }
+
+    /**
      * Build tree Node
      * 3
      * / \
      * 9  20
-     * /  \
-     * 15   7
+     *    / \
+     *   15  7
      *
      * @return
      */
@@ -209,7 +227,10 @@ public class TreeSolution {
 
         System.out.println("题目附加2：" + s.inorderTraversalStack(s.buildTreeNode()));
 
-        System.out.println("题目3： " + s.isSymmetric(s.buildTreeNode()));
+        System.out.println("题目附加3：");
+        s.prorderTraversalStack(s.buildTreeNode());
+
+        System.out.println("\n题目3： " + s.isSymmetric(s.buildTreeNode()));
 
         System.out.println("题目4：" + s.levelOrder(s.buildTreeNode()));
 
