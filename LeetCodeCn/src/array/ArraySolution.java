@@ -352,6 +352,31 @@ public class ArraySolution {
     }
 
     /**
+     * 题目13：求最大平均值的连续子序列的最大平均值
+     */
+    public static int maxSubArrayAverage(int k, int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (k > nums.length) {
+            return 0;
+        }
+        if (k == 1) {
+            Arrays.sort(nums);
+            return nums[nums.length - 1];
+        } else {
+            // if k > 1, 那肯定是连续2个的序列比3个的子序列的平均值要大
+            int sum = 0;
+            int tempMax = nums[0] + nums[1];
+            for (int j = 2; j< nums.length; j++) {
+                sum = nums[j-1] + nums[j];
+                tempMax = Math.max(tempMax, sum);
+            }
+            return (tempMax / 2);
+        }
+
+    }
+    /**
      * 题目12：https://blog.csdn.net/zhjali123/article/details/72871261
      * 输出数字矩形，输入N，输出：
      * 1， 2， 3， 4
@@ -439,6 +464,12 @@ public class ArraySolution {
         // 题目13：
         int arr_13[] = {2,3,1,2,4,3};
         System.out.println("题目13：" + minSubArrayLen(7, arr_13));
+
+        // 题目14：
+        int arr_14[] = {-1, 1,2,4};
+        System.out.println("题目14：" + maxSubArrayAverage(1, arr_14));
+
+        System.out.println("题目14：" + maxSubArrayAverage(3, arr_14));
 
     }
 }
