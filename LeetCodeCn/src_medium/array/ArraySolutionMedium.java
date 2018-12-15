@@ -60,11 +60,63 @@ public class ArraySolutionMedium {
         return result;
     }
 
+    /**
+     * 题目2：矩阵置0
+     * 给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法
+     * 1. O(m*n)解法：原数据x[m][n]，复制一份数据到y[m][n]，遍历y，根据其中的元素是否是0，对x中元素置0。
+     * 2. O(m+n)空间的解法, X[m]来记录某一列是否需要置零，用Y[n]来记录某一行是否需要置零，遍历原始数据，如果
+     * 某一元素为0，则修改x[m], Y[n],最后遍历X,Y来标记对应的行和列.
+     * 下面function用思路2，进行求解
+     */
+    public void setZeroes(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+            return;
+        }
+        int[] m = new int[matrix[0].length]; //记录某一列是否需要置0
+        int[] n = new int[matrix.length]; // 记录某一行是否需要置0
+        for (int i=0; i<matrix.length; i++) {
+            for (int j=0; j< matrix[i].length; j++) {
+                if (matrix[i][j] == 0) {
+                    m[j] = 1;//认为是0
+                    n[i] = 1;//认为是0
+                }
+            }
+        }
+        // 遍历m，如果发现元素时1，则将该列所有元素置0
+        for (int i=0; i<m.length; i++) {
+            if (m[i] == 1) {
+                for (int j=0; j<matrix.length; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        // 遍历n，如果发现元素时1，则将该行所有元素置0
+        for (int i=0; i<n.length; i++) {
+            if (n[i] == 1) {
+                for (int j=0; j<matrix[0].length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
     public static void main(String args[]) {
         ArraySolutionMedium array = new ArraySolutionMedium();
         int nums_1[] = {-1, 0, 1, 2, -1, -4};
         List<List<Integer>> listList = array.threeSum(nums_1);
-        System.out.println(Arrays.toString(listList.toArray()));
+        System.out.println("题目1：" + Arrays.toString(listList.toArray()));
+
+        int nums_2[][] = {
+                {0,1,2,0},
+                {3,4,5,2},
+                {1,3,1,5}};
+        array.setZeroes(nums_2);
+        System.out.println("题目2：");
+        for (int i=0; i<nums_2.length; i++) {
+            for (int j=0; j< nums_2[i].length;j++) {
+                System.out.print(nums_2[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
 
