@@ -1,4 +1,4 @@
-## LeetCode
+## LeetCode  初级
 https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/
 #### 1. 数组
 
