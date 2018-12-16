@@ -1,8 +1,6 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ArraySolutionMedium {
 
@@ -99,6 +97,32 @@ public class ArraySolutionMedium {
             }
         }
     }
+
+    /**
+     * 题目3：字谜数组
+     * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+     * 思路：将字符串转成字符数组，并排序，然后放入key中，判断map中是否要该key
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs == null || strs.length ==0 ){
+            return new ArrayList<>();
+        }
+        Map<String, List<String>> map = new HashMap<>();
+        for (int i=0; i<strs.length; i++) {
+            char[] strChar = strs[i].toCharArray();
+            Arrays.sort(strChar);
+            String temp = String.valueOf(strChar);
+            if (map.containsKey(temp)) {
+                map.get(temp).add(strs[i]);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(strs[i]);
+                map.put(temp, list);
+            }
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+
     public static void main(String args[]) {
         ArraySolutionMedium array = new ArraySolutionMedium();
         int nums_1[] = {-1, 0, 1, 2, -1, -4};
@@ -117,6 +141,10 @@ public class ArraySolutionMedium {
             }
             System.out.println();
         }
+
+        String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
+        System.out.println(Arrays.toString(listsIssue3.toArray()));
     }
 }
 
