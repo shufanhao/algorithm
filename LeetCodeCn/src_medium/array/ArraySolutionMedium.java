@@ -123,6 +123,34 @@ public class ArraySolutionMedium {
         return new ArrayList<List<String>>(map.values());
     }
 
+    /**
+     * 无重复字符的最长子串
+     * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+     * 思路：
+     * 从start开始遍历，但是第一步是while loop 来推进end, 直到推不动end, 然后start++
+     * 巧妙：为end是外围variable，在start的loop上，end不会重置；[start~end]中间不需要重复计算
+     * 最终可以O（n）
+     */
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        boolean[] chars = new boolean[256]; // 256 ASCII code
+        int rst = 0;
+        int start = 0;
+        int end = 0;
+        while (start<s.length()) {
+            while (end < s.length() && !chars[s.charAt(end)]) {
+                chars[s.charAt(end)] = true;
+                rst = Math.max(rst, end - start + 1);
+                end ++;
+            }
+            chars[s.charAt(start)] = false; // 这个地方是关键
+            start++;
+        }
+        return rst;
+    }
+
     public static void main(String args[]) {
         ArraySolutionMedium array = new ArraySolutionMedium();
         int nums_1[] = {-1, 0, 1, 2, -1, -4};
@@ -145,6 +173,9 @@ public class ArraySolutionMedium {
         String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
         List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
         System.out.println(Arrays.toString(listsIssue3.toArray()));
+
+        String inputString = "pwwkew";
+        System.out.println("题目4：" + array.lengthOfLongestSubstring(inputString));
     }
 }
 
