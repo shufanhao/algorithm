@@ -124,7 +124,7 @@ public class ArraySolutionMedium {
     }
 
     /**
-     * 无重复字符的最长子串
+     * 题目4：无重复字符的最长子串
      * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
      * 思路：
      * 从start开始遍历，但是第一步是while loop 来推进end, 直到推不动end, 然后start++
@@ -151,6 +151,58 @@ public class ArraySolutionMedium {
         return rst;
     }
 
+    /**
+     * 题目5: 最长回文子串
+     * https://juejin.im/entry/58c7c297da2f605dc5b3d139
+     * 思路：回文子串是以中心轴对称的，可以从下表i出发，用左右两个指针，从i左右出发，判断是否相等，找出最大值即可
+     * 注意：回文字符串有奇偶对称之分，如：abcba, abba，所以要判断两种类型
+     */
+    public String longestPalindrome(String s) {
+        if (s == null) return null;
+        if (s.length() == 0) return "";
+        String longest = s.substring(0, 1);
+        String temp;
+        for (int i=0; i<s.length(); i++) {
+            // 两次求，i, i一次，另外一次：i, i+1
+            temp = findPalindrome(s, i, i);
+            longest = temp.length() > longest.length() ? temp : longest;
+            temp = findPalindrome(s, i, i+1);
+            longest = temp.length() > longest.length() ? temp : longest;
+        }
+        return longest;
+    }
+
+    public String findPalindrome(String str, int left, int right) {
+        int len = str.length();
+        while (left >=0 && right <= len -1 && str.charAt(left) == str.charAt(right)) {
+            left --;
+            right ++;
+        }
+        return str.substring(left +1 , right);
+    }
+
+    /**
+     * 递增的三元子序列：给定一个未排序的数组，判断数组是否存在长度为3的递增子序列
+     * 思路：有点像动态规划，维护一个二元组，first,second, 记录第i个元素之前的最小递增二元子序列
+     */
+    public boolean increasingTriplet(int[] nums) {
+        if (nums == null) return false;
+        if (nums.length < 3) return false;
+        int first = Integer.MAX_VALUE;
+        int second = Integer.MAX_VALUE;
+        for (int num : nums) {
+            // 不太清楚为什么是这样写，感觉不是很合理
+            if (num <= first) {
+                first = num;
+            } else if (num <= second) {
+                second = num;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String args[]) {
         ArraySolutionMedium array = new ArraySolutionMedium();
         int nums_1[] = {-1, 0, 1, 2, -1, -4};
@@ -174,8 +226,14 @@ public class ArraySolutionMedium {
         List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
         System.out.println(Arrays.toString(listsIssue3.toArray()));
 
-        String inputString = "pwwkew";
-        System.out.println("题目4：" + array.lengthOfLongestSubstring(inputString));
+        String strsIssue4 = "pwwkew";
+        System.out.println("题目4：" + array.lengthOfLongestSubstring(strsIssue4));
+
+        String strsIssue5 = "babad";
+        System.out.println("题目5：" + array.longestPalindrome(strsIssue5));
+
+        int numsIssue6[] = {0,4,2,1,0,-1,-3};
+        System.out.println("题目6：" + array.increasingTriplet(numsIssue6));
     }
 }
 
