@@ -39,6 +39,25 @@ public class ListSolutionMedium {
         return result;
     }
 
+    /**
+     * 题目2：奇偶链表https://blog.csdn.net/NoMasp/article/details/50535947
+     * 思路：
+     * 将节点分成奇数节点和偶数节点，然后分别更改指向即可
+     */
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) return head;
+        ListNode odd = head;
+        ListNode even = odd.next;
+        ListNode evenHead = even;
+        while (odd.next != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
+    }
     public static void main(String args[]) {
         ListSolutionMedium list = new ListSolutionMedium();
 
@@ -56,5 +75,9 @@ public class ListSolutionMedium {
             System.out.print(result.val + " ");
             result = result.next;
         }
+
+        ListSolution common = new ListSolution();
+        int[] input = {1,4,5,9};
+        common.printList(list.oddEvenList(common.createList(input)), "题目2：");
     }
 }

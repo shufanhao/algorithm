@@ -180,7 +180,7 @@ public class ListSolution {
         }
     }
 
-    private ListNode createList(int[] input) {
+    public ListNode createList(int[] input) {
         // list is: 4 -> 5 -> 1 -> 9
         ListNode head = new ListNode(input[0]);
         head.next = new ListNode(input[1]);
@@ -189,7 +189,7 @@ public class ListSolution {
         return head;
     }
 
-    private void printList(ListNode head, String msg) {
+    public void printList(ListNode head, String msg) {
         System.out.print(msg + ": ");
         while (head != null) {
             System.out.print(head.val + "->");
