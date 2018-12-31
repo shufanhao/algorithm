@@ -196,7 +196,7 @@ public class TreeSolution {
 
     /**
      * Build tree Node
-     * 3
+     * 10
      * / \
      * 9  20
      *    / \
@@ -204,7 +204,7 @@ public class TreeSolution {
      *
      * @return
      */
-    private TreeNode buildTreeNode() {
+    public TreeNode buildTreeNode() {
         TreeNode root = new TreeNode(10);
         root.left = new TreeNode(9);
         root.right = new TreeNode(20);
