@@ -12,3 +12,4 @@ https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/
 #### 3. 二叉树
 1. 中序遍历二叉树
 2. 二叉树的锯齿形层次遍历
+3. 从前序遍历和中序遍历构造二叉树
