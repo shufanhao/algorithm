@@ -1,5 +1,6 @@
 package tree;
 
+import javax.swing.plaf.metal.MetalIconFactory;
 import java.util.*;
 
 public class TreeSolutionMedium {
@@ -78,6 +79,37 @@ public class TreeSolutionMedium {
         }
         return -1;
     }
+
+    /**
+     * 题目4：每个节点的右向指针
+     * 要求用O(1)的空间复杂度，用两个指针start, cur, 其中start标记每一层的起始节点
+     * cur用来遍历该层的节点
+     */
+    public void connect(TreeLinkNode root) {
+        if (root == null) return;
+        TreeLinkNode start = root;
+        TreeLinkNode cur = null;
+
+        while (start.left != null) {
+            cur = start;
+            while (cur != null) {
+                cur.left.next = cur.right;
+                if (cur.next != null) cur.right.next = cur.next.left;
+                cur = cur.next;
+            }
+            start = start.left;
+        }
+    }
+
+    public TreeLinkNode buildTreeLinkNode() {
+        TreeLinkNode root = new TreeLinkNode(10);
+        root.left = new TreeLinkNode(9);
+        root.right = new TreeLinkNode(20);
+        root.right.left = new TreeLinkNode(15);
+        root.right.right = new TreeLinkNode(7);
+        return root;
+    }
+
     public static void main(String args[]) {
         TreeSolutionMedium medium = new TreeSolutionMedium();
         TreeSolution easy = new TreeSolution();
@@ -90,5 +122,7 @@ public class TreeSolutionMedium {
         System.out.println("题目3：" );
         easy.prorderTraversalStack(medium.buildTree(preorder, inorder));
 
+        System.out.println("题目4：");
+        medium.connect(medium.buildTreeLinkNode());
     }
 }

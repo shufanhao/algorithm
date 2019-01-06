@@ -13,3 +13,4 @@ https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/
 1. 中序遍历二叉树
 2. 二叉树的锯齿形层次遍历
 3. 从前序遍历和中序遍历构造二叉树
+4. 每个节点的右向指针，解法比较牛逼，非常巧妙
