@@ -1,6 +1,5 @@
 package tree;
 
-import javax.swing.plaf.metal.MetalIconFactory;
 import java.util.*;
 
 public class TreeSolutionMedium {
@@ -110,6 +109,27 @@ public class TreeSolutionMedium {
         return root;
     }
 
+    /**
+     * 题目5：二叉搜索树种的第K小的元素
+     * 思路：利用中序遍历然后比较第K个最小元素
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) return 0;
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            while (--k == 0) {
+                return root.val;
+            }
+            root = root.right;
+        }
+        return 0;
+    }
+
     public static void main(String args[]) {
         TreeSolutionMedium medium = new TreeSolutionMedium();
         TreeSolution easy = new TreeSolution();
@@ -124,5 +144,7 @@ public class TreeSolutionMedium {
 
         System.out.println("题目4：");
         medium.connect(medium.buildTreeLinkNode());
+
+        System.out.println("题目5: " + medium.kthSmallest(easy.buildSearchTree(), 1));
     }
 }
