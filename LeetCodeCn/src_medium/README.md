@@ -16,3 +16,6 @@ https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/
 4. 每个节点的右向指针，解法比较牛逼，非常巧妙
 5. 二叉搜索树中第k小元素
 6. 岛屿的个数, DFS问题，还没解答
+#### 5. Sort
+1. 前K个高频元素
+
