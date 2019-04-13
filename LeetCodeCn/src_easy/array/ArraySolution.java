@@ -37,8 +37,8 @@ public class ArraySolution {
      * http://www.cnblogs.com/grandyang/p/4341243.html
      * 思路：
      * 1. 遍历一遍原数组，分别记录0，1，2的个数， 更新原数组，按个数分别赋上0，1，2
-     * 2. 定义两个指针，start,end; 从头开始遍历数组，如果遇到0，则交换改值和start指向的值，
-     * 并将start后移一位。若遇到2，则交换改值和end指向的值，并将end前移一位，若遇到1则继续遍历
+     * 2. 定义两个指针，start,end; 从头开始遍历数组，如果end值遇到0，则交换改值和start指向的值，
+     * 并将start后移一位。若start值遇到2，则交换改值和end指向的值，并将end前移一位，若遇到1则继续遍历
      */
     public static void sortColors(int nums[]) {
         int start  = 0;
@@ -222,13 +222,13 @@ public class ArraySolution {
     /**
      * 题目9： 两数之和
      * 1. 常规思路：o(n的平方) 的时间复杂度，类似于冒泡排序
-     * 2. 简单思路：将数组的元素和对赢的index，存到Map中
+     * 2. 简单思路：将数组的元素和对应的index，存到Map中
      * 用target 减去 数组的每一个元素，然后将结果在map中检查是否有对应的key
      * 如果有，则返回
      */
     public static int[] twoSum(int[] nums, int target) {
         if (nums == null) {
-            return nums;
+            return null;
         }
         Map<Integer, Integer> filter = new HashMap<>(nums.length);
         int tmp;
@@ -239,7 +239,7 @@ public class ArraySolution {
             }
             filter.put(nums[i], i);
         }
-        return nums;
+        return null;
     }
 
     /**
@@ -303,6 +303,7 @@ public class ArraySolution {
 
     /**
      * 题目12：输出数组中最大的连续子序列的长度
+     * 解法：提供变量去记录之前的最大连续子序列，然后用记录的maxCount去比较即可
      */
     public static int getOnsecutiveMaxLen(int arr[]) {
         int maxCount = 0;
@@ -327,8 +328,8 @@ public class ArraySolution {
     }
 
     /**
-     * 题目13：长度最小的子数组, 滑动窗口方法
-     * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，控制窗口的大小得到想要的结果
+     * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组,  滑动窗口方法
+     * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，发现窗口内的和比目标值大时，就left ++, 小时就right++
      */
     public static int minSubArrayLen(int s, int[] nums) {
         int l = 0; // left
@@ -342,7 +343,7 @@ public class ArraySolution {
                 sum -= nums[l++];
             }
             if (sum >= s) {
-                minLen = Math.min(minLen, r-l);
+                minLen = Math.min(minLen, r - l);
             }
         }
         if (minLen == nums.length + 1) {
@@ -352,7 +353,10 @@ public class ArraySolution {
     }
 
     /**
-     * 题目13：求最大平均值的连续子序列的最大平均值
+     * 题目13：求最大平均值的连续子序列的最大平均值, 目标值是k
+     * 解法：
+     * 如果K=1, 结果肯定是最大的那个值
+     * 如果K>1, 结果肯定是连续2个的序列比3个的子序列的平均值要大
      */
     public static int maxSubArrayAverage(int k, int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -376,15 +380,7 @@ public class ArraySolution {
         }
 
     }
-    /**
-     * 题目12：https://blog.csdn.net/zhjali123/article/details/72871261
-     * 输出数字矩形，输入N，输出：
-     * 1， 2， 3， 4
-     * 12，13，14，5
-     * 11，16，15，6
-     * 10，9， 8， 7
-     * @param args
-     */
+
 
     public static void main(String args[]) {
         // 题目1：
@@ -459,17 +455,17 @@ public class ArraySolution {
 
         // 题目12：
         int arr[] = {1,1,2,2,3,3,1,1,1,1};
-        System.out.println("题目12：" + getOnsecutiveMaxLen(arr));
+        System.out.println("题目12：输出数组中最大的连续子序列的长度 " + getOnsecutiveMaxLen(arr));
 
         // 题目13：
         int arr_13[] = {2,3,1,2,4,3};
-        System.out.println("题目13：" + minSubArrayLen(7, arr_13));
+        System.out.println("题目13：长度最小的子数组 " + minSubArrayLen(7, arr_13));
 
         // 题目14：
         int arr_14[] = {-1, 1,2,4};
-        System.out.println("题目14：" + maxSubArrayAverage(1, arr_14));
+        System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(1, arr_14));
 
-        System.out.println("题目14：" + maxSubArrayAverage(3, arr_14));
+        System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(3, arr_14));
 
     }
 }
