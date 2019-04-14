@@ -44,18 +44,18 @@ public class Solution {
     public int binarySearch(int nums[], int k) {
         int low = 0;
         int high = nums.length - 1;
-        int middle = 0;
+        int mid = 0;
         if ( k < nums[low] || k > nums[high] || low > high) {
             return -1;
         }
         while (low <= high) {
-            middle = (low + high) / 2;
-            if (nums[middle] > k) {
-                high = middle -1;
-            } else if (nums[middle] < k) {
-                low = middle + 1;
+            mid = (low + high) / 2;
+            if (nums[mid] > k) {
+                high = mid -1;
+            } else if (nums[mid] < k) {
+                low = mid + 1;
             } else {
-                return middle;
+                return mid;
             }
         }
         return -1;

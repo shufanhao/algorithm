@@ -8,6 +8,9 @@ import java.util.*;
  * 2. 用栈
  */
 public class TreeSolution {
+
+    private int last = Integer.MIN_VALUE;
+
     /**
      * 题目1：二叉树的最大深度
      * 思路：递归实现，所谓递归要把它理解成高中数学中的递推公式，这一项的值和之前几项的关系
@@ -29,12 +32,12 @@ public class TreeSolution {
      * 2. 利用中序遍历，一棵二叉搜索树的中序遍历后，其节点的值是从小到大排序的
      */
     public boolean isValidBSTRefursive(TreeNode root) {
-        if (root == null) {
-            return true;
-        }
-        int prev = Integer.MIN_VALUE;
-        // 判断值是否都大于prev
-        return isValidBSTHelper(root, prev);
+        if (root == null) return true;
+        if (!isValidBSTRefursive(root.left)) return false;
+        if (root.val <= last) return false;
+        last = root.val;
+        if (!isValidBSTRefursive(root.right)) return false;
+        return true;
     }
 
     public boolean isValidBSTStack(TreeNode root) {
@@ -74,24 +77,6 @@ public class TreeSolution {
         }
         return (left.val == right.val) && (isSymmetricHelper(left.left, right.right))
                 && (isSymmetricHelper(left.right, right.left));
-    }
-
-    private boolean isValidBSTHelper(TreeNode node, int prev) {
-        if (node == null) {
-            return true;
-        }
-        // 先遍历左子树, 节点值都大于prev
-        if (isValidBSTHelper(node.left, prev)) {
-            // 得到 node 节点值
-            if (node.val > prev) {
-                prev = node.val;
-                return isValidBSTHelper(node.right, prev);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 
     /**
