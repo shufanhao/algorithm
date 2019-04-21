@@ -56,6 +56,25 @@ public class DynamicPlanning {
         }
         return sum;
     }
+
+    /**
+     * 题目4：打家劫舍问题
+     * 就是公式：dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1])
+     */
+    public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) return nums[0];
+        int[] dp = new int[nums.length + 1];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for (int i=2; i<nums.length; i++) {
+            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+        }
+        return dp[nums.length - 1];
+    }
+
     public static void main(String args[]) {
         DynamicPlanning dynamicPlanning = new DynamicPlanning();
         System.out.println("题目1：" + dynamicPlanning.climbStairs(3));
@@ -65,5 +84,8 @@ public class DynamicPlanning {
 
         int[] nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
         System.out.println("题目3：" + dynamicPlanning.maxSubArray(nums));
+
+        int[] money = {2,7,9,3,1};
+        System.out.println("题目4：" + dynamicPlanning.rob(money));
     }
 }
