@@ -12,3 +12,6 @@ https://blog.csdn.net/pipisorry/article/details/62443757
 
 ## 3. LRU 缓存
 
+## 4. Booking的问题
+
+## 5. 两个栈实现一个队列
