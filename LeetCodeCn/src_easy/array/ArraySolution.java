@@ -201,7 +201,7 @@ public class ArraySolution {
     }
 
     /**
-     * 题目8： 移动0
+     * 题目8：移动0，类似第一个题目：从排序数组中删除重复的项
      */
     public static int[] moveZeroes(int[] nums) {
         if (nums == null) {
