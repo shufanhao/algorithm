@@ -9,4 +9,4 @@
 QuickSort | O(nlogn) | O(n^2) | O(logn) 
 MergeSort | O(nlogn) | O(nlogn) | O（n)
 HeapSort | O(nlogn) | O(nlogn) | O（1)
-BuffleSort | O（n^2）| O（n2）| O(1)
+BuffleSort | O（n^2）| O（n^2）| O(1)
