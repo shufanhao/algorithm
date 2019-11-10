@@ -13,7 +13,7 @@ class SortSolutionMedium {
         for (int num : nums) {
             int2FreqMap.put(num, int2FreqMap.getOrDefault(num, 0) + 1);
         }
-        
+
         // 桶排序
         List<Integer>[] bucket = new List[nums.length + 1];
         for (Integer key : int2FreqMap.keySet()) {
@@ -23,7 +23,7 @@ class SortSolutionMedium {
             }
             bucket[freq].add(key);
         }
-        
+
         // 逆序（频次由高到低）取出元素
         List<Integer> ret = new ArrayList<>();
         for (int i = nums.length; i >= 0 && ret.size() < k; --i) {
@@ -31,7 +31,7 @@ class SortSolutionMedium {
                 ret.addAll(bucket[i]);
             }
         }
-        
+
         return ret;
     }
 }

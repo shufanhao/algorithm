@@ -7,8 +7,19 @@ import java.util.Random;
  */
 public class ShuffleArray {
     private int[] numsOrin;
+
     public ShuffleArray(int[] nums) {
         this.numsOrin = nums;
+    }
+
+    public static void main(String[] args) {
+        int nums[] = {1, 2, 3, 4};
+        ShuffleArray s = new ShuffleArray(nums);
+        int shuffle[] = s.shuffle();
+        for (int i = 0; i < shuffle.length; i++) {
+            System.out.println(shuffle[i]);
+        }
+
     }
 
     public int[] reset() {
@@ -27,21 +38,12 @@ public class ShuffleArray {
         // shuffle, 就是用random随机取出一个数，然后这个数，的对应的数组元素和数组的最后一个元素交换
         // 其实就是随机交换位置。
         Random random = new Random();
-        for (int i= cur.length-1; i>=0; i--) {
-            int pos = random.nextInt(i +1);
+        for (int i = cur.length - 1; i >= 0; i--) {
+            int pos = random.nextInt(i + 1);
             int temp = cur[pos];
             cur[pos] = cur[i];
             cur[i] = temp;
         }
         return cur;
-    }
-    public static void main(String[] args) {
-        int nums [] =  {1,2,3,4};
-        ShuffleArray s = new ShuffleArray(nums);
-        int shuffle [] = s.shuffle();
-        for (int i = 0; i < shuffle.length; i++) {
-            System.out.println(shuffle[i]);
-        }
-
     }
 }

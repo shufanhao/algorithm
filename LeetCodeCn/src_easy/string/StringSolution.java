@@ -1,13 +1,33 @@
 package string;
 
-import java.awt.image.renderable.RenderableImage;
 import java.util.Arrays;
-import java.util.Stack;
 
 /**
  * 字符串问题, 注意双指针
  */
 public class StringSolution {
+
+    public static void main(String args[]) {
+        StringSolution ss = new StringSolution();
+        System.out.println("题目1： " + ss.reverseString("haofan"));
+
+        System.out.println("题目2： " + ss.reverse(-102));
+
+        System.out.println("题目3： " + ss.firstUniqChar("loveleetcode"));
+
+        System.out.println("题目4：" + ss.isAnagram("rat", "car"));
+
+        System.out.println("题目5： " + ss.isPalindrome("race a car"));
+
+        System.out.println("题目6： " + ss.myAtoi("  4193 with words"));
+
+        System.out.println("题目7： " + ss.strStr("hello", "ll"));
+
+        System.out.println("题目8： " + ss.countAndSay(4));
+
+        String[] s = {"flower", "flow", "flight"};
+        System.out.println("题目9： " + ss.longestCommonPrefix(s));
+    }
 
     /**
      * 题目1：反转字符串
@@ -236,27 +256,5 @@ public class StringSolution {
             }
         }
         return sb.toString();
-    }
-
-    public static void main(String args[]) {
-        StringSolution ss = new StringSolution();
-        System.out.println("题目1： " + ss.reverseString("haofan"));
-
-        System.out.println("题目2： " + ss.reverse(-102));
-
-        System.out.println("题目3： " + ss.firstUniqChar("loveleetcode"));
-
-        System.out.println("题目4：" + ss.isAnagram("rat", "car"));
-
-        System.out.println("题目5： " + ss.isPalindrome("race a car"));
-
-        System.out.println("题目6： " + ss.myAtoi("  4193 with words"));
-
-        System.out.println("题目7： " + ss.strStr("hello", "ll"));
-
-        System.out.println("题目8： " + ss.countAndSay(4));
-
-        String[] s = {"flower", "flow", "flight"};
-        System.out.println("题目9： " + ss.longestCommonPrefix(s));
     }
 }

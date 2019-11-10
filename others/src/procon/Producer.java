@@ -24,8 +24,8 @@ public class Producer extends Thread {
                         e.printStackTrace();
                     }
                 } else {
-                    int num=(int)(Math.random()*100)+1;
-                    System.out.println("生产者生产了："  + num);
+                    int num = (int) (Math.random() * 100) + 1;
+                    System.out.println("生产者生产了：" + num);
                     list.add(num);
                     list.notify();
                 }

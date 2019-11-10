@@ -17,15 +17,6 @@ import java.util.Map;
  */
 public class Solution1 {
 
-    private static class ValueComparator implements Comparator<Map.Entry<String,Integer>> {
-        public int compare(Map.Entry<String,Integer> m,Map.Entry<String,Integer> n) {
-            if ((n.getValue() - m.getValue()) == 0) {
-                return Integer.valueOf(m.getKey()) - Integer.valueOf(n.getKey());
-            }
-            return n.getValue()-m.getValue();
-        }
-    }
-
     public static void best_hostels() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int num = 0;
@@ -35,7 +26,7 @@ public class Solution1 {
             e.printStackTrace();
         }
         HashMap<String, Integer> result = new HashMap<>();
-        while (num-- >0) {
+        while (num-- > 0) {
             String[] twoValue = new String[0];
             try {
                 twoValue = bufferedReader.readLine().trim().split(" ");
@@ -51,15 +42,16 @@ public class Solution1 {
             }
         }
 
-        List<Map.Entry<String,Integer>> list = new ArrayList<>();
+        List<Map.Entry<String, Integer>> list = new ArrayList<>();
         list.addAll(result.entrySet());
 
         ValueComparator vc = new ValueComparator();
-        Collections.sort(list,vc);
-        for(Iterator<Map.Entry<String,Integer>> it = list.iterator(); it.hasNext();) {
+        Collections.sort(list, vc);
+        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
             System.out.println(it.next().getKey());
         }
     }
+
     public static void main(String args[]) throws IOException {
         /**
          * 输入：第一行是个数，也就是一共有多少个hotel, 第二行第一个数是hotel id，第二个数是分数
@@ -75,5 +67,14 @@ public class Solution1 {
          * 2000 9
          */
         best_hostels();
+    }
+
+    private static class ValueComparator implements Comparator<Map.Entry<String, Integer>> {
+        public int compare(Map.Entry<String, Integer> m, Map.Entry<String, Integer> n) {
+            if ((n.getValue() - m.getValue()) == 0) {
+                return Integer.valueOf(m.getKey()) - Integer.valueOf(n.getKey());
+            }
+            return n.getValue() - m.getValue();
+        }
     }
 }

@@ -10,6 +10,17 @@ import java.util.List;
 public class MinStack {
     private List<Integer> list = new ArrayList<>();
 
+    public static void main(String args[]) {
+        MinStack minStack = new MinStack();
+        minStack.push(-2);
+        minStack.push(0);
+        minStack.push(-3);
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println(minStack.top());
+        System.out.println(minStack.getMin());
+    }
+
     public void push(int num) {
         list.add(num);
     }
@@ -32,17 +43,6 @@ public class MinStack {
     public int getMin() {
         Object array[] = list.toArray();
         Arrays.sort(array);
-        return (int)array[0];
-    }
-
-    public static void main(String args[]) {
-        MinStack minStack = new MinStack();
-        minStack.push(-2);
-        minStack.push(0);
-        minStack.push(-3);
-        System.out.println(minStack.getMin());
-        minStack.pop();
-        System.out.println(minStack.top());
-        System.out.println(minStack.getMin());
+        return (int) array[0];
     }
 }

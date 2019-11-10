@@ -11,16 +11,15 @@ public class HeapSort {
      * 1. 将无序序列构建成一个堆，根据升序，大顶堆，降序，小顶堆。
      * 2. 将堆顶元素与末尾元素交换，将最大元素沉到数组末端。
      * 3. 重新调整结构，使其满足堆定义，然后继续交换堆顶元素与当前末尾元素，反复执行调整+交换，直到整个序列有序。
-     *
-     * */
+     */
     public static void sort(int[] arr) {
         // 构建大顶堆
         // 从第一个非叶子节点开始执行
-        for (int j=arr.length/2 -1; j>=0; j--) {
+        for (int j = arr.length / 2 - 1; j >= 0; j--) {
             adjustHeap(arr, j, arr.length);
         }
 
-        for (int j=arr.length -1; j>0; j--) {
+        for (int j = arr.length - 1; j > 0; j--) {
             // 将堆顶元素与末尾元素进行交换，将最大元素沉到数组末端
             swap(arr, 0, j);
             adjustHeap(arr, 0, j);
@@ -29,9 +28,9 @@ public class HeapSort {
 
     public static void adjustHeap(int[] arr, int i, int length) {
         int temp = arr[i]; // 取出当前元素
-        for (int k=i*2+1; k<length; k=k*2+1) {
+        for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {
             // 从左子节点小于右子节点，k指向右子节点
-            if (k+1 < length && arr[k] < arr[k+1]) {
+            if (k + 1 < length && arr[k] < arr[k + 1]) {
                 k++;
             }
             if (arr[k] > temp) {
@@ -44,13 +43,15 @@ public class HeapSort {
         arr[i] = temp;
 
     }
+
     public static void swap(int arr[], int a, int b) {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
     }
+
     public static void main(String[] args) {
-        int [] arr = {1,8,7,6,5,4,3,2,9};
+        int[] arr = {1, 8, 7, 6, 5, 4, 3, 2, 9};
         sort(arr);
         System.out.println(Arrays.toString(arr));
     }

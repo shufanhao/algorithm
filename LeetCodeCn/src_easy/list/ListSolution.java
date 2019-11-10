@@ -7,6 +7,35 @@ package list;
  */
 public class ListSolution {
 
+    public static void main(String args[]) {
+        ListSolution c = new ListSolution();
+        int[] input = {4, 5, 1, 9};
+        ListNode headQ1 = c.createList(input);
+        c.deleteNode(headQ1.next);
+        c.printList(headQ1, "题目1");
+
+        ListNode headQ2 = c.createList(input);
+        c.removeNthFromEnd(headQ2, 2);
+        c.printList(headQ2, "题目2");
+
+        //ListNode headQ3 = c.createList(input);
+        ListNode head = new ListNode(2);
+        head.next = new ListNode(1);
+        head = c.reverseList(head);
+        c.printList(head, "题目3");
+        int[] input_1 = {1, 2, 4, 5};
+        int[] input_2 = {2, 3, 4, 6};
+        ListNode headQ4 = c.mergeTwoLists(c.createList(input_1),
+                c.createList(input_2));
+        c.printList(headQ4, "题目4");
+
+        int[] input_5 = {1, 2, 2, 1};
+        ListNode headQ5 = c.createList(input_5);
+        System.out.println("题目5：" + c.isPalindrome(headQ5));
+
+        System.out.println("题目6：" + c.hasCycle(c.createList(input)));
+    }
+
     /**
      * 题目1：删除链表中的节点
      * 思路：其实是修改的要删除节点的值，将其改成和下一个节点一样的值
@@ -196,34 +225,5 @@ public class ListSolution {
             head = head.next;
         }
         System.out.println();
-    }
-
-    public static void main(String args[]) {
-        ListSolution c = new ListSolution();
-        int[] input = {4, 5, 1, 9};
-        ListNode headQ1 = c.createList(input);
-        c.deleteNode(headQ1.next);
-        c.printList(headQ1, "题目1");
-
-        ListNode headQ2 = c.createList(input);
-        c.removeNthFromEnd(headQ2, 2);
-        c.printList(headQ2, "题目2");
-
-        //ListNode headQ3 = c.createList(input);
-        ListNode head = new ListNode(2);
-        head.next = new ListNode(1);
-        head = c.reverseList(head);
-        c.printList(head, "题目3");
-        int[] input_1 = {1, 2, 4, 5};
-        int[] input_2 = {2, 3, 4, 6};
-        ListNode headQ4 = c.mergeTwoLists(c.createList(input_1),
-                c.createList(input_2));
-        c.printList(headQ4, "题目4");
-
-        int[] input_5 = {1, 2, 2, 1};
-        ListNode headQ5 = c.createList(input_5);
-        System.out.println("题目5：" + c.isPalindrome(headQ5));
-
-        System.out.println("题目6：" + c.hasCycle(c.createList(input)));
     }
 }

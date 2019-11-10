@@ -5,6 +5,30 @@ import java.util.List;
 import java.util.Stack;
 
 public class Solution {
+    public static void main(String args[]) {
+        Solution s = new Solution();
+        System.out.println("题目1：" + s.hammingWeight(128));
+
+        System.out.println("题目2：" + s.hammingDistance(1, 4));
+
+        System.out.println("题目3：" + s.reverseBits(43261596));
+
+        System.out.println("题目4： " + s.generate(4));
+
+        System.out.println("题目5：" + s.isValid("()[]{}"));
+
+        int[] nums = {3, 0, 1};
+        System.out.println("题目6： " + s.missingNumber(nums));
+
+        System.out.println("题目7.1： " + s.ipToLong("219.239.110.138"));
+        System.out.println("题目7.2： " + s.longToIP(18537472));
+
+        for (; ; ) {
+            System.out.println("haofan");
+            return;
+        }
+    }
+
     /**
      * 题目1：位1的个数
      * 思路：和1 与操作，然后做右移操作
@@ -158,29 +182,5 @@ public class Solution {
         // 将高24位置0
         sb.append(String.valueOf((longIp & 0x000000FF)));
         return sb.toString();
-    }
-
-    public static void main(String args[]) {
-        Solution s = new Solution();
-        System.out.println("题目1：" + s.hammingWeight(128));
-
-        System.out.println("题目2：" + s.hammingDistance(1, 4));
-
-        System.out.println("题目3：" + s.reverseBits(43261596));
-
-        System.out.println("题目4： " + s.generate(4));
-
-        System.out.println("题目5：" + s.isValid("()[]{}"));
-
-        int[] nums = {3, 0, 1};
-        System.out.println("题目6： " + s.missingNumber(nums));
-
-        System.out.println("题目7.1： " + s.ipToLong("219.239.110.138"));
-        System.out.println("题目7.2： " + s.longToIP(18537472));
-
-        for (;;) {
-            System.out.println("haofan");
-            return;
-        }
     }
 }

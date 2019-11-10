@@ -1,8 +1,45 @@
 package array;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ArraySolutionMedium {
+
+    public static void main(String args[]) {
+        ArraySolutionMedium array = new ArraySolutionMedium();
+        int nums_1[] = {-1, 0, 1, 2, -1, -4};
+        List<List<Integer>> listList = array.threeSum(nums_1);
+        System.out.println("题目1：" + Arrays.toString(listList.toArray()));
+
+        int nums_2[][] = {
+                {0, 1, 2, 0},
+                {3, 4, 5, 2},
+                {1, 3, 1, 5}};
+        array.setZeroes(nums_2);
+        System.out.println("题目2：");
+        for (int i = 0; i < nums_2.length; i++) {
+            for (int j = 0; j < nums_2[i].length; j++) {
+                System.out.print(nums_2[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
+        System.out.println(Arrays.toString(listsIssue3.toArray()));
+
+        String strsIssue4 = "pwwkew";
+        System.out.println("题目4：" + array.lengthOfLongestSubstring(strsIssue4));
+
+        String strsIssue5 = "babad";
+        System.out.println("题目5：" + array.longestPalindrome(strsIssue5));
+
+        int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
+        System.out.println("题目6：" + array.increasingTriplet(numsIssue6));
+    }
 
     /**
      * 三数之和：给定一个包含n个整数的数组nums, 判断nums中是否存在三个元素a,b,c，使得
@@ -13,19 +50,20 @@ public class ArraySolutionMedium {
      * 特别注意：
      * 1. 注意i,p,q 取值范围
      * 2. 为了防止重复，在移动指针的时候，如果遇到移动后和移动前的指针位置的值一样，则要做一个移动，知道和上一个取值不一样
+     *
      * @param nums
      * @return
      */
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        if (nums == null || nums.length <=2) {
+        if (nums == null || nums.length <= 2) {
             return result;
         }
         Arrays.sort(nums);
         int i, p, q, reverse;
-        for (i=0; i<nums.length - 2; i++) {
+        for (i = 0; i < nums.length - 2; i++) {
             reverse = -nums[i];
-            p = i+1;
+            p = i + 1;
             q = nums.length - 1;
             while (p < q) {
                 if ((nums[p] + nums[q]) == reverse) {
@@ -36,14 +74,14 @@ public class ArraySolutionMedium {
                     result.add(temp);
                     p++;
                     // 这个地方要注意，为了防止重复，一定要加
-                    while ((p<q) && (nums[p-1] == nums[p])) {
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
                         p++;
                     }
                     q--;
                 } else if ((nums[p] + nums[q]) < reverse) {
                     p++;
                     // 这个地方要注意，为了防止重复，一定要加
-                    while ((p<q) && (nums[p-1] == nums[p])) {
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
                         p++;
                     }
                 } else {
@@ -51,7 +89,7 @@ public class ArraySolutionMedium {
                 }
             }
             // 这个地方要注意，为了防止重复，一定要加
-            while ( (i+1) < nums.length && (nums[i] == nums[i+1])) {
+            while ((i + 1) < nums.length && (nums[i] == nums[i + 1])) {
                 i++;
             }
         }
@@ -72,8 +110,8 @@ public class ArraySolutionMedium {
         }
         int[] m = new int[matrix[0].length]; //记录某一列是否需要置0
         int[] n = new int[matrix.length]; // 记录某一行是否需要置0
-        for (int i=0; i<matrix.length; i++) {
-            for (int j=0; j< matrix[i].length; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 0) {
                     m[j] = 1;//认为是0
                     n[i] = 1;//认为是0
@@ -81,17 +119,17 @@ public class ArraySolutionMedium {
             }
         }
         // 遍历m，如果发现元素时1，则将该列所有元素置0
-        for (int i=0; i<m.length; i++) {
+        for (int i = 0; i < m.length; i++) {
             if (m[i] == 1) {
-                for (int j=0; j<matrix.length; j++) {
+                for (int j = 0; j < matrix.length; j++) {
                     matrix[j][i] = 0;
                 }
             }
         }
         // 遍历n，如果发现元素时1，则将该行所有元素置0
-        for (int i=0; i<n.length; i++) {
+        for (int i = 0; i < n.length; i++) {
             if (n[i] == 1) {
-                for (int j=0; j<matrix[0].length; j++) {
+                for (int j = 0; j < matrix[0].length; j++) {
                     matrix[i][j] = 0;
                 }
             }
@@ -104,11 +142,11 @@ public class ArraySolutionMedium {
      * 思路：将字符串转成字符数组，并排序，然后放入key中，判断map中是否要该key
      */
     public List<List<String>> groupAnagrams(String[] strs) {
-        if (strs == null || strs.length ==0 ){
+        if (strs == null || strs.length == 0) {
             return new ArrayList<>();
         }
         Map<String, List<String>> map = new HashMap<>();
-        for (int i=0; i<strs.length; i++) {
+        for (int i = 0; i < strs.length; i++) {
             char[] strChar = strs[i].toCharArray();
             Arrays.sort(strChar);
             String temp = String.valueOf(strChar);
@@ -139,11 +177,11 @@ public class ArraySolutionMedium {
         int rst = 0;
         int start = 0;
         int end = 0;
-        while (start<s.length()) {
+        while (start < s.length()) {
             while (end < s.length() && !chars[s.charAt(end)]) {
                 chars[s.charAt(end)] = true;
                 rst = Math.max(rst, end - start + 1);
-                end ++;
+                end++;
             }
             chars[s.charAt(start)] = false; // 这个地方是关键
             start++;
@@ -162,11 +200,11 @@ public class ArraySolutionMedium {
         if (s.length() == 0) return "";
         String longest = s.substring(0, 1);
         String temp;
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             // 两次求，i, i一次，另外一次：i, i+1
             temp = findPalindrome(s, i, i);
             longest = temp.length() > longest.length() ? temp : longest;
-            temp = findPalindrome(s, i, i+1);
+            temp = findPalindrome(s, i, i + 1);
             longest = temp.length() > longest.length() ? temp : longest;
         }
         return longest;
@@ -174,11 +212,11 @@ public class ArraySolutionMedium {
 
     public String findPalindrome(String str, int left, int right) {
         int len = str.length();
-        while (left >=0 && right <= len -1 && str.charAt(left) == str.charAt(right)) {
-            left --;
-            right ++;
+        while (left >= 0 && right <= len - 1 && str.charAt(left) == str.charAt(right)) {
+            left--;
+            right++;
         }
-        return str.substring(left +1 , right);
+        return str.substring(left + 1, right);
     }
 
     /**
@@ -201,39 +239,6 @@ public class ArraySolutionMedium {
             }
         }
         return false;
-    }
-
-    public static void main(String args[]) {
-        ArraySolutionMedium array = new ArraySolutionMedium();
-        int nums_1[] = {-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> listList = array.threeSum(nums_1);
-        System.out.println("题目1：" + Arrays.toString(listList.toArray()));
-
-        int nums_2[][] = {
-                {0,1,2,0},
-                {3,4,5,2},
-                {1,3,1,5}};
-        array.setZeroes(nums_2);
-        System.out.println("题目2：");
-        for (int i=0; i<nums_2.length; i++) {
-            for (int j=0; j< nums_2[i].length;j++) {
-                System.out.print(nums_2[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
-        System.out.println(Arrays.toString(listsIssue3.toArray()));
-
-        String strsIssue4 = "pwwkew";
-        System.out.println("题目4：" + array.lengthOfLongestSubstring(strsIssue4));
-
-        String strsIssue5 = "babad";
-        System.out.println("题目5：" + array.longestPalindrome(strsIssue5));
-
-        int numsIssue6[] = {0,4,2,1,0,-1,-3};
-        System.out.println("题目6：" + array.increasingTriplet(numsIssue6));
     }
 }
 

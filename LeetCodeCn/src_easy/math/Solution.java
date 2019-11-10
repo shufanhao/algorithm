@@ -1,8 +1,23 @@
 package math;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Solution {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println("题目1：" + solution.fizzBuzz(15));
+
+        System.out.println("题目2: " + solution.countPrimes(10));
+
+        System.out.println("题目3: " + solution.isPowerOfThree(9));
+
+        System.out.println("题目4；" + solution.romanToInt("LVIII"));
+    }
+
     /**
      * 题目1：Fizz Buzz， 比较简单
      * 写一个程序，输出从 1 到 n 数字的字符串表示。
@@ -101,17 +116,6 @@ public class Solution {
             }
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println("题目1：" + solution.fizzBuzz(15));
-
-        System.out.println("题目2: " + solution.countPrimes(10));
-
-        System.out.println("题目3: " + solution.isPowerOfThree(9));
-
-        System.out.println("题目4；" + solution.romanToInt("LVIII"));
     }
 
 }

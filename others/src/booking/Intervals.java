@@ -12,20 +12,6 @@ import java.util.Comparator;
  * @date
  */
 public class Intervals {
-    public static class Interval {
-        int start;
-        int end;
-
-        Interval() {
-            start = 0;
-            end = 0;
-        }
-
-        Interval(int s, int e) {
-            start = s;
-            end = e;
-        }
-    }
     public static ArrayList<Interval> merge(ArrayList<Interval> intervals) {
         if (intervals.size() == 0)
             return intervals;
@@ -54,6 +40,7 @@ public class Intervals {
         result.add(new Interval(start, end));
         return result;
     }
+
     public static void main(String[] args) throws java.lang.Exception {
         /**
          * 输入：第一个数是一共多少行
@@ -90,6 +77,21 @@ public class Intervals {
         System.out.println(r.size());
         for (Interval i : r) {
             System.out.println(i.start + " " + i.end);
+        }
+    }
+
+    public static class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
         }
     }
 

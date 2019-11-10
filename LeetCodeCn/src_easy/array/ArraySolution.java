@@ -41,13 +41,13 @@ public class ArraySolution {
      * 并将start后移一位。若start值遇到2，则交换改值和end指向的值，并将end前移一位，若遇到1则继续遍历
      */
     public static void sortColors(int nums[]) {
-        int start  = 0;
+        int start = 0;
         int end = nums.length - 1;
-        for (int i=0; i<=end; i++) {
+        for (int i = 0; i <= end; i++) {
             if (nums[i] == 0) {
                 swap(nums, i, start++);
             } else if (nums[i] == 2) { //这个地方容易忘记
-                swap(nums, i--, end --);
+                swap(nums, i--, end--);
             }
         }
     }
@@ -75,18 +75,19 @@ public class ArraySolution {
      * 设计一个算法计算获取的最大利润，只能完成一笔交易。
      * 其实最小买入，最大卖出
      */
-    public static int maxProfitIII(int [] prices) {
+    public static int maxProfitIII(int[] prices) {
         int result = 0;
         if (prices == null || prices.length == 0) {
             return 0;
         }
         int minBuy = prices[0];
-        for (int i=1; i<prices.length; i++) {
+        for (int i = 1; i < prices.length; i++) {
             result = Math.max(result, prices[i] - minBuy);
             minBuy = Math.min(prices[i], minBuy);
         }
         return result;
     }
+
     /**
      * 题目3：旋转数组
      * 解法1：利用o(n)的空间复杂度
@@ -307,12 +308,12 @@ public class ArraySolution {
      */
     public static int getOnsecutiveMaxLen(int arr[]) {
         int maxCount = 0;
-        for (int i=0; i<arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             int preCount = 1;
-            if (((i+1) < arr.length -1 ) && (arr[i] != arr[i+1])) {
+            if (((i + 1) < arr.length - 1) && (arr[i] != arr[i + 1])) {
                 i++;
             } else {
-                maxCount ++;
+                maxCount++;
             }
             if (maxCount < preCount) {
                 maxCount = preCount;
@@ -372,8 +373,8 @@ public class ArraySolution {
             // if k > 1, 那肯定是连续2个的序列比3个的子序列的平均值要大
             int sum = 0;
             int tempMax = nums[0] + nums[1];
-            for (int j = 2; j< nums.length; j++) {
-                sum = nums[j-1] + nums[j];
+            for (int j = 2; j < nums.length; j++) {
+                sum = nums[j - 1] + nums[j];
                 tempMax = Math.max(tempMax, sum);
             }
             return (tempMax / 2);
@@ -388,7 +389,7 @@ public class ArraySolution {
         System.out.println("题目1 从排序数组中删除重复项: " + remoeDuplicates(nums));
         // 题目1.2
         //int arr_13[] = {1,1,1,0,0,0,1,2,2};
-        int arr_1_2[] = {2,0,1};
+        int arr_1_2[] = {2, 0, 1};
         sortColors(arr_1_2);
         System.out.println("题目1.2：" + Arrays.toString(arr_1_2));
         // 题目2.1：
@@ -396,7 +397,7 @@ public class ArraySolution {
         System.out.println("题目2.1：买卖股票的最佳时机：" + maxProfit(prices_1));
 
         // 题目2.2：
-        int[] prices_2 = {7,1,5,3,6,4};
+        int[] prices_2 = {7, 1, 5, 3, 6, 4};
         System.out.println("题目2.2：买卖股票的最佳时机：" + maxProfitIII(prices_2));
 
         // 题目3：
@@ -454,15 +455,15 @@ public class ArraySolution {
         }
 
         // 题目12：
-        int arr[] = {1,1,2,2,3,3,1,1,1,1};
+        int arr[] = {1, 1, 2, 2, 3, 3, 1, 1, 1, 1};
         System.out.println("题目12：输出数组中最大的连续子序列的长度 " + getOnsecutiveMaxLen(arr));
 
         // 题目13：
-        int arr_13[] = {2,3,1,2,4,3};
+        int arr_13[] = {2, 3, 1, 2, 4, 3};
         System.out.println("题目13：长度最小的子数组 " + minSubArrayLen(7, arr_13));
 
         // 题目14：
-        int arr_14[] = {-1, 1,2,4};
+        int arr_14[] = {-1, 1, 2, 4};
         System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(1, arr_14));
 
         System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(3, arr_14));

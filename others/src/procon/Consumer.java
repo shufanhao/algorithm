@@ -24,7 +24,7 @@ public class Consumer extends Thread {
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println("正在消费： " + list.get(list.size() -1));
+                    System.out.println("正在消费： " + list.get(list.size() - 1));
                     list.remove(list.size() - 1);
                     list.notify();
                 }

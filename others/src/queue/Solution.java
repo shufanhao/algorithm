@@ -14,6 +14,14 @@ public class Solution {
     Stack<Integer> stack1 = new Stack<>();
     Stack<Integer> stack2 = new Stack<>();
 
+    public static void main(String[] args) {
+        Solution queue = new Solution();
+        queue.push(1);
+        queue.push(2);
+        queue.push(3);
+        System.out.println(queue.pop());
+    }
+
     public void push(int node) {
         stack1.push(node);
     }
@@ -29,13 +37,5 @@ public class Solution {
             }
         }
         return stack2.pop();
-    }
-
-    public static void main(String[] args) {
-        Solution queue = new Solution();
-        queue.push(1);
-        queue.push(2);
-        queue.push(3);
-        System.out.println(queue.pop());
     }
 }

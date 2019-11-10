@@ -13,7 +13,7 @@ public class BubbleSort {
             return;
         }
         // 外层循环控制排序趟数
-        for (int j=0; j<num.length -1; j++) {
+        for (int j = 0; j < num.length - 1; j++) {
             // 内层循环控制每一趟排序多少次
             for (int i = 0; i < num.length - 1 - j; i++) {
                 if (num[i] > num[i + 1]) {
@@ -30,7 +30,7 @@ public class BubbleSort {
     }
 
     public static void main(String args[]) {
-        int[] nums = {3,4,1,5,6};
+        int[] nums = {3, 4, 1, 5, 6};
         sort(nums);
         System.out.println(Arrays.toString(nums));
     }

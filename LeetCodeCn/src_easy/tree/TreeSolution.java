@@ -1,6 +1,10 @@
 package tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * 二叉树问题：
@@ -10,6 +14,31 @@ import java.util.*;
 public class TreeSolution {
 
     private int last = Integer.MIN_VALUE;
+
+    public static void main(String args[]) {
+        TreeSolution s = new TreeSolution();
+        System.out.println("题目1：" + s.maxDepth(s.buildTreeNode()));
+
+        System.out.println("题目2 递归：" + s.isValidBSTRefursive(s.buildTreeNode()));
+
+        System.out.println("题目2 非递归：" + s.isValidBSTStack(s.buildTreeNode()));
+
+        System.out.print("题目附加1：");
+        s.inorderTraversalRecursive(s.buildTreeNode());
+        System.out.println();
+
+        System.out.println("题目附加2：" + s.inorderTraversalStack(s.buildTreeNode()));
+
+        System.out.println("题目附加3：");
+        s.prorderTraversalStack(s.buildTreeNode());
+
+        System.out.println("\n题目3： " + s.isSymmetric(s.buildTreeNode()));
+
+        System.out.println("题目4：" + s.levelOrder(s.buildTreeNode()));
+
+        int[] nums = {-10, -3, 0, 5, 9};
+        System.out.println("题目5：" + s.sortedArrayToBST(nums).val);
+    }
 
     /**
      * 题目1：二叉树的最大深度
@@ -184,8 +213,8 @@ public class TreeSolution {
      * 10
      * / \
      * 9  20
-     *    / \
-     *   15  7
+     * / \
+     * 15  7
      */
     public TreeNode buildTreeNode() {
         TreeNode root = new TreeNode(10);
@@ -201,8 +230,8 @@ public class TreeSolution {
      * 3
      * / \
      * 1  4
-     *  \
-     *   2
+     * \
+     * 2
      */
     public TreeNode buildSearchTree() {
         TreeNode root = new TreeNode(3);
@@ -210,30 +239,5 @@ public class TreeSolution {
         root.right = new TreeNode(4);
         root.left.right = new TreeNode(2);
         return root;
-    }
-
-    public static void main(String args[]) {
-        TreeSolution s = new TreeSolution();
-        System.out.println("题目1：" + s.maxDepth(s.buildTreeNode()));
-
-        System.out.println("题目2 递归：" + s.isValidBSTRefursive(s.buildTreeNode()));
-
-        System.out.println("题目2 非递归：" + s.isValidBSTStack(s.buildTreeNode()));
-
-        System.out.print("题目附加1：");
-        s.inorderTraversalRecursive(s.buildTreeNode());
-        System.out.println();
-
-        System.out.println("题目附加2：" + s.inorderTraversalStack(s.buildTreeNode()));
-
-        System.out.println("题目附加3：");
-        s.prorderTraversalStack(s.buildTreeNode());
-
-        System.out.println("\n题目3： " + s.isSymmetric(s.buildTreeNode()));
-
-        System.out.println("题目4：" + s.levelOrder(s.buildTreeNode()));
-
-        int[] nums = {-10, -3, 0, 5, 9};
-        System.out.println("题目5：" + s.sortedArrayToBST(nums).val);
     }
 }

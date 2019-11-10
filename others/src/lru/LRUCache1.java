@@ -83,12 +83,6 @@ public class LRUCache1 {
             moveToFirst(node);
         }
     }
-    class DlinkNode {
-        public DlinkNode pre;
-        public DlinkNode post;
-        public int key;
-        public String value;
-    }
 
     @Override
     public String toString() {
@@ -99,5 +93,12 @@ public class LRUCache1 {
             node = node.post;
         }
         return sb.toString();
+    }
+
+    class DlinkNode {
+        public DlinkNode pre;
+        public DlinkNode post;
+        public int key;
+        public String value;
     }
 }
