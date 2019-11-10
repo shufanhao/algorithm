@@ -1,4 +1,11 @@
-class Solution {
+package sort;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class SortSolutionMedium {
     // Ref: https://blog.csdn.net/x273591655/article/details/84001236
     public List<Integer> topKFrequent(int[] nums, int k) {
         // 统计元素的频次
