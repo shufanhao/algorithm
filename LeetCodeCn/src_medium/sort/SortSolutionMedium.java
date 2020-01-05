@@ -76,6 +76,51 @@ class SortSolutionMedium {
         return left;
     }
 
+    /**
+     * 在排序数组中查找元素的第一个和最后一个位置
+     * @param nums      -- 升序数组
+     * @param target    -- 目标值
+     */
+    public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length ==0) return new int[]{-1, -1};
+        if (nums.length == 1) {
+            if (nums[0] == target) {
+                return new int[]{0, 0};
+            } else {
+                return new int[]{-1, -1};
+            }
+        }
+        int left = 0;
+        int right = nums.length - 1;
+        int mid = -1;
+        boolean find = false;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target ){
+                right = mid;
+            } else {
+                find = true;
+                break;
+            }
+        }
+
+        if (mid == -1 || find == false) return new int[]{-1, -1};
+        int head = mid - 1;
+        int tail = mid + 1;
+        int headTemp = head;
+        int tailTemp = tail;
+        while (tailTemp++ < nums.length && nums[tail] == nums[mid]) {
+            tail ++;
+        }
+
+        while (headTemp-- > 0 && nums[head] == nums[mid]) {
+            head --;
+        }
+        return new int[]{head + 1, tail-1};
+    }
+
     public static void main(String args[]) {
         SortSolutionMedium medium = new SortSolutionMedium();
         int [] nums2 = new int[]{1, 1, 1, 2, 2, 3};
@@ -86,5 +131,8 @@ class SortSolutionMedium {
 
         int [] nums4 = new int[]{1,2,1,3,5,6,4};
         System.out.println("题目4：" + medium.findPeakElement(nums4));
+
+        int [] nums5 = new int[]{1, 4};
+        System.out.println("题目5: " + Arrays.toString(medium.searchRange(nums5, 4)));
     }
 }
