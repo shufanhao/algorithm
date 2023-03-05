@@ -15,24 +15,6 @@ import java.util.Map;
 public class ArraySolution {
 
     /**
-     * 题目1.1: 从排序数组中删除重复项, 快慢指针
-     * 分别用两个指针，i,j 去移动，不相等的话，指针i++
-     */
-    public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        int i = 0;
-        for (int j = 0; j < nums.length; j++) {
-            if (nums[i] != nums[j]) {
-                i++;
-                nums[i] = nums[j];
-            }
-        }
-        return i + 1;
-    }
-
-    /**
      * 题目1.2：颜色排序
      * http://www.cnblogs.com/grandyang/p/4341243.html
      * 思路：
@@ -51,7 +33,6 @@ public class ArraySolution {
             }
         }
     }
-
 
     /**
      * 题目2.1：买卖股票的最佳时机 II(直接求和)
@@ -382,7 +363,6 @@ public class ArraySolution {
 
     }
 
-
     public static void main(String[] args) {
         int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         // 题目1.2
@@ -466,5 +446,23 @@ public class ArraySolution {
 
         System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(3, arr_14));
 
+    }
+
+    /**
+     * 题目1.1: 从排序数组中删除重复项, 快慢指针
+     * 分别用两个指针，i,j 去移动，不相等的话，指针i++
+     */
+    public int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[i] != nums[j]) {
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i + 1;
     }
 }

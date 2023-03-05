@@ -1,13 +1,17 @@
 package com.haofan.algorithm.offer.binary;
 
 public class Binary {
+    private static int getInt(char c) {
+        return c == '1' ? 1 : 0;
+    }
+
     /**
      * 题目2：二进制加法
      * 输入两个表示二进制的字符串，请计算它们的和，并以二进制字符串的形式输出。例如，输入的二进制字符串分别是"11"和"10"，则输出"101"。
      * 思考：一般看到这个题目后，可能会把两个整数相加后得到和，再转成二进制，这种方法会导致溢出。
      * 解法：
      * 解法1：两个整数相加的可能性是0+0=0，-> 则字符为“0” 无进位; 0+1=1，-> 则字符为“1”，无进位; 1+1=2，-> 则字符为“0”，进位为1; 1+1+1=3，-> 则字符为“1”，进位为1
-     *       先补齐小的数，小的数前面加0，然后一个for loop 判断上面4种case。
+     * 先补齐小的数，小的数前面加0，然后一个for loop 判断上面4种case。
      * 解法2：如下
      **/
     public String addBinary(String a, String b) {
@@ -16,7 +20,7 @@ public class Binary {
         int carry = 0;
 
         // 要从后往前算
-        for (int i=0; i<len; i++) {
+        for (int i = 0; i < len; i++) {
             //随着i的增大，len-1-i会随之减小，也就实现了前移的操作，carry即为当前i下，a[i]与b[i]字符的和
             if (i < a.length()) {
                 carry += getInt(a.charAt(a.length() - 1 - i));
@@ -31,7 +35,7 @@ public class Binary {
         //这里之所以要加这个if是因为考虑到a，b首位都是1的情况
         //以a = "1010", b = "1011"为例:在第四次循环时，它们首位都是1，那么carry=2，然后s追加了0（s.append(carry % 2)）
         //之后carry置为了1，循环就结束了，但此时s中只有4位数，第四次的进位还没完成，所以我们这里给它补上
-        if(carry > 0) result.append('1');
+        if (carry > 0) result.append('1');
 
         return result.reverse().toString();
     }
@@ -45,8 +49,8 @@ public class Binary {
      **/
     public int[] countBits(int num) {
         int[] result = new int[num + 1];
-        for (int i=1; i<num; i++) {
-            result[i] = result[i & (i- 1)] + 1;
+        for (int i = 1; i < num; i++) {
+            result[i] = result[i & (i - 1)] + 1;
         }
         return result;
     }
@@ -63,18 +67,15 @@ public class Binary {
     public int singleNumber(int[] nums) {
         int[] bitSums = new int[32];
         for (int num : nums) {
-            for (int i=0; i<32; i++) {
-                bitSums[i] += (num >> (31 -i)) &1;
+            for (int i = 0; i < 32; i++) {
+                bitSums[i] += (num >> (31 - i)) & 1;
             }
         }
         int result = 0;
-        for (int i=0; i<32; i++) {
+        for (int i = 0; i < 32; i++) {
             result = (result << 1) + bitSums[i] % 3;
         }
         return result;
-    }
-    private static int getInt(char c) {
-        return c == '1' ? 1 : 0;
     }
 
 }

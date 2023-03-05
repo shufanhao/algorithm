@@ -1,7 +1,9 @@
 ## 1. BitMap
+
 https://blog.csdn.net/pipisorry/article/details/62443757
 
 应用：
+
 - 可以进行数据的快速查找，判重，删除，一般来说数据范围是int的10倍以上
 - 去重数据而达到压缩数据
 

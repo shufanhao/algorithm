@@ -41,4 +41,10 @@ class ArrayTest {
         int[] nums = {10, 5, 2, 6};
         assertEquals(8, array.numSubarrayProductLessThanK(nums, 100));
     }
+
+    @Test
+    void subArraySum() {
+        int[] sums = {3, 4, 7, 2, -3, 1, 4, 2};
+        assertEquals(4, array.subArraySum(sums, 7));
+    }
 }

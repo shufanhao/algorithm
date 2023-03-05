@@ -6,10 +6,10 @@ public class Compress {
         int writeIDX = 0;
         int cLength = 0;
 
-        for(int i = 0; i < characters.length; i++) {
+        for (int i = 0; i < characters.length; i++) {
             int count = 1;
 
-            while (i + 1 < characters.length && characters[i] == characters[i+1]) {
+            while (i + 1 < characters.length && characters[i] == characters[i + 1]) {
                 count++;
                 i++;
             }
@@ -17,7 +17,7 @@ public class Compress {
             if (count > 1) {
                 String str = String.valueOf(count);
 
-                for(int j = 0; j < str.length(); j++) {
+                for (int j = 0; j < str.length(); j++) {
                     characters[writeIDX] = str.charAt(j);
                     writeIDX++;
                 }

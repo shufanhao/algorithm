@@ -4,6 +4,21 @@ import java.util.*;
 
 class SortSolutionMedium {
 
+    public static void main(String args[]) {
+        SortSolutionMedium medium = new SortSolutionMedium();
+        int[] nums2 = new int[]{1, 1, 1, 2, 2, 3};
+        System.out.println("题目2：" + medium.topKFrequent(nums2, 2));
+
+        int[] nums3 = new int[]{3, 2, 1, 5, 6, 4};
+        System.out.println("题目3：" + medium.findKthLargest(nums3, 2));
+
+        int[] nums4 = new int[]{1, 2, 1, 3, 5, 6, 4};
+        System.out.println("题目4：" + medium.findPeakElement(nums4));
+
+        int[] nums5 = new int[]{1, 4};
+        System.out.println("题目5: " + Arrays.toString(medium.searchRange(nums5, 4)));
+    }
+
     /**
      * 题目2：前 K 个高频元素
      * Ref: https://blog.csdn.net/x273591655/article/details/84001236
@@ -74,11 +89,12 @@ class SortSolutionMedium {
 
     /**
      * 在排序数组中查找元素的第一个和最后一个位置
-     * @param nums      -- 升序数组
-     * @param target    -- 目标值
+     *
+     * @param nums   -- 升序数组
+     * @param target -- 目标值
      */
     public int[] searchRange(int[] nums, int target) {
-        if (nums == null || nums.length ==0) return new int[]{-1, -1};
+        if (nums == null || nums.length == 0) return new int[]{-1, -1};
         if (nums.length == 1) {
             if (nums[0] == target) {
                 return new int[]{0, 0};
@@ -94,7 +110,7 @@ class SortSolutionMedium {
             mid = (left + right) / 2;
             if (nums[mid] < target) {
                 left = mid + 1;
-            } else if (nums[mid] > target ){
+            } else if (nums[mid] > target) {
                 right = mid;
             } else {
                 find = true;
@@ -108,27 +124,12 @@ class SortSolutionMedium {
         int headTemp = head;
         int tailTemp = tail;
         while (tailTemp++ < nums.length && nums[tail] == nums[mid]) {
-            tail ++;
+            tail++;
         }
 
         while (headTemp-- > 0 && nums[head] == nums[mid]) {
-            head --;
+            head--;
         }
-        return new int[]{head + 1, tail-1};
-    }
-
-    public static void main(String args[]) {
-        SortSolutionMedium medium = new SortSolutionMedium();
-        int [] nums2 = new int[]{1, 1, 1, 2, 2, 3};
-        System.out.println("题目2：" + medium.topKFrequent(nums2, 2));
-
-        int [] nums3 = new int[]{3,2,1,5,6,4};
-        System.out.println("题目3：" + medium.findKthLargest(nums3, 2));
-
-        int [] nums4 = new int[]{1,2,1,3,5,6,4};
-        System.out.println("题目4：" + medium.findPeakElement(nums4));
-
-        int [] nums5 = new int[]{1, 4};
-        System.out.println("题目5: " + Arrays.toString(medium.searchRange(nums5, 4)));
+        return new int[]{head + 1, tail - 1};
     }
 }
