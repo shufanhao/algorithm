@@ -1,6 +1,7 @@
 package com.haofan.algorithm.offer.string;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class StringOffer {
 
@@ -90,5 +91,116 @@ public class StringOffer {
             }
         }
         return true;
+    }
+
+    /**
+     * 题目3：包含所有字符的最短字符串
+     * 输入两个字符串s和t，请找出字符串s中包含字符串t的所有字符的最短子字符串。
+     * 例如，输入的字符串s为"ADDBANCAD"，字符串t为"ABC"，则字符串s中包含字符'A'、'B'和'C'的最短子字符串是"BANC"。
+     * 如果不存在符合条件的子字符串，则返回空字符串""。如果存在多个符合条件的子字符串，则返回任意一个。
+     *
+     * 解法：
+     * 1. 用哈希表统计字符串t的char出现的次数，+1
+     * 2. left, right 指针遍历字符串s，如果char出现在t中，则哈希表对应位置-1
+     * 3. 如果两个指针之间的子字符串还没有包含字符串t的所有字符，则在子字符串中添加新的字符，于是向右移动第2个指针。
+     * 4. 如果某一时刻两个指针之间的子字符串已经包含字符串t的所有字符，由于目标是找出最短的符合条件的子字符串，因此向右移动第1个指针，
+     *    以判断删除子字符串最左边的字符之后是否仍然包含字符串t的所有字符。
+     */
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> chartToCount = new HashMap<>();
+
+        for (char ch: t.toCharArray()) {
+            chartToCount.put(ch, chartToCount.getOrDefault(ch, 0) + 1);
+        }
+
+        int count = chartToCount.size();
+        int start = 0, end = 0, minStart = 0, minEnd = 0;
+        int minLength = Integer.MAX_VALUE;
+        while (end < s.length() || (count == 0 && end == s.length())) {
+            if (count > 0 ) {
+                char endChar = s.charAt(end);
+                if (chartToCount.containsKey(endChar)) {
+                    chartToCount.put(endChar, chartToCount.get(endChar) - 1);
+                    if (chartToCount.get(endChar) == 0) {
+                        count --;
+                    }
+                }
+                end ++;
+            } else {
+                if (end - start < minLength) {
+                    minLength = end - start;
+                    minStart = start;
+                    minEnd = end;
+                }
+
+                char starChar = s.charAt(start);
+                if (chartToCount.containsKey(starChar)) {
+                    chartToCount.put(starChar, chartToCount.get(starChar) + 1);
+                    if (chartToCount.get(starChar) == 1) {
+                        count ++;
+                    }
+                }
+                start ++;
+            }
+        }
+        return minLength < Integer.MAX_VALUE ? s.substring(minStart, minEnd): "";
+    }
+
+    /**
+     * 题目3： 有效的回文
+     * 判断一个字符串是否是一个回文字符串，假设只需要考虑字母和数字字符，并忽略大小写。回文是正着读和反着读都是一样的单词。
+     * 解法：双指针，分别从前后遍历，判断是否相等。
+     */
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (!Character.isLetterOrDigit(s.charAt(left))) {
+                // skip non-letter or digit
+                left ++;
+            }
+            if (!Character.isLetterOrDigit(s.charAt(right))) {
+                // skip non-letter or digit
+                right --;
+            }
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left ++;
+            right --;
+        }
+        return true;
+    }
+
+    /**
+     * 题目4：最多删除一个字符得到回文
+     *
+     * 给定一个字符串，判断如果最多从字符串中删除一个字符能不能得到一个回文字符串。
+     * 例如 输入abca, 由于删除字符b或c，就能得到一个回文字符串，则输出为true
+     *
+     * 解法：一样还是左右指针
+     */
+    public boolean validPalindrome(String s) {
+        int start = 0, end = s.length() - 1;
+        for (; start < s.length()/2; start ++, end --) {
+            if (s.charAt(start) != s.charAt(end)) {
+                break;
+            }
+        }
+
+        // start == s.length() / 2 , 是指字符串本身就是回文字符串。
+        return start == s.length() / 2
+                || isPalindrome(s, start, end - 1)
+                || isPalindrome(s, start + 1, end);
+    }
+
+    private boolean isPalindrome(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) {
+                break;
+            }
+            start ++;
+            end --;
+        }
+        return start >= end;
     }
 }
