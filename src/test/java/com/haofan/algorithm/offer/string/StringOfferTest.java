@@ -16,4 +16,15 @@ class StringOfferTest {
     void lengthOfLongestSubstring() {
         assertEquals(3, offer.lengthOfLongestSubstring("babcca"));
     }
+
+    @Test
+    void minWindow() {
+        assertEquals("BANC", offer.minWindow("ADDBANCAD", "ABC"));
+    }
+
+    @Test
+    void isPalindrome() {
+        assertTrue(offer.isPalindrome("noon!"));
+        assertFalse(offer.isPalindrome("haofan"));
+    }
 }
