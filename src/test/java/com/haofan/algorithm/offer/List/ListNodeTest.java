@@ -63,4 +63,29 @@ class ListNodeTest {
 
         Assertions.assertEquals(3, list.detectCycle(head).val);
     }
+
+    @Test
+    void getIntersectionNode() {
+        ListNode head1 = new ListNode(1);
+        ListNode head2 = new ListNode(7);
+        ListNode intersectionNode = new ListNode(4);
+
+        head1.next = new ListNode(2);
+        head1.next.next = new ListNode(3);
+        head1.next.next.next = intersectionNode;
+        intersectionNode.next = new ListNode(5);
+
+        head2.next = new ListNode(8);
+        head2.next.next = intersectionNode;
+
+        Assertions.assertEquals(intersectionNode, list.getIntersectionNode(head1, head2));
+    }
+
+    @Test
+    void reverseList() {
+        int[] array = new int[]{1, 2, 3, 4};
+        ListNode raw = arrayToList(array);
+        ListNode reverse = list.reverseList(raw);
+        Assertions.assertArrayEquals(new int[]{4, 3, 2, 1}, listToArray(reverse));
+    }
 }
