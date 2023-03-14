@@ -92,6 +92,60 @@ public class ListSolution {
         return slow;
     }
 
+    /**
+     * 面试题3：两个链表的第一个重合点，如下 找出 第一个重合点 4
+     * 1 -> 2 -> 3 ->
+     *               4 -> 5 -> 6
+     *      7 -> 8 ->
+     * 解法：
+     * 1. 构建环形链表，将第一个链表的尾节点指向第二个链表的头节点，那么就是上一个题目，找出第一个入口节点。
+     * 2. 或者是先找出两个链表的长度差值delta，然后让长的链表先走delta step，然后再同时开始走，这样第一个重合的节点就是重合点。
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int countA = countList(headA);
+        int countB = countList(headB);
+        int delta = Math.abs(countA - countB);
+        ListNode longer = countA > countB ? headA : headB;
+        ListNode shorter = countA > countB ? headB : headA;
+        ListNode node1 = longer;
+        for (int i=0; i< delta; i++) {
+            node1 = node1.next;
+        }
+        ListNode node2 = shorter;
+        while (node1 != node2) {
+            node2 = node2.next;
+            node1 = node1.next;
+        }
+        return node1;
+    }
+
+    /**
+     * 面试题4：翻转链表
+     * 1 -> 2 -> 3  翻转成 1 <- 2 <- 3
+     */
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        // current node
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+
+    // get the count of this list
+    private int countList(ListNode head) {
+        int count = 0;
+        while (head != null) {
+            count++;
+            head = head.next;
+        }
+        return count;
+    }
+
     // 一块一慢指针，找到环中的一个节点。
     private ListNode getNodeInLoop(ListNode head) {
         if (head == null || head.next == null) {
