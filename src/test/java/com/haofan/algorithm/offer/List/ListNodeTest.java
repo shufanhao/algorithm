@@ -88,4 +88,21 @@ class ListNodeTest {
         ListNode reverse = list.reverseList(raw);
         Assertions.assertArrayEquals(new int[]{4, 3, 2, 1}, listToArray(reverse));
     }
+
+    @Test
+    void addTwoNumbers() {
+        ListNode head = list.addTwoNumbers(arrayToList(new int[]{9, 8, 4}), arrayToList(new int[]{1, 8}));
+        Assertions.assertArrayEquals(new int[]{1, 0, 0, 2}, listToArray(head));
+    }
+
+    @Test
+    void reorderList() {
+        int[] res = listToArray(list.reorderList(arrayToList(new int[]{1, 2, 3, 4, 5, 6})));
+        Assertions.assertArrayEquals(new int[] {1, 6, 2, 5, 3, 4}, res);
+    }
+
+    @Test
+    void isPalindrome() {
+        list.isPalindrome(arrayToList(new int[]{1, 2, 3, 3, 2, 1}));
+    }
 }

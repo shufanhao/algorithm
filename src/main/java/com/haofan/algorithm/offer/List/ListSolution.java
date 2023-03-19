@@ -1,5 +1,7 @@
 package com.haofan.algorithm.offer.List;
 
+import java.util.List;
+
 public class ListSolution {
     /**
      * 理解哨兵节点
@@ -136,6 +138,92 @@ public class ListSolution {
         return prev;
     }
 
+    /**
+     * 面试题5：链表中的数字相加
+     * 给定两个表示非负整数的单向链表，如何实现这两个链表的相加，并且把他们的和仍然用单向链表表示？
+     * 如：9 -> 8 -> 4        4 ->8 -> 9
+     *     1 -> 8            8 -> 1
+     * 结果应该是  2 -> 0 -> 0 -> 1，再翻转后 是1 -> 0 -> 0 -> 2
+     * 解法：
+     * 1. 如果单纯的把链表转成整数相加的话，如果链表很长有可能会溢出。
+     * 2. 所以还是先把链表反转，然后最后从第一个元素开始相加，并且进位的方式
+     */
+    public ListNode addTwoNumbers(ListNode head1, ListNode head2) {
+        head1 = reverseList(head1);
+        head2 = reverseList(head2);
+        ListNode sumNode = addReversed(head1, head2);
+        return reverseList(sumNode);
+    }
+
+    private ListNode addReversed(ListNode head1, ListNode head2) {
+        ListNode dummy = new ListNode(0);
+        ListNode sumNode = dummy;
+        int carry = 0;
+        while (head1 != null || head2 != null) {
+            int sum = (head1 == null ? 0 : head1.val) + (head2 == null ? 0 : head2.val) + carry;
+            carry = sum >= 10 ? 1 : 0;
+            sum = sum >= 10 ? sum - 10 : sum;
+            ListNode newNode = new ListNode(sum);
+
+            sumNode.next = newNode;
+            sumNode = sumNode.next;
+
+            head1 = head1 == null ? null : head1.next;
+            head2 = head2 == null ? null : head2.next;
+        }
+        if (carry > 0) {
+            sumNode.next = new ListNode(carry);
+        }
+        return dummy.next;
+    }
+
+    /**
+     * 面试题6：重排链表
+     * 重排链表: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+     * 重排成：1 -> 6 -> 2 -> 5 -> 3 -> 4
+     *
+     * 解法：
+     * 1. 将链表后半段取出，然后翻转。
+     * 2. 再和前半段链表连起来，即可。
+     */
+    public ListNode reorderList(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+            // fast 走两步，slow 走一步，然后fast到终点后，slow后面的就是后半段
+            if (fast.next != null) {
+                fast = fast.next;
+            }
+        }
+        ListNode temp = slow.next;
+        slow.next = null;
+
+        link(head, reverseList(temp), dummy);
+        return head;
+    }
+
+    private void link(ListNode node1, ListNode node2, ListNode head) {
+        ListNode prev = head;
+        while (node1 != null && node2 != null) {
+            ListNode temp = node1.next;
+
+            // 这个地方不是很理解
+            prev.next = node1;
+            node1.next = node2;
+            prev = node2;
+
+            node1 = temp;
+            node2 = node2.next;
+        }
+
+        if (node1 != null) {
+            prev.next = node1;
+        }
+    }
     // get the count of this list
     private int countList(ListNode head) {
         int count = 0;
@@ -165,5 +253,43 @@ public class ListSolution {
             }
         }
         return null;
+    }
+
+
+    /**
+     * 面试题7：回文链表
+     * 1 -> 2 -> 3 -> 3 -> 2 -> 1
+     *
+     * 解法和上面的类似：
+     * 1. 快慢指针拿出链表的后半部分，然后将后半部分反转
+     * 2. 判断反转后的链表和前半部分链表是否相同
+     */
+    public boolean isPalindrome(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+            // fast 走两步，slow 走一步，然后fast到终点后，slow后面的就是后半段
+            if (fast.next != null) {
+                fast = fast.next;
+            }
+        }
+        ListNode secondHalf = slow.next;
+        slow.next = null;
+        return equals(head, reverseList(secondHalf));
+    }
+
+    private boolean equals(ListNode head1, ListNode head2) {
+        while (head1 != null && head2 != null) {
+            if (head1.val != head2.val) {
+                return false;
+            }
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        return head1 == null && head2 == null;
     }
 }
