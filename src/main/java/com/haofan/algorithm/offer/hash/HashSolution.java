@@ -2,7 +2,7 @@ package com.haofan.algorithm.offer.hash;
 
 import java.util.*;
 
-public class Hash {
+public class HashSolution {
     /**
      * 面试题1：设计一个容器，插入，删除和随机访问都是O(1)的容器，方法包括:
      * insert(), remove(), getRandom(等概率返回某一个元素)

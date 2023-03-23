@@ -1,9 +1,8 @@
 package com.haofan.algorithm.offer.string;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
-public class StringOffer {
+public class StringSolution {
 
     /**
      * 题目1：输入字符串s1和s2，如何判断字符串s2中是否包含字符串s1的某个变位词？

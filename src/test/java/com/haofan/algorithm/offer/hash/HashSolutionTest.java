@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-class HashTest {
+class HashSolutionTest {
 
-    Hash hash = new Hash();
+    HashSolution hashSolution = new HashSolution();
     @Test
     void randomizedSet() {
-        Hash.RandomizedSet randomizedSet = new Hash.RandomizedSet();
+        HashSolution.RandomizedSet randomizedSet = new HashSolution.RandomizedSet();
         Assertions.assertTrue(randomizedSet.insert(1));
         Assertions.assertTrue(randomizedSet.insert(2));
         Assertions.assertTrue(randomizedSet.insert(3));
@@ -21,18 +21,18 @@ class HashTest {
     @Test
     void groupAnagrams() {
         String[] strs = new String[] {"eat", "tea", "nat", "tan", "bat", "ate"};
-        System.out.println(hash.groupAnagrams(strs));
-        Assertions.assertEquals(3, hash.groupAnagrams(strs).size());
+        System.out.println(hashSolution.groupAnagrams(strs));
+        Assertions.assertEquals(3, hashSolution.groupAnagrams(strs).size());
     }
 
     @Test
     void isAlienSorted() {
-        Assertions.assertTrue(hash.isAlienSorted(new String[]{"hello","leetcode"}, "hlabcdefgijkmnopqrstuvwxyz"));
+        Assertions.assertTrue(hashSolution.isAlienSorted(new String[]{"hello","leetcode"}, "hlabcdefgijkmnopqrstuvwxyz"));
     }
 
     @Test
     void findMinDifference() {
         String[] array = new String[] {"00:00","23:59","23:55"};
-        Assertions.assertEquals(4, hash.findMinDifference(Arrays.stream(array).toList()));
+        Assertions.assertEquals(4, hashSolution.findMinDifference(Arrays.stream(array).toList()));
     }
 }

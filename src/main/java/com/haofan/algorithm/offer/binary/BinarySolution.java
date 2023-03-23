@@ -1,6 +1,6 @@
 package com.haofan.algorithm.offer.binary;
 
-public class Binary {
+public class BinarySolution {
     private static int getInt(char c) {
         return c == '1' ? 1 : 0;
     }

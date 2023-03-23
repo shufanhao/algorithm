@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArraySolutionTest {
+class ArraySolutionSolutionTest {
 
     private ArraySolution array = new ArraySolution();
     @Test

@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StringOfferTest {
+class StringSolutionTest {
 
-    private StringOffer offer = new StringOffer();
+    private StringSolution offer = new StringSolution();
     @Test
     void checkInclusion() {
         assertTrue(offer.checkInclusion("ab", "eidbaooo"));

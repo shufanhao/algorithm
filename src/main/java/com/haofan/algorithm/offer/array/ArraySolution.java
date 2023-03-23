@@ -2,7 +2,7 @@ package com.haofan.algorithm.offer.array;
 
 import java.util.*;
 
-public class Array {
+public class ArraySolution {
     /**
      * 题目1：排序数组中的两个数字之和
      * 输入一个递增排序的数组和一个值k，请问如何在数组中找出两个和为k的数字并返回它们的下标？
