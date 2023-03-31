@@ -209,8 +209,8 @@ public class TreeSolution {
      * 10
      * / \
      * 9  20
-     * / \
-     * 15  7
+     *    / \
+     *   15  7
      */
     public TreeNode buildTreeNode() {
         TreeNode root = new TreeNode(10);
