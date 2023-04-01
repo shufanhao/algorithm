@@ -2,9 +2,7 @@ package com.haofan.algorithm.offer.tree;
 
 import com.haofan.algorithm.leetcodecn.easy.tree.TreeNode;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class TreeSolution {
     /**
@@ -158,4 +156,123 @@ public class TreeSolution {
         // Todo
         return null;
     }
+
+    /**
+     * 面试题7：二叉搜索树的下一个节点
+     * 其实就是找到中序遍历的对应的节点的，下一个节点。
+     *
+     * 解法1：通过stack的方式进行中序遍历, 知道找到节点，时间复杂度O(N)
+     * 解法2：因为是平衡二叉树，所以left < root < right, 所以二叉树的下一个节点，一定是right tree中最小的一个
+     */
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        TreeNode cur = root;
+        TreeNode result = null;
+        while (cur != null) {
+            if (cur.val < p.val) {
+                // 找left tree
+                cur = cur.right;
+            } else {
+                cur = cur.left;
+                // 下面这段，在剑指offer书中，说的是要在上面。
+                result = cur;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 面试题7：所有大于或等于节点的值之和
+     * 给定一个二叉搜索树，请将它的每个节点的值替换成树中大于或者等于该节点值的所有节点值之和。
+     *
+     * 解法1：先遍历一遍二叉树，然后拿到sum，然后中序遍历二叉搜索树，并记录之前所有节点的值，然后将该节点赋值成sum - total
+     * 解法2：可以颠倒遍历二叉搜索树，先遍历right tree -> root -> left tree，这样就拿到了比该节点的大的和。
+     */
+    public TreeNode convertBST(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        int sum =0;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                // traverse right tree instead of left tree
+                cur = cur.right;
+            }
+            cur = stack.pop();
+            sum += cur.val;
+            cur.val = sum;
+            cur = cur.left;
+        }
+
+        return root;
+    }
+
+    /**
+     * 面试题8: 二叉搜索树迭代器
+     *
+     * 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：
+     * BSTIterator(TreeNode root) 初始化 BSTIterator 类的一个对象。BST 的根节点 root 会作为构造函数的一部分给出。
+     * 指针应初始化为一个不存在于 BST 中的数字，且该数字小于 BST 中的任何元素。
+     * boolean hasNext() 如果向指针右侧遍历存在数字，则返回 true ；否则返回 false 。
+     * int next()将指针向右移动，然后返回指针处的数字。
+     *
+     * 解法1：将二叉树展平, 只有right node
+     * 解法2：中序遍历的while循环条件，if tree, 每执行一次，就是遍历一个node。if false, 就是都遍历完了。
+     * 所以：中序遍历中while循环条件可以看成迭代器的haxNext方法
+     */
+    public static class BSTIterator {
+        TreeNode cur;
+        Stack<TreeNode> stack;
+
+        public BSTIterator(TreeNode root) {
+            cur = root;
+            stack = new Stack<>();
+        }
+
+        public boolean hasNext() {
+            return cur != null || !stack.isEmpty();
+        }
+
+        public int next() {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            int val = cur.val;
+            cur = cur.right;
+            return val;
+        }
+    }
+
+    /**
+     * 面试题9：二叉搜索树的两个节点值之和
+     *
+     * 解法1: 利用hash 表，保存节点的值v，没遍历到一个节点，就看有没有存在k -v 的值
+     * 解法2：双指针，将二叉搜索树看成一个排序数组，按照排序数组的解法。稍微麻烦
+     */
+    // 解法1
+    public boolean findTarget(TreeNode root, int k) {
+        Set<Integer> set = new HashSet<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            if (set.contains(k - cur.val)) {
+                return true;
+            }
+            set.add(cur.val);
+            cur = cur.right;
+        }
+
+        return false;
+    }
+
+    /**
+     * 面试题：TreeSet, TreeMap
+     */
+
 }

@@ -27,4 +27,26 @@ class TreeSolutionTest {
     void searchBST() {
         assertEquals(2, tree.searchBST(treeTool.buildSearchTree(), 2).val);
     }
+
+    @Test
+    void inorderSuccessor() {
+        assertEquals(null, tree.inorderSuccessor(treeTool.buildSearchTree(), treeTool.buildSearchTree().right));
+    }
+
+    @Test
+    void convertBST() {
+        assertEquals(7, tree.convertBST(treeTool.buildSearchTree()).val);
+    }
+
+    @Test
+    void BSTIterator() {
+        TreeSolution.BSTIterator bstIterator = new TreeSolution.BSTIterator(treeTool.buildSearchTree());
+        assertTrue(bstIterator.hasNext());
+        assertEquals(1, bstIterator.next());
+    }
+
+    @Test
+    void findTarget() {
+        assertFalse(tree.findTarget(treeTool.buildSearchTree(), 2));
+    }
 }
