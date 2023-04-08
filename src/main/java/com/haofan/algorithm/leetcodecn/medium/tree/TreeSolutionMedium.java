@@ -1,6 +1,6 @@
 package com.haofan.algorithm.leetcodecn.medium.tree;
 
-import com.haofan.algorithm.leetcodecn.easy.tree.TreeNode;
+import com.haofan.algorithm.help.TreeNode;
 import com.haofan.algorithm.leetcodecn.easy.tree.TreeSolution;
 
 import java.util.*;
@@ -10,9 +10,9 @@ public class TreeSolutionMedium {
     public static void main(String[] args) {
         TreeSolutionMedium medium = new TreeSolutionMedium();
         TreeSolution easy = new TreeSolution();
-        System.out.println("题目1：" + medium.inorderTraversal(easy.buildTreeNode()));
+        System.out.println("题目1：" + medium.inorderTraversal(TreeNode.buildTreeNode()));
 
-        System.out.println("题目2：" + medium.zigzagLevelOrder(easy.buildTreeNode()));
+        System.out.println("题目2：" + medium.zigzagLevelOrder(TreeNode.buildTreeNode()));
 
         int[] preorder = {3, 9, 20, 15, 7};
         int[] inorder = {9, 3, 15, 20, 7};
@@ -22,7 +22,7 @@ public class TreeSolutionMedium {
         System.out.println("题目4：");
         medium.connect(medium.buildTreeLinkNode());
 
-        System.out.println("题目5: " + medium.kthSmallest(easy.buildSearchTree(), 1));
+        System.out.println("题目5: " + medium.kthSmallest(TreeNode.buildSearchTree(), 1));
 
         char[][] grid = {
                 {'1', '1', '1', '1', '0'},

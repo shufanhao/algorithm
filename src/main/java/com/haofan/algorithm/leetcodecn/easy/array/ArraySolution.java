@@ -303,7 +303,7 @@ public class ArraySolution {
         return maxCount;
     }
 
-    private static void swap(int[] nums, int a, int b) {
+    public static void swap(int[] nums, int a, int b) {
         int temp = nums[a];
         nums[a] = nums[b];
         nums[b] = temp;

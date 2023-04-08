@@ -1,5 +1,6 @@
 package com.haofan.algorithm.offer.sort;
 
+import com.haofan.algorithm.help.ListNode;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,5 +27,15 @@ class SortSolutionTest {
     @Test
     void relativeSortArray() {
         System.out.println(Arrays.toString(sort.relativeSortArray(new int[]{2,3,1,3,2,4,6,7,9}, new int[]{2,1,4})));
+    }
+
+    @Test
+    void sortArrayQuick() {
+        System.out.println(Arrays.toString(sort.sortArrayQuick(new int[]{4, 3, 2, 8})));
+    }
+
+    @Test
+    void sortList() {
+        sort.sortList(ListNode.arrayToList(new int[]{4, 3, 2, 8}));
     }
 }

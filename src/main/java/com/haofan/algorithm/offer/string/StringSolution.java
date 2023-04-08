@@ -10,13 +10,13 @@ public class StringSolution {
      * 例如，字符串s1为"ac"，字符串s2为"dgcaf"，由于字符串s2中包含字符串s1的变位词"ca"，因此输出为true。
      * 如果字符串s1为"ab"，字符串s2为"dgcaf"，则输出为false。
      * 变位词就是字母出现的次数一样。
-     *
+     * <p>
      * 解法: 完全按照书上的方式。
      * 1. 因为字符串只可能包含小写字母，所以可以将每个字母的出现次数放在一个26长度的数组中，index是charAt()- 'a'，value是次数
      * 2. 先统计ac中字母出现的哈希表
      * 3. left, right 指针从遍历s2, left指向s2的第一个字符，right指向子字符串的最后一个字符，双指针指向dg,然后得到哈希表
      * 4. 双指针都向右移动，1位，定位到gc, 每次移动指针，也就是最右边添加一个字符，最左边删除一个字符，添加一个字符，则对应的位置-1，
-     *    删除一个字符对应的位置+1
+     * 删除一个字符对应的位置+1
      * 5. 判断是否全0
      */
     public boolean checkInclusion(String s1, String s2) {
@@ -26,19 +26,19 @@ public class StringSolution {
             return false;
         }
         int[] counts = new int[26];
-        for (int i=0; i< s1.length(); ++i) {
-            counts[s1.charAt(i) - 'a'] ++;
-            counts[s2.charAt(i) - 'a'] --;
+        for (int i = 0; i < s1.length(); ++i) {
+            counts[s1.charAt(i) - 'a']++;
+            counts[s2.charAt(i) - 'a']--;
         }
 
         if (areAllZero(counts)) {
             return true;
         }
 
-        for (int i=s1.length(); i<s2.length(); ++i) {
+        for (int i = s1.length(); i < s2.length(); ++i) {
             // i 相当于右指针， i- s1.length() 相当于左指针
-            counts[s2.charAt(i) - 'a'] --;
-            counts[s2.charAt(i - s1.length()) - 'a'] ++;
+            counts[s2.charAt(i) - 'a']--;
+            counts[s2.charAt(i - s1.length()) - 'a']++;
             if (areAllZero(counts)) {
                 return true;
             }
@@ -48,11 +48,11 @@ public class StringSolution {
 
     /**
      * 题目2：不含重复字符的最长子字符串
-     *  输入一个字符串，求该字符串中不含重复字符的最长子字符串的长度。例如，输入字符串"babcca"，其最长的不含重复字符的子字符串是"abc"，长度为3。
-     *
-     *  解法：左右指针，按照书中的解法
-     *  假设到ba, 左：b, 右 a. 没有重复的话，右指针+1, 如果有重复左指针+1
-     *  因为没有说可能只有限定的字符，假设字符串只包含ASCII码的话，则有256种可能。还是像上面题目一样，讲char出现的次数放在hash表中。
+     * 输入一个字符串，求该字符串中不含重复字符的最长子字符串的长度。例如，输入字符串"babcca"，其最长的不含重复字符的子字符串是"abc"，长度为3。
+     * <p>
+     * 解法：左右指针，按照书中的解法
+     * 假设到ba, 左：b, 右 a. 没有重复的话，右指针+1, 如果有重复左指针+1
+     * 因为没有说可能只有限定的字符，假设字符串只包含ASCII码的话，则有256种可能。还是像上面题目一样，讲char出现的次数放在hash表中。
      */
     public int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) {
@@ -64,11 +64,11 @@ public class StringSolution {
         int left = -1;
         int longest = 1;
         for (; right < s.length(); right++) {
-            counts[s.charAt(right)] ++;
+            counts[s.charAt(right)]++;
             while (hasGreaterThan1(counts)) {
                 // 有重复的那么左指针+1，并且将左指针对应的char清零
-                left ++;
-                counts[s.charAt(left)] --;
+                left++;
+                counts[s.charAt(left)]--;
             }
             longest = Math.max(right - left, longest);
         }
@@ -76,16 +76,17 @@ public class StringSolution {
     }
 
     private boolean hasGreaterThan1(int[] counts) {
-        for (int count: counts) {
+        for (int count : counts) {
             if (count > 1) {
                 return true;
             }
         }
         return false;
     }
+
     private boolean areAllZero(int[] counts) {
-        for (int count: counts) {
-            if (count != 0 ) {
+        for (int count : counts) {
+            if (count != 0) {
                 return false;
             }
         }
@@ -97,18 +98,18 @@ public class StringSolution {
      * 输入两个字符串s和t，请找出字符串s中包含字符串t的所有字符的最短子字符串。
      * 例如，输入的字符串s为"ADDBANCAD"，字符串t为"ABC"，则字符串s中包含字符'A'、'B'和'C'的最短子字符串是"BANC"。
      * 如果不存在符合条件的子字符串，则返回空字符串""。如果存在多个符合条件的子字符串，则返回任意一个。
-     *
+     * <p>
      * 解法：
      * 1. 用哈希表统计字符串t的char出现的次数，+1
      * 2. left, right 指针遍历字符串s，如果char出现在t中，则哈希表对应位置-1
      * 3. 如果两个指针之间的子字符串还没有包含字符串t的所有字符，则在子字符串中添加新的字符，于是向右移动第2个指针。
      * 4. 如果某一时刻两个指针之间的子字符串已经包含字符串t的所有字符，由于目标是找出最短的符合条件的子字符串，因此向右移动第1个指针，
-     *    以判断删除子字符串最左边的字符之后是否仍然包含字符串t的所有字符。
+     * 以判断删除子字符串最左边的字符之后是否仍然包含字符串t的所有字符。
      */
     public String minWindow(String s, String t) {
         HashMap<Character, Integer> chartToCount = new HashMap<>();
 
-        for (char ch: t.toCharArray()) {
+        for (char ch : t.toCharArray()) {
             chartToCount.put(ch, chartToCount.getOrDefault(ch, 0) + 1);
         }
 
@@ -116,15 +117,15 @@ public class StringSolution {
         int start = 0, end = 0, minStart = 0, minEnd = 0;
         int minLength = Integer.MAX_VALUE;
         while (end < s.length() || (count == 0 && end == s.length())) {
-            if (count > 0 ) {
+            if (count > 0) {
                 char endChar = s.charAt(end);
                 if (chartToCount.containsKey(endChar)) {
                     chartToCount.put(endChar, chartToCount.get(endChar) - 1);
                     if (chartToCount.get(endChar) == 0) {
-                        count --;
+                        count--;
                     }
                 }
-                end ++;
+                end++;
             } else {
                 if (end - start < minLength) {
                     minLength = end - start;
@@ -136,13 +137,13 @@ public class StringSolution {
                 if (chartToCount.containsKey(starChar)) {
                     chartToCount.put(starChar, chartToCount.get(starChar) + 1);
                     if (chartToCount.get(starChar) == 1) {
-                        count ++;
+                        count++;
                     }
                 }
-                start ++;
+                start++;
             }
         }
-        return minLength < Integer.MAX_VALUE ? s.substring(minStart, minEnd): "";
+        return minLength < Integer.MAX_VALUE ? s.substring(minStart, minEnd) : "";
     }
 
     /**
@@ -155,32 +156,32 @@ public class StringSolution {
         while (left < right) {
             if (!Character.isLetterOrDigit(s.charAt(left))) {
                 // skip non-letter or digit
-                left ++;
+                left++;
             }
             if (!Character.isLetterOrDigit(s.charAt(right))) {
                 // skip non-letter or digit
-                right --;
+                right--;
             }
             if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
-            left ++;
-            right --;
+            left++;
+            right--;
         }
         return true;
     }
 
     /**
      * 题目4：最多删除一个字符得到回文
-     *
+     * <p>
      * 给定一个字符串，判断如果最多从字符串中删除一个字符能不能得到一个回文字符串。
      * 例如 输入abca, 由于删除字符b或c，就能得到一个回文字符串，则输出为true
-     *
+     * <p>
      * 解法：一样还是左右指针
      */
     public boolean validPalindrome(String s) {
         int start = 0, end = s.length() - 1;
-        for (; start < s.length()/2; start ++, end --) {
+        for (; start < s.length() / 2; start++, end--) {
             if (s.charAt(start) != s.charAt(end)) {
                 break;
             }
@@ -197,8 +198,8 @@ public class StringSolution {
             if (s.charAt(start) != s.charAt(end)) {
                 break;
             }
-            start ++;
-            end --;
+            start++;
+            end--;
         }
         return start >= end;
     }

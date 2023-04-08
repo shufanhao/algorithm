@@ -1,6 +1,6 @@
 package com.haofan.algorithm.leetcodecn.medium.list;
 
-import com.haofan.algorithm.leetcodecn.easy.list.ListNode;
+import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.leetcodecn.easy.list.ListSolution;
 
 /**

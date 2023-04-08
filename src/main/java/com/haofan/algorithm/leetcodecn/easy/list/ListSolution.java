@@ -1,5 +1,7 @@
 package com.haofan.algorithm.leetcodecn.easy.list;
 
+import com.haofan.algorithm.help.ListNode;
+
 /**
  * 链表问题，
  * 1. 注意双指针解法，双指针：快慢指针和首尾指针 （一般用于使用额外空间的情况）
