@@ -1,8 +1,13 @@
 package com.haofan.algorithm.leetcodecn.medium.array;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
+
+import static com.haofan.algorithm.help.Common.swap;
 
 public class ArraySolutionMedium {
+    private List<List<Integer>> ret = new LinkedList<>();
+    private LinkedList<Integer> tempList = new LinkedList<>();
 
     public static void main(String args[]) {
         ArraySolutionMedium array = new ArraySolutionMedium();
@@ -35,6 +40,10 @@ public class ArraySolutionMedium {
 
         int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
         System.out.println("题目6：" + array.increasingTriplet(numsIssue6));
+
+        int nums[] = {1, 2, 3};
+        System.out.println("题目7: ");
+        array.permute(nums);
     }
 
     /**
@@ -235,6 +244,49 @@ public class ArraySolutionMedium {
             }
         }
         return false;
+    }
+
+    /**
+     * 全排列, 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+     *
+     * 以{1,2,3}为例，它的排列是：
+     * 以1开头，后面接着{2,3}的全排列，
+     * 以2开头，后面接着{1,3}的全排列，
+     * 以3开头，后面接着{1,2}的全排列。
+     *
+     * 输入：nums = [1,2,3]
+     * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        // 定义一个与 nums 等长的数组，用于记录当前的值是否被使用
+        // true 表示已被使用
+        // false 表示未被使用
+        boolean[] numState = new boolean[nums.length];
+        backTracking(nums, numState);
+        System.out.println(Arrays.toString(ret.toArray()));
+        return ret;
+    }
+
+    public void backTracking(int[] nums, boolean[] numState) {
+        // tempList 和 nums 长度相等表明所有元素都已经添加
+        if (tempList.size() == nums.length) {
+            ret.add(new ArrayList<>(tempList));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            // 如果元素已经被使用过，则直接进入下一轮循环
+            if (numState[i]) {
+                continue;
+            }
+            tempList.add(nums[i]);
+            numState[i] = true;
+
+            backTracking(nums, numState);
+
+            numState[i] = false;
+            tempList.removeLast();
+        }
     }
 }
 

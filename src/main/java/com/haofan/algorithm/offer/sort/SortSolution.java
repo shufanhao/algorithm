@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import static com.haofan.algorithm.help.Common.swap;
+
 public class SortSolution {
     /**
      * 面试题1：合并区间
@@ -135,7 +137,7 @@ public class SortSolution {
     private int partition(int[] nums, int start, int end) {
         int random = new Random().nextInt(end - start + 1) + start;
         // 把random 位置的值交换到数组的尾部
-        ArraySolution.swap(nums, random, end);
+        swap(nums, random, end);
 
         // 小指针
         int small = start - 1;
@@ -143,12 +145,12 @@ public class SortSolution {
             if (nums[i] < nums[end]) {
                 // 小指针向右移动
                 small++;
-                ArraySolution.swap(nums, random, end);
+                swap(nums, random, end);
             }
         }
 
         small++;
-        ArraySolution.swap(nums, small, end);
+        swap(nums, small, end);
         return small;
     }
 

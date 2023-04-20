@@ -2,6 +2,8 @@ package com.haofan.algorithm.sort;
 
 import java.util.Arrays;
 
+import static com.haofan.algorithm.help.Common.swap;
+
 //https://www.cnblogs.com/chengxiao/p/6129630.html
 public class HeapSort {
     /**
@@ -44,12 +46,6 @@ public class HeapSort {
         }
         arr[i] = temp;
 
-    }
-
-    public static void swap(int arr[], int a, int b) {
-        int temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
     }
 
     public static void main(String[] args) {

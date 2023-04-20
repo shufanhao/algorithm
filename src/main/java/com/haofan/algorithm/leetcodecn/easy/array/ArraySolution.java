@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.haofan.algorithm.help.Common.swap;
+
 /**
  * 数组问题：
  * 1. 如果要空间复杂度是o(1)的话，应该是肯定有两个指针，start,end,
@@ -301,12 +303,6 @@ public class ArraySolution {
             }
         }
         return maxCount;
-    }
-
-    public static void swap(int[] nums, int a, int b) {
-        int temp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = temp;
     }
 
     /**
