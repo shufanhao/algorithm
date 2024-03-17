@@ -46,4 +46,9 @@ class ArraySolutionTest {
         int[] sums = {3, 4, 7, 2, -3, 1, 4, 2};
         assertEquals(4, arraySolution.subArraySum(sums, 7));
     }
+
+    @Test
+    void findDuplicate() {
+        assertTrue(arraySolution.findDuplicate(new int[]{2, 3, 1, 0, 2, 5}));
+    }
 }

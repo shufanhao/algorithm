@@ -164,4 +164,37 @@ public class ArraySolution {
         }
         return res;
     }
+
+    /**
+     * 剑指offer 2
+     * 面试题2：数组中的重复数字 <a href="https://github.com/todorex/Coding-Interviews/blob/master/notes/">...</a>数组中重复的数字.md
+     * <p>
+     * 输入{2, 3, 1, 0, 2, 5} 找出2, 算法时间复杂度O(n), 空间是O(1), 核心是：
+     */
+    public boolean findDuplicate(int[] array) {
+        // 杜绝数组为空
+        if (array.length == 0) {
+            return false;
+        }
+        // 杜绝数组有非法数字
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < 0 || array[i] > array.length - 1) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            while (array[i] != i) {
+                if (array[i] == array[array[i]]) {
+                    System.out.println("duplicate number: " + array[i]);
+                    return true;
+                }
+
+                int temp = array[i];
+                array[i] = array[temp];
+                array[temp] = temp;
+            }
+        }
+        return false;
+    }
 }

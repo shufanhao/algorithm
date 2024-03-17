@@ -203,4 +203,37 @@ public class StringSolution {
         }
         return start >= end;
     }
+
+    /**
+     * 剑指offer 2：
+     * 面试题5：
+     * 请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为 "We Are Happy". 则经过替换之后的字符串为 "We%20Are%20Happy"。
+     *
+     * 快慢指针，从后往前
+     */
+    public String replaceSpace(String input) {
+        StringBuffer str = new StringBuffer(input);
+
+        int oldLength = str.length();
+        for (int i = 0; i < oldLength; i++) {
+            if (str.charAt(i) == ' ') {
+                str.append("  ");
+            }
+        }
+        int newLength = str.length();
+
+        int p1 = oldLength - 1;
+        int p2 = newLength - 1;
+        while (p1 != p2) {
+            if (str.charAt(p1) == ' ') {
+                str.setCharAt(p2--, '0');
+                str.setCharAt(p2--, '2');
+                str.setCharAt(p2--, '%');
+                p1--;
+            } else {
+                str.setCharAt(p2--, str.charAt(p1--));
+            }
+        }
+        return str.toString();
+    }
 }
