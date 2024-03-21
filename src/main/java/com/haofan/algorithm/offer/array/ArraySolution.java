@@ -4,14 +4,14 @@ import java.util.*;
 
 public class ArraySolution {
     /**
-     * 题目1：排序数组中的两个数字之和
+     * 题目6：排序数组中的两个数字之和
      * 输入一个递增排序的数组和一个值k，请问如何在数组中找出两个和为k的数字并返回它们的下标？
      * 假设数组中存在且只存在一对符合条件的数字，同时一个数字不能使用两次。例如，输入数组[1，2，4，6，10]，k的值为8，
      * 数组中的数字2与6的和为8，它们的下标分别为1与3。
      * <p>
      * 解法：
-     * 1. 空间换时间。把数组中每个元素，以及index，都放入到Map中，然后遍历，map，如果发现有k-i的值则返回。时间复杂度O(N)，空间O(N)
-     * 2. 双指针，因为是排序数组，从left, right指针，left + right的值如果大于K，则right 左移，反之右移，直到出现和等于8的值。
+     * 1. 空间换时间。把数组中每个元素，以及index，都放入到Map中，然后遍历，map，如果发现有k-i的值则返回。time O(N)，space O(N)
+     * 2. 双指针，因为是排序数组，从left, right指针，left + right的值如果大于K，则right 左移，反之右移，直到出现和等于8的值。time O(N), space O(1)
      */
     public int[] twoSum1(int[] numbers, int target) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -30,25 +30,31 @@ public class ArraySolution {
     public int[] twoSum2(int[] numbers, int target) {
         int left = 0;
         int right = numbers.length - 1;
-        while (left < right && ((numbers[left] + numbers[right]) != target)) {
-            if ((numbers[left] + numbers[right]) > target) {
-                right--;
-            } else {
+        while (left <= right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target) {
+                // 找到正确的和，立即返回索引
+                return new int[]{left, right};
+            } else if (sum < target) {
                 left++;
+            } else {
+                right--;
             }
         }
-        return new int[]{left, right};
+        return null;
     }
 
     /**
-     * 题目2：和大于或等于k的最短子数组
+     * 题目7: 数组中和为0的3个数字
      * 输入一个数组，如何找出数组中所有和为0的3个数字的三元组？需要注意的是，返回值中不得包含重复的三元组。
      * 例如，在数组[-1，0，1，2，-1，-4]中有两个三元组的和为0，它们分别是[-1，0，1]和[-1，-1，2]，其中[-1, -1, 2]是不行的。
      * 不包含重复的数组的意思就是：三个数字中不能相同。在三数之和确定的情况下，只要确定第一个和第二个数不相同即可。
      * <p>
      * 解法：
-     * 通过遍历数组，从第一个数i开始，连个指针j, k分别从i+1,n-1往中间移动，去找到满足sum = nums[i] + nums[j] + nums[k] == 0 的所有组合
-     * j K移动逻辑，几居室 sum > 0; k 左移，sum < 0; j右移。sum = 0 ,找打
+     * 通过遍历数组，从第一个数i开始，两个指针j, k分别从i+1,n-1往中间移动，去找到满足sum = nums[i] + nums[j] + nums[k] == 0 的所有组合
+     * j K移动逻辑，几居室 sum > 0; k 左移，sum < 0; j右移。sum = 0，则找到。
+     *
+     * 其实是和上面题目的逻辑是类似的
      */
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
@@ -66,7 +72,7 @@ public class ArraySolution {
                     j++;
                 } else if (sum > 0) {
                     k--;
-                } else if (sum < 0) {
+                } else {
                     j++;
                 }
             }
@@ -80,6 +86,7 @@ public class ArraySolution {
      * 则返回0。例如，输入数组[5，1，4，3]，k的值为7，和大于或等于7的最短连续子数组是[4，3]，因此输出它的长度2
      * <p>
      * 解法：
+     * 还是双指针，同时移动
      * 下面以数组[5，1，4，3]为例一步步分析用两个指针找出和大于或等于7的最短子数组的过程。
      * 首先，指针P1和P2都指向数组中的第1个数字5。此时子数组中只有一个数字5，因此子数组中的所有数字之和也是5，小于7。
      * 然后把指针P2向右移动一步指向数字1。此时子数组中包含两个数字，即5和1，它们的和为6，仍然小于7。因此，再把指针P2向右移动一步指向数字6，此
@@ -96,12 +103,12 @@ public class ArraySolution {
 
         for (int right = 0; right < nums.length; right++) {
             sum += nums[right];
-            while (left < right && sum >= k) {
+            while (left <= right && sum >= k) {
                 minLength = Math.min(minLength, right - left + 1);
-                sum += nums[left++];
+                sum -= nums[left++];
             }
         }
-        return minLength;
+        return minLength == Integer.MAX_VALUE ? -1 : minLength;
     }
 
     /**

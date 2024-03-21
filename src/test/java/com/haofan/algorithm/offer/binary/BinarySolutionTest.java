@@ -21,4 +21,9 @@ class BinarySolutionTest {
     void singleNumber() {
         assertEquals(100, binarySolution.singleNumber(new int[]{0, 1, 0, 1, 0, 1, 100}));
     }
+
+    @Test
+    void maxProduct() {
+        assertEquals(16, binarySolution.maxProduct(new String[] {"abcw","baz","foo","bar","fxyz","abcdef"}));
+    }
 }

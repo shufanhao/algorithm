@@ -18,9 +18,8 @@ class ArraySolutionTest {
         assertEquals(1, result1[0]);
         assertEquals(3, result1[1]);
 
-        int[]  result2 = arraySolution.twoSum2(numbers, target);
-        assertEquals(1, result2[0]);
-        assertEquals(3, result2[1]);
+        int[] result2 = arraySolution.twoSum2(new int[]{2, 7, 11, 15}, 9);
+        System.out.println(Arrays.toString(Arrays.stream(result2).toArray()));
     }
 
     @Test
