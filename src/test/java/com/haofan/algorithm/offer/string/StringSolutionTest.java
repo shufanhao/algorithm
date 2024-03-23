@@ -2,6 +2,8 @@ package com.haofan.algorithm.offer.string;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringSolutionTest {
@@ -12,6 +14,10 @@ class StringSolutionTest {
         assertTrue(offer.checkInclusion("ab", "eidbaooo"));
     }
 
+    @Test
+    void findAnagrams() {
+        assertArrayEquals(new Object[]{0, 6}, offer.findAnagrams("cbaebabacd", "abc").toArray());
+    }
     @Test
     void lengthOfLongestSubstring() {
         assertEquals(3, offer.lengthOfLongestSubstring("babcca"));

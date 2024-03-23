@@ -1,11 +1,13 @@
 package com.haofan.algorithm.offer.string;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class StringSolution {
 
     /**
-     * 题目1：输入字符串s1和s2，如何判断字符串s2中是否包含字符串s1的某个变位词？
+     * 面试题14：输入字符串s1和s2，如何判断字符串s2中是否包含字符串s1的某个变位词？
      * 如果字符串s2中包含字符串s1的某个变位词，则字符串s1至少有一个变位词是字符串s2的子字符串。假设两个字符串中只包含英文小写字母。
      * 例如，字符串s1为"ac"，字符串s2为"dgcaf"，由于字符串s2中包含字符串s1的变位词"ca"，因此输出为true。
      * 如果字符串s1为"ab"，字符串s2为"dgcaf"，则输出为false。
@@ -28,6 +30,7 @@ public class StringSolution {
         int[] counts = new int[26];
         for (int i = 0; i < s1.length(); ++i) {
             counts[s1.charAt(i) - 'a']++;
+            // 这个地方有可能会忘记。
             counts[s2.charAt(i) - 'a']--;
         }
 
@@ -47,7 +50,42 @@ public class StringSolution {
     }
 
     /**
-     * 题目2：不含重复字符的最长子字符串
+     * 面试题15：字符串中的所有变位词
+     * s1 = "cbaebabacd", s2 = "abc"，输出{0, 6}
+     * 给定两个字符串 s1 和 s2，找到 s2 中所有变位词在字符串s1的起始下标，返回这些子串的起始索引。不考虑答案输出的顺序。
+     *
+     * 解法：上上面的面试14类似。
+     */
+    public List<Integer> findAnagrams(String s1, String s2) {
+        List<Integer> indices = new LinkedList<>();
+        if (s1.length() < s2.length()) {
+            return indices;
+        }
+
+        int[] counts = new int[26];
+        //
+        for (int i = 0; i < s2.length(); i++) {
+            counts[s2.charAt(i) - 'a'] ++;
+            counts[s1.charAt(i) - 'a'] --;
+        }
+
+        if (areAllZero(counts)) {
+            indices.add(0);
+        }
+
+        for (int i = s2.length(); i < s1.length(); i++) {
+            counts[s1.charAt(i) - 'a'] --;
+            counts[s1.charAt(i - s2.length()) - 'a'] ++;
+            if (areAllZero(counts)) {
+                indices.add(i - s2.length() + 1);
+            }
+        }
+
+        return indices;
+    }
+
+    /**
+     * 面试题16：不含重复字符的最长子字符串
      * 输入一个字符串，求该字符串中不含重复字符的最长子字符串的长度。例如，输入字符串"babcca"，其最长的不含重复字符的子字符串是"abc"，长度为3。
      * <p>
      * 解法：左右指针，按照书中的解法
@@ -55,7 +93,7 @@ public class StringSolution {
      * 因为没有说可能只有限定的字符，假设字符串只包含ASCII码的话，则有256种可能。还是像上面题目一样，讲char出现的次数放在hash表中。
      */
     public int lengthOfLongestSubstring(String s) {
-        if (s.length() == 0) {
+        if (s.isEmpty()) {
             return 0;
         }
 
