@@ -81,7 +81,7 @@ public class ArraySolution {
     }
 
     /**
-     * 题目3: 和大于或等于k的最短子数组
+     * 题目8: 和大于或等于k的最短子数组
      * 输入一个正整数组成的数组和一个正整数k，请问数组中和大于或等于k的连续子数组的最短长度是多少？如果不存在所有数字之和大于或等于k的子数组，
      * 则返回0。例如，输入数组[5，1，4，3]，k的值为7，和大于或等于7的最短连续子数组是[4，3]，因此输出它的长度2
      * <p>
@@ -112,35 +112,38 @@ public class ArraySolution {
     }
 
     /**
-     * 题目4：乘积小于k的子数组
+     * 面试题9：乘积小于k的子数组
      * 输入一个由正整数组成的数组和一个正整数k，请问数组中有多少个数字乘积小于k的连续子数组？例如，输入数组[10，5，2，6]，k的值为100，
      * 有8个子数组的所有数字的乘积小于100，它们分别是[10]、[5]、[2]、[6]、[10，5]、[5，2]、[2，6]和[5，2，6]
      * <p>
      * 和题目4一样，也是双指针，但是这个题目稍微trick一点
      * 解法：
-     * 1. 两个指针i，j，j是用于乘积大于等于k的时候，删除乘积中第一个数，i用于遍历数组的
-     * 2. 两个指针，i, j 初始值是0
+     * 1. 两个指针l，r，l是用于乘积大于等于k的时候，删除乘积中第一个数，r用于遍历数组的
+     * 2. 两个指针，r, r 初始值是0
      * 3. 遍历数组计算乘积total
-     * 4. 每遍历一个数，那么将total和K进行比较，如果total 大于等于k, total 不断除以nums[j++]，直到total小于k
-     * 5. 此时当前指针i对应的乘积小于k的情况有i-j+1种。
+     * 4. 每遍历一个数，那么将total和K进行比较，如果total 大于等于k, total 不断除以nums[l++]，直到total小于k
+     * 5. 此时当前指针r对应的乘积小于k的情况有r-l+1种。
+     *
+     * Time: O(n), space: O(1)
      */
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         if (k <= 1) {
             return 0;
         }
-        int res = 0, total = 1, i, j = 0;
-        for (i = 0; i < nums.length; i++) {
-            total *= nums[i];
+        int res = 0, total = 1, r, l = 0;
+        for (r = 0; r < nums.length; r++) {
+            total *= nums[r];
             while (total >= k) {
-                total /= nums[j++]; //如果total大于等于k的时候，j指针后移，此时也满足了如果第一个数大于等于k的时候，res最后等于0
+                total /= nums[l++]; //如果total大于等于k的时候，l指针后移，此时也满足了如果第一个数大于等于k的时候，res最后等于0
             }
-            res += i - j + 1;
+            // l 和 r 之间的就是有多少个子数组。
+            res += r - l + 1;
         }
         return res;
     }
 
     /**
-     * 题目5： 和为k的子数组
+     * 面试题10： 和为k的子数组
      * <p>
      * 输入一个整数数组和一个整数k，请问数组中有多少个数字之和等于k的连续子数组？
      * 例如，输入数组[1，1，1]，k的值为2，有2个连续子数组之和等于2。
@@ -152,6 +155,7 @@ public class ArraySolution {
      * 3. 核心思想：要找到有多少符合preSum[j] - preSum[i] = K 的情况。i为子数组左边界，j为子数组右边界。也就是说我们在遍历到位置j时，
      * 想知道在之前有多少个位置，符合preSum[i] = preSum[j] - K。即前缀和preSum[j]出现了多少次，而这恰好可以直接从哈希表中得到。
      */
+    // 3, 4, 7, 2. 7
     public int subArraySum(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         int[] preSum = new int[nums.length + 1];
@@ -167,11 +171,39 @@ public class ArraySolution {
             } else {
                 map.put(preSum[i], map.get(preSum[i]) + 1);
             }
+            // 这个地方是核心。
             res += map.getOrDefault(preSum[i] - k, 0);
         }
         return res;
     }
 
+
+    /**
+     * 面试题11：输入一个只包含0和1的子数组，求出0和1的个数相同的子数组
+     * 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
+     *
+     * 解法：因为是输入只包含0和1，所有可以把0换成-1，这样题目就变成找到含有相同数量的-1和1的最长连续子数组，也就是和为0。这就和上上面的题目类似了。
+     *
+     * 输入是{0,1,0} 输出是2，time: o(n), space: o(n)
+     */
+    public int findMaxLength(int[] nums) {
+        // key: sum, value: index of num.
+        Map<Integer, Integer> sumToIndex= new HashMap<>();
+        sumToIndex.put(0, -1);
+        int sum = 0;
+        int maxLength = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i] == 0 ? -1 : 1;
+            // map 不包含这个key
+            if (!sumToIndex.containsKey(sum)) {
+                sumToIndex.put(sum, i);
+            } else {
+                // 已经包含这个key, 那么说明 i - 之前在index位置sum的 的和为0
+                maxLength = Math.max(maxLength, i - sumToIndex.get(sum));
+            }
+        }
+        return maxLength;
+    }
     /**
      * 剑指offer 2
      * 面试题2：数组中的重复数字 <a href="https://github.com/todorex/Coding-Interviews/blob/master/notes/">...</a>数组中重复的数字.md

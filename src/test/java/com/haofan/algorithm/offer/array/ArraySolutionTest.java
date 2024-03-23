@@ -47,6 +47,10 @@ class ArraySolutionTest {
     }
 
     @Test
+    void findMaxLength() {
+        assertEquals(2, arraySolution.findMaxLength(new int[] {0, 1, 0}));
+    }
+    @Test
     void findDuplicate() {
         assertTrue(arraySolution.findDuplicate(new int[]{2, 3, 1, 0, 2, 5}));
     }
