@@ -1,5 +1,6 @@
 package com.haofan.algorithm.offer.string;
 
+import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -132,7 +133,7 @@ public class StringSolution {
     }
 
     /**
-     * 题目3：包含所有字符的最短字符串
+     * 题目3：包含所有字符的最短字符串, 比较难理解。
      * 输入两个字符串s和t，请找出字符串s中包含字符串t的所有字符的最短子字符串。
      * 例如，输入的字符串s为"ADDBANCAD"，字符串t为"ABC"，则字符串s中包含字符'A'、'B'和'C'的最短子字符串是"BANC"。
      * 如果不存在符合条件的子字符串，则返回空字符串""。如果存在多个符合条件的子字符串，则返回任意一个。
@@ -185,32 +186,35 @@ public class StringSolution {
     }
 
     /**
-     * 题目3： 有效的回文
+     * 面试题18： 有效的回文
      * 判断一个字符串是否是一个回文字符串，假设只需要考虑字母和数字字符，并忽略大小写。回文是正着读和反着读都是一样的单词。
      * 解法：双指针，分别从前后遍历，判断是否相等。
      */
     public boolean isPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        while (left < right) {
-            if (!Character.isLetterOrDigit(s.charAt(left))) {
-                // skip non-letter or digit
-                left++;
+        int i = 0;
+        int j = s.length() - 1;
+        while ( i < j) {
+            char ch1 = s.charAt(i);
+            char ch2 = s.charAt(j);
+            if (!Character.isLetterOrDigit(ch1)) {
+                i++;
+            } else if (!Character.isLetterOrDigit(ch2)) {
+                j--;
+            } else {
+                ch1 = Character.toLowerCase(ch1);
+                ch2 = Character.toLowerCase(ch2);
+                if (ch1 != ch2) {
+                    return false;
+                }
+                i++;
+                j--;
             }
-            if (!Character.isLetterOrDigit(s.charAt(right))) {
-                // skip non-letter or digit
-                right--;
-            }
-            if (s.charAt(left) != s.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
         }
         return true;
     }
 
     /**
-     * 题目4：最多删除一个字符得到回文
+     * 面试题19：最多删除一个字符得到回文
      * <p>
      * 给定一个字符串，判断如果最多从字符串中删除一个字符能不能得到一个回文字符串。
      * 例如 输入abca, 由于删除字符b或c，就能得到一个回文字符串，则输出为true

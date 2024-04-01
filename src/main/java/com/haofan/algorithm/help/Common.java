@@ -1,7 +1,6 @@
 package com.haofan.algorithm.help;
 
 public class Common {
-
     public static void swap(int[] nums, int a, int b) {
         int temp = nums[a];
         nums[a] = nums[b];

@@ -20,11 +20,11 @@ public class ArraySolution {
      * 题目1.2：颜色排序
      * http://www.cnblogs.com/grandyang/p/4341243.html
      * 思路：
-     * 1. 遍历一遍原数组，分别记录0，1，2的个数， 更新原数组，按个数分别赋上0，1，2
-     * 2. 定义两个指针，start,end; 从头开始遍历数组，如果end值遇到0，则交换改值和start指向的值，
+     * 1. 遍历一遍原数组，分别记录0，1，2的个数， 更新原数组，按个数分别赋上0，1，2。但是需要遍历2遍数组。
+     * 2. 如果只要遍历一遍数组，那么定义两个指针，start,end; 从头开始遍历数组，如果end值遇到0，则交换改值和start指向的值，
      * 并将start后移一位。若start值遇到2，则交换改值和end指向的值，并将end前移一位，若遇到1则继续遍历
      */
-    public static void sortColors(int nums[]) {
+    public void sortColors(int[] nums) {
         int start = 0;
         int end = nums.length - 1;
         for (int i = 0; i <= end; i++) {
@@ -37,15 +37,52 @@ public class ArraySolution {
     }
 
     /**
+     * 题目：买卖股票的最佳时机 I
+     * <a href="https://blog.csdn.net/qq_45927881/article/details/135729555">...</a>
+     * 输入：[7,1,5,3,6,4]
+     * 输出：5
+     * 解释：在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     *
+     * time: O(n), space: O(1)
+     */
+    public int maxProfitI(int[] prices) {
+        int minPrice = prices[0], maxProfit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            } else if ((prices[i] - minPrice) > maxProfit) {
+                maxProfit = prices[i] - minPrice;
+            }
+        }
+        return maxProfit;
+    }
+
+    /**
+     * 也可以使用动态规划来求解，因为可以分成多个step，每个step又有不同的选择。
+     * dp[i] 表示 第i天的最大利润。
+     * 对于第i天，如果选择卖出股票，则dp[i] = prices[i] - minPrice, 如果选择不卖出股票，则dp[i] = dp[i-1]
+     * 所以，状态转移方程：dp[i] = max(dp[i-1], prices[i] - minPrice)
+     */
+    public int maxProfitIDP(int[] prices) {
+        int[] dp = new int[prices.length];
+        int minPrice = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            minPrice = Math.min(minPrice, prices[i]);
+            dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
+        }
+        return dp[prices.length - 1];
+    }
+    /**
      * 题目2.1：买卖股票的最佳时机 II(直接求和)
      * 其实就是就一个和：下一天的价格减去前一天的价格差，这个差求和
      **/
-    public static int maxProfit(int[] prices) {
+    public int maxProfitII(int[] prices) {
         if (prices == null || prices.length == 0) {
             return 0;
         }
         int sum = 0;
         for (int i = 0; i < prices.length - 1; i++) {
+            // 这个是条件
             if (prices[i] < prices[i + 1]) {
                 sum += prices[i + 1] - prices[i];
             }
@@ -54,29 +91,38 @@ public class ArraySolution {
     }
 
     /**
-     * 题目2.2：买卖股票的最佳时机 III(动态规划)
-     * 设计一个算法计算获取的最大利润，只能完成一笔交易。
-     * 其实最小买入，最大卖出
+     * 题目2.2：买卖股票的最佳时机 III(动态规划), 有些难度，不理解。
+     * <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/description/">...</a>
+     * 设计一个算法计算获取的最大利润，你最多可以完成 两笔 交易
+     * 其实最小买入，最大卖出。
      */
-    public static int maxProfitIII(int[] prices) {
-        int result = 0;
-        if (prices == null || prices.length == 0) {
-            return 0;
+    public int maxProfitIII(int[] prices) {
+        /**
+         对于任意一天考虑四个变量:
+         fstBuy: 在该天第一次买入股票可获得的最大收益
+         fstSell: 在该天第一次卖出股票可获得的最大收益
+         secBuy: 在该天第二次买入股票可获得的最大收益
+         secSell: 在该天第二次卖出股票可获得的最大收益
+         分别对四个变量进行相应的更新, 最后secSell就是最大
+         收益值(secSell >= fstSell)
+         **/
+        int fstBuy = Integer.MIN_VALUE, fstSell = 0;
+        int secBuy = Integer.MIN_VALUE, secSell = 0;
+        for(int p : prices) {
+            fstBuy = Math.max(fstBuy, -p);
+            fstSell = Math.max(fstSell, fstBuy + p);
+            secBuy = Math.max(secBuy, fstSell - p);
+            secSell = Math.max(secSell, secBuy + p);
         }
-        int minBuy = prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            result = Math.max(result, prices[i] - minBuy);
-            minBuy = Math.min(prices[i], minBuy);
-        }
-        return result;
+        return secSell;
     }
 
     /**
-     * 题目3：旋转数组
-     * 解法1：利用o(n)的空间复杂度
+     * 题目3：旋转数组/轮转数组 <a href="https://leetcode.cn/problems/rotate-array/description/">...</a>
+     * 解法1：利用o(n)的空间复杂度, time O(n)
      * 解法2：空间复杂度是o(1)，先反转前n-k个元素，再反转后k个元素，再整个数组反转
      */
-    public static void rotate(int[] nums, int k) {
+    public void rotate(int[] nums, int k) {
         if (nums == null || nums.length == 0) {
             return;
         }
@@ -90,13 +136,14 @@ public class ArraySolution {
             nums[i] = temp[i];
         }*/
 
+        k = k%nums.length;
         // 解法2：
         reverse(nums, 0, nums.length - 1 - k);
         reverse(nums, nums.length - k, nums.length - 1);
         reverse(nums, 0, nums.length - 1);
     }
 
-    public static void reverse(int[] nums, int start, int end) {
+    public void reverse(int[] nums, int start, int end) {
         while (start < end) {
             int tmp = nums[start];
             nums[start++] = nums[end];
@@ -107,9 +154,9 @@ public class ArraySolution {
     /**
      * 题目4：存在重复
      * 1. 解法：将数组放到HashMap中，然后检查是否有key，如果有说明，已经存放过。
-     * 2. 解法：先将数组排序，然后比较前后2个元素
+     * 2. 解法：先将数组排序，然后比较前后2个元素, space O(1), time O(nlogn) 排序算法
      */
-    public static boolean containsDuplicate(int[] nums) {
+    public boolean containsDuplicate(int[] nums) {
         if (nums == null) {
             return false;
         }
@@ -127,7 +174,7 @@ public class ArraySolution {
      * 任何一个数字异或它自己都等于0。也就是说，如果我们从头到尾依次异或数组中的每一个数字，
      * 那么最终的结果刚好是那个只出现依次的数字，因为那些出现两次的数字全部在异或中抵消掉了。
      */
-    public static int singleNumber(int[] nums) {
+    public int singleNumber(int[] nums) {
         if (nums == null) {
             return 0;
         }
@@ -142,7 +189,7 @@ public class ArraySolution {
      * 题目 6：两个数组的交集 II
      * 先将两个数组排序，然后两个指针分别指向数组1，数组2，根据两个数组的元素大小，决定是否移动指针
      */
-    public static int[] intersect(int[] nums1, int[] nums2) {
+    public int[] intersect(int[] nums1, int[] nums2) {
         if (nums1 == null || nums2 == null) {
             return null;
         }
@@ -171,7 +218,7 @@ public class ArraySolution {
     /**
      * 题目7： 加一
      */
-    public static int[] plusOne(int[] digits) {
+    public int[] plusOne(int[] digits) {
         for (int i = digits.length - 1; i > 0; i--) {
             if (digits[i] < 9) {
                 digits[i]++;
@@ -187,7 +234,7 @@ public class ArraySolution {
     /**
      * 题目8：移动0，类似第一个题目：从排序数组中删除重复的项
      */
-    public static int[] moveZeroes(int[] nums) {
+    public int[] moveZeroes(int[] nums) {
         if (nums == null) {
             return null;
         }
@@ -210,7 +257,7 @@ public class ArraySolution {
      * 用target 减去 数组的每一个元素，然后将结果在map中检查是否有对应的key
      * 如果有，则返回
      */
-    public static int[] twoSum(int[] nums, int target) {
+    public int[] twoSum(int[] nums, int target) {
         if (nums == null) {
             return null;
         }
@@ -234,7 +281,7 @@ public class ArraySolution {
      * 2. 使用3*(i/3) + j/3 i 代表行的增加，j代表列的增加，可以知道现在处于第几个方阵
      * 3. 如果数字是char 型， 则 int c = x - '1', c 就是对应的数字
      */
-    public static boolean isValidSudoku(char[][] board) {
+    public boolean isValidSudoku(char[][] board) {
         int len = 9;
         boolean[][] rowFlag = new boolean[len][len];
         boolean[][] colFlag = new boolean[len][len];
@@ -262,7 +309,7 @@ public class ArraySolution {
      * 解法：因为要求不能新的矩阵，所以要看看没有规律，直接调换元素。
      * 先调换所有对角元素，再调换列元素，就得到顺时针旋转90度后的元素。
      */
-    public static void rotate(int[][] matrix) {
+    public void rotate(int[][] matrix) {
 
         int length = matrix.length;
 
@@ -289,7 +336,7 @@ public class ArraySolution {
      * 题目12：输出数组中最大的连续子序列的长度
      * 解法：提供变量去记录之前的最大连续子序列，然后用记录的maxCount去比较即可
      */
-    public static int getOnsecutiveMaxLen(int arr[]) {
+    public int getOnsecutiveMaxLen(int arr[]) {
         int maxCount = 0;
         for (int i = 0; i < arr.length; i++) {
             int preCount = 1;
@@ -309,7 +356,7 @@ public class ArraySolution {
      * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组,  滑动窗口方法
      * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，发现窗口内的和比目标值大时，就left ++, 小时就right++
      */
-    public static int minSubArrayLen(int s, int[] nums) {
+    public int minSubArrayLen(int s, int[] nums) {
         int l = 0; // left
         int r = 0;// right
         int sum = 0;
@@ -336,7 +383,7 @@ public class ArraySolution {
      * 如果K=1, 结果肯定是最大的那个值
      * 如果K>1, 结果肯定是连续2个的序列比3个的子序列的平均值要大
      */
-    public static int maxSubArrayAverage(int k, int[] nums) {
+    public int maxSubArrayAverage(int k, int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
@@ -359,25 +406,8 @@ public class ArraySolution {
 
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-        // 题目1.2
-        //int arr_13[] = {1,1,1,0,0,0,1,2,2};
-        int arr_1_2[] = {2, 0, 1};
-        sortColors(arr_1_2);
-        System.out.println("题目1.2：" + Arrays.toString(arr_1_2));
-        // 题目2.1：
-        int[] prices_1 = {1, 2, 3, 4, 5};
-        System.out.println("题目2.1：买卖股票的最佳时机：" + maxProfit(prices_1));
-
-        // 题目2.2：
-        int[] prices_2 = {7, 1, 5, 3, 6, 4};
-        System.out.println("题目2.2：买卖股票的最佳时机：" + maxProfitIII(prices_2));
-
-        // 题目3：
-        int[] rotate = {1, 2, 3, 4, 5, 6, 7};
-        rotate(rotate, 2);
-        System.out.println("题目3：旋转数组： " + Arrays.toString(rotate));
 
         // 题目4：
         System.out.println("题目4：存在重复： " + (containsDuplicate(nums)));
