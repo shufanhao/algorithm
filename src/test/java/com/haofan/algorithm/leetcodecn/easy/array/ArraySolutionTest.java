@@ -1,7 +1,9 @@
 package com.haofan.algorithm.leetcodecn.easy.array;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Time;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,30 +55,64 @@ class ArraySolutionTest {
 
     @Test
     void singleNumber() {
+        // 题目5：
+        int[] single = {4, 1, 2, 1, 2};
+        System.out.println("题目5：只出现一次的数字： " + array.singleNumber(single));
     }
 
     @Test
     void intersect() {
+        // 题目6：
+        int[] nums1 = {1, 2, 2, 1};
+        int[] nums2 = {2, 2};
+        System.out.println("题目6： 两个数组的交集： " + Arrays.toString(array.intersect(nums1, nums2)));
     }
 
     @Test
-    void plusOne() {
+    void plusOne() throws InterruptedException {
+        int[] plusOne = {9, 9, 9};
+        System.out.println("题目7： 加一： 范宇增 " + Arrays.toString(array.plusOne(plusOne)));
     }
 
     @Test
     void moveZeroes() {
+        int[] move = {0, 1, 0, 3, 12};
+        System.out.println("题目8： 移动0 " + Arrays.toString(array.moveZeroes(move)));
     }
 
     @Test
     void twoSum() {
+        int[] twosSumArr = {2, 7, 11, 15};
+        System.out.println("题目9： 两数之和 " + Arrays.toString(array.twoSum(twosSumArr, 9)));
     }
 
     @Test
     void isValidSudoku() {
+        char[][] a = {
+                {'.', '8', '7', '6', '5', '4', '3', '2', '1'},
+                {'2', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'3', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'4', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'5', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'6', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'7', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'8', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'9', '.', '.', '.', '.', '.', '.', '.', '.'}
+        };
+        assertTrue(array.isValidSudoku(a));
     }
 
     @Test
     void testRotate() {
+        int[][] rotateArr = new int[][]{
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+        array.rotate(rotateArr);
+        for (int i = 0; i < rotateArr.length; i++) {
+            System.out.println("题目11： 旋转图像 " + Arrays.toString(rotateArr[i]));
+        }
     }
 
     @Test

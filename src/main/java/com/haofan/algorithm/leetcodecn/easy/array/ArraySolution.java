@@ -186,7 +186,8 @@ public class ArraySolution {
     }
 
     /**
-     * 题目 6：两个数组的交集 II
+     * 题目6：两个数组的交集 II
+     * <a href="https://leetcode.cn/problems/intersection-of-two-arrays-ii/description/">...</a>
      * 先将两个数组排序，然后两个指针分别指向数组1，数组2，根据两个数组的元素大小，决定是否移动指针
      */
     public int[] intersect(int[] nums1, int[] nums2) {
@@ -195,7 +196,7 @@ public class ArraySolution {
         }
         Arrays.sort(nums1);
         Arrays.sort(nums2);
-        int len = nums1.length > nums2.length ? nums2.length : nums1.length;
+        int len = Math.min(nums1.length, nums2.length);
         int[] temp = new int[len];
         int i = 0; // i 指向nums1
         int j = 0; // j 指向nums2
@@ -216,16 +217,18 @@ public class ArraySolution {
     }
 
     /**
-     * 题目7： 加一
+     * 题目7： 加一 <a href="https://leetcode.cn/problems/plus-one/">...</a>
      */
     public int[] plusOne(int[] digits) {
-        for (int i = digits.length - 1; i > 0; i--) {
-            if (digits[i] < 9) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            // 从后向前遍历，[1, 9, 9], 不等于9则直接++, 如果是9的话，则赋值成0
+            if (digits[i] != 9) {
                 digits[i]++;
                 return digits;
             }
             digits[i] = 0;
         }
+        // 针对的是[9, 9, 9] 这种case.
         int[] newDigits = new int[digits.length + 1];
         newDigits[0] = 1;
         return newDigits;
@@ -233,6 +236,7 @@ public class ArraySolution {
 
     /**
      * 题目8：移动0，类似第一个题目：从排序数组中删除重复的项
+     * <a href="https://leetcode.cn/problems/move-zeroes/description/">...</a>
      */
     public int[] moveZeroes(int[] nums) {
         if (nums == null) {
@@ -251,7 +255,7 @@ public class ArraySolution {
     }
 
     /**
-     * 题目9： 两数之和
+     * 题目9： 两数之和 <a href="https://leetcode.cn/problems/two-sum/description/">...</a>
      * 1. 常规思路：o(n的平方) 的时间复杂度，类似于冒泡排序
      * 2. 简单思路：将数组的元素和对应的index，存到Map中
      * 用target 减去 数组的每一个元素，然后将结果在map中检查是否有对应的key
@@ -275,28 +279,31 @@ public class ArraySolution {
 
     /**
      * 题目10：
-     * 有效的数独：https://blog.csdn.net/biezhihua/article/details/79648015
-     * 1. 抽象出三个二维数组，rawFlag[x][x], 表示在第x行中，出现过数字x, colFlag[][]
+     * 有效的数独：<a href="https://blog.csdn.net/biezhihua/article/details/79648015">...</a>
+     * <a href="https://leetcode.cn/problems/valid-sudoku/">...</a>
+     * 1. 抽象出三个二维数组，rawFlag[i][x], 表示在第i行中，出现过数字x, colFlag[j][x] 表示在第j列中出现过数字x
      * cellFlag[][] 表示在第几个方阵中出现过数字x
      * 2. 使用3*(i/3) + j/3 i 代表行的增加，j代表列的增加，可以知道现在处于第几个方阵
      * 3. 如果数字是char 型， 则 int c = x - '1', c 就是对应的数字
      */
     public boolean isValidSudoku(char[][] board) {
-        int len = 9;
-        boolean[][] rowFlag = new boolean[len][len];
-        boolean[][] colFlag = new boolean[len][len];
-        boolean[][] cellFlag = new boolean[len][len];
+        boolean[][] rowFlag = new boolean[9][9];
+        boolean[][] colFlag = new boolean[9][9];
+        boolean[][] cellFlag = new boolean[9][9];
 
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                if (board[i][j] >= '1' && board[i][j] <= '9') {
-                    int c = board[i][j] - '1';
-                    if (rowFlag[i][c] || colFlag[c][j] || cellFlag[3 * (i / 3) + j / 3][c]) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char c = board[i][j];
+                if (c != '.') {
+                    int num = c - '1';
+                    int cell = 3 * (i / 3) + j / 3;
+                    if (rowFlag[i][num] || colFlag[j][num] || cellFlag[cell][num]) {
                         return false;
                     }
-                    rowFlag[i][c] = true;
-                    colFlag[c][i] = true;
-                    cellFlag[3 * (i / 3) + j / 3][c] = true;
+
+                    rowFlag[i][num] = true;
+                    colFlag[j][num] = true;
+                    cellFlag[cell][num] = true;
                 }
             }
         }
@@ -305,14 +312,14 @@ public class ArraySolution {
 
     /**
      * 题目11：
-     * 旋转图像：https://blog.csdn.net/biezhihua/article/details/79653162
+     * 旋转图像：<a href="https://blog.csdn.net/biezhihua/article/details/79653162">...</a>
+     *
+     * <a href="https://leetcode.cn/problems/rotate-image/description/">...</a>
      * 解法：因为要求不能新的矩阵，所以要看看没有规律，直接调换元素。
-     * 先调换所有对角元素，再调换列元素，就得到顺时针旋转90度后的元素。
+     * 先调换所有对角元素，再上下调换列元素，就得到顺时针旋转90度后的元素。
      */
     public void rotate(int[][] matrix) {
-
         int length = matrix.length;
-
         // 调换对角元素
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length - i; j++) {
@@ -334,9 +341,13 @@ public class ArraySolution {
 
     /**
      * 题目12：输出数组中最大的连续子序列的长度
+     * <a href="https://leetcode.cn/problems/longest-consecutive-sequence/">...</a>
+     * 要求time O(N)
      * 解法：提供变量去记录之前的最大连续子序列，然后用记录的maxCount去比较即可
+     *
+     * 这个题目，没有找到leetcode对应的。
      */
-    public int getOnsecutiveMaxLen(int arr[]) {
+    public int getOnsecutiveMaxLen(int[] arr) {
         int maxCount = 0;
         for (int i = 0; i < arr.length; i++) {
             int preCount = 1;
@@ -407,57 +418,6 @@ public class ArraySolution {
     }
 
     public void main(String[] args) {
-        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-
-        // 题目4：
-        System.out.println("题目4：存在重复： " + (containsDuplicate(nums)));
-
-        // 题目5：
-        int single[] = {4, 1, 2, 1, 2};
-        System.out.println("题目5：只出现一次的数字： " + singleNumber(single));
-
-        // 题目6：
-        int[] nums1 = {1, 2, 2, 1};
-        int[] nums2 = {2, 2};
-        System.out.println("题目6： 两个数组的交集： " + Arrays.toString(intersect(nums1, nums2)));
-
-        // 题目7：
-        int[] plusOne = {1, 2, 9};
-        System.out.println("题目7： 加一： " + Arrays.toString(plusOne(plusOne)));
-
-        // 题目8：
-        int[] move = {0, 1, 0, 3, 12};
-        System.out.println("题目8： 移动0 " + Arrays.toString(moveZeroes(move)));
-
-        // 题目9：
-        int[] twosSumArr = {2, 7, 11, 15};
-        System.out.println("题目9： 两数之和 " + Arrays.toString(twoSum(twosSumArr, 9)));
-
-        // 题目10：
-        char[][] a = {
-                {'.', '8', '7', '6', '5', '4', '3', '2', '1'},
-                {'2', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'3', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'4', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'5', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'6', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'7', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'8', '.', '.', '.', '.', '.', '.', '.', '.'},
-                {'9', '.', '.', '.', '.', '.', '.', '.', '.'}
-        };
-        System.out.println("题目10： 有效的数独 " + isValidSudoku(a));
-
-        // 题目11：
-        int[][] rotateArr = new int[][]{
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
-        };
-        rotate(rotateArr);
-        for (int i = 0; i < rotateArr.length; i++) {
-            System.out.println("题目11： 旋转图像 " + Arrays.toString(rotateArr[i]));
-        }
-
         // 题目12：
         int arr[] = {1, 1, 2, 2, 3, 3, 1, 1, 1, 1};
         System.out.println("题目12：输出数组中最大的连续子序列的长度 " + getOnsecutiveMaxLen(arr));
