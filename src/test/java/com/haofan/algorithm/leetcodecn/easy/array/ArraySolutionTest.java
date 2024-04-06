@@ -117,21 +117,25 @@ class ArraySolutionTest {
 
     @Test
     void getOnsecutiveMaxLen() {
+        int[] arr = {1, 1, 2, 2, 3, 3, 1, 1, 1, 1};
+        System.out.println("题目12：输出数组中最大的连续子序列的长度 " + array.getOnsecutiveMaxLen(arr));
     }
 
     @Test
     void minSubArrayLen() {
+        int[] arr = {2, 3, 1, 2, 4, 3};
+        assertEquals(2, array.minSubArrayLen(7, arr));
     }
 
     @Test
-    void maxSubArrayAverage() {
-    }
-
-    @Test
-    void main() {
+    void findMaxAverage() {
+        int[] arr = {1,12,-5,-6,50,3};
+        assertEquals(12.75, array.findMaxAverage(arr, 4));
     }
 
     @Test
     void removeDuplicates() {
+        int[] arr = {0,0,1,1,1,2,2,3,3,4};
+        System.out.println(array.removeDuplicates(arr));
     }
 }

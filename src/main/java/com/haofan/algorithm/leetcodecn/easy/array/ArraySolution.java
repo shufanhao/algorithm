@@ -364,78 +364,65 @@ public class ArraySolution {
     }
 
     /**
-     * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组,  滑动窗口方法
+     * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组,  滑动窗口方法, 因为是正整数，可以用滑动窗口。
+     * <a href="https://leetcode.cn/problems/2VG8Kg/description/">...</a>
      * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，发现窗口内的和比目标值大时，就left ++, 小时就right++
+     * <p>
+     * Space O(1), time O(n)
      */
-    public int minSubArrayLen(int s, int[] nums) {
-        int l = 0; // left
-        int r = 0;// right
+    public int minSubArrayLen(int target, int[] nums) {
+        int minLen = nums.length + 1;
+        int l = 0;
+        int r = 0;
         int sum = 0;
-        int minLen = nums.length + 1; //不存在的case
         while (l < nums.length) {
-            if (r < nums.length && sum < s) {
+            if (r < nums.length && sum < target) {
                 sum += nums[r++];
             } else {
                 sum -= nums[l++];
             }
-            if (sum >= s) {
+
+            if (sum >= target) {
                 minLen = Math.min(minLen, r - l);
             }
         }
+
         if (minLen == nums.length + 1) {
             return 0;
         }
+
         return minLen;
     }
 
     /**
-     * 题目13：求最大平均值的连续子序列的最大平均值, 目标值是k
-     * 解法：
-     * 如果K=1, 结果肯定是最大的那个值
-     * 如果K>1, 结果肯定是连续2个的序列比3个的子序列的平均值要大
+     * 题目13： <a href="https://leetcode.cn/problems/maximum-average-subarray-i/">...</a>
+     * 给一个由 n 个元素组成的整数数组 nums 和一个整数 k 。
+     * <p>
+     * 请你找出平均数最大且 长度为 k 的连续子数组，并输出该最大平均数。
+     *
+     * 输入：nums = [1,12,-5,-6,50,3], k = 4
+     * 输出：12.75
+     * 解释：最大平均数 (12-5-6+50)/4 = 51/4 = 12.75
+     *
+     * 关键的是：sum_i = sums_i-1 - nums[i-k]+ nums[i] 这样可以节省time
+     *
      */
-    public int maxSubArrayAverage(int k, int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
+    public double findMaxAverage(int[] nums, int k) {
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
         }
-        if (k > nums.length) {
-            return 0;
-        }
-        if (k == 1) {
-            Arrays.sort(nums);
-            return nums[nums.length - 1];
-        } else {
-            // if k > 1, 那肯定是连续2个的序列比3个的子序列的平均值要大
-            int sum = 0;
-            int tempMax = nums[0] + nums[1];
-            for (int j = 2; j < nums.length; j++) {
-                sum = nums[j - 1] + nums[j];
-                tempMax = Math.max(tempMax, sum);
-            }
-            return (tempMax / 2);
+        int maxSum = sum;
+        for (int i = k; i < nums.length ; i++) {
+            sum = sum - nums[i - k] + nums[i];
+            maxSum = Math.max(maxSum, sum);
         }
 
-    }
-
-    public void main(String[] args) {
-        // 题目12：
-        int arr[] = {1, 1, 2, 2, 3, 3, 1, 1, 1, 1};
-        System.out.println("题目12：输出数组中最大的连续子序列的长度 " + getOnsecutiveMaxLen(arr));
-
-        // 题目13：
-        int arr_13[] = {2, 3, 1, 2, 4, 3};
-        System.out.println("题目13：长度最小的子数组 " + minSubArrayLen(7, arr_13));
-
-        // 题目14：
-        int arr_14[] = {-1, 1, 2, 4};
-        System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(1, arr_14));
-
-        System.out.println("题目14：求最大平均值的连续子序列的最大平均值 " + maxSubArrayAverage(3, arr_14));
-
+        return 1.0 * maxSum / k;
     }
 
     /**
-     * 题目1.1: 从排序数组中删除重复项, 快慢指针
+     * 题目14: 删除有序数组中的重复项
      * 分别用两个指针，i,j 去移动，不相等的话，指针i++
      */
     public int removeDuplicates(int[] nums) {
