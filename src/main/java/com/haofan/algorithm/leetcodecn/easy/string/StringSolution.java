@@ -10,10 +10,6 @@ public class StringSolution {
     public static void main(String args[]) {
         StringSolution ss = new StringSolution();
 
-        System.out.println("题目8： " + ss.countAndSay(4));
-
-        String[] s = {"flower", "flow", "flight"};
-        System.out.println("题目9： " + ss.longestCommonPrefix(s));
     }
 
     /**
@@ -160,6 +156,7 @@ public class StringSolution {
      * 题目8：数数并说 <a href="https://leetcode.cn/problems/count-and-say/description/?utm_source=LCUS&utm_medium=ip_redirect&utm_campaign=transfer2china">...</a>
      * 并说：超过1个相同的数字连在一起时，并说，也就是”几个几“
      * 不并说：前后数字不同时，不并说，需要单说，也就是”一个几“
+     * 从1开始一直到n 循环
      */
     public String countAndSay(int n) {
 
@@ -169,6 +166,7 @@ public class StringSolution {
         for (int i = 1; i < n; i++) {
             StringBuilder builder = new StringBuilder();
             int index = 0;
+            // 假设结果 result = 1211, 那么预期输出是1个1，,1个2，,2个1
             while (index < result.length()) {
                 // 记录值
                 char val = result.charAt(index);
@@ -192,7 +190,7 @@ public class StringSolution {
     }
 
     /**
-     * 题目9：最长公共前缀
+     * 题目9：最长公共前缀 <a href="https://leetcode.cn/problems/longest-common-prefix/description/">...</a>
      * 思路：先排序，然后用字符串数组的第一个和最后一个比较
      */
     public String longestCommonPrefix(String[] strs) {

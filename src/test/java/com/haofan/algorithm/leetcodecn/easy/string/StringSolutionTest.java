@@ -1,13 +1,9 @@
 package com.haofan.algorithm.leetcodecn.easy.string;
 
-import com.haofan.algorithm.leetcodecn.easy.string.StringSolution;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 
 class StringSolutionTest {
@@ -36,14 +32,6 @@ class StringSolutionTest {
     }
 
     @Test
-    void isPalindrome() {
-    }
-
-    @Test
-    void isNumOrAlph() {
-    }
-
-    @Test
     void myAtoi() {
         Assertions.assertEquals(4193, s.myAtoi("  4193 with words"));
     }
@@ -55,9 +43,11 @@ class StringSolutionTest {
 
     @Test
     void countAndSay() {
+        Assertions.assertEquals("1211", s.countAndSay(4));
     }
 
     @Test
     void longestCommonPrefix() {
+        Assertions.assertEquals("fl", s.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
     }
 }
