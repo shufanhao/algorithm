@@ -2,6 +2,8 @@ package com.haofan.algorithm.offer.List;
 
 import com.haofan.algorithm.help.ListNode;
 
+import java.util.List;
+
 public class ListSolution {
     /**
      * 理解哨兵节点
@@ -30,7 +32,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题1： 删除链表的倒数第k个节点
+     * 面试题21：删除链表的倒数第k个节点
      * <p>
      * 解法：
      * 删除倒数第k个节点，主要要找到第k+1个节点即可。
