@@ -59,7 +59,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题2：链表中环的入口节点
+     * 面试题22：链表中环的入口节点  <a href="https://leetcode.cn/problems/c32eOV/">...</a>
      * <p>
      * 如果链表中有环，那么应该如何找出环的入口节点。
      * ----------------
@@ -97,7 +97,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题3：两个链表的第一个重合点，如下 找出 第一个重合点 4
+     * 面试题23：两个链表的第一个重合点，如下 找出 第一个重合点 4 <a href="https://leetcode.cn/problems/3u1WK4/">...</a>
      * 1 -> 2 -> 3 ->
      * 4 -> 5 -> 6
      * 7 -> 8 ->
@@ -124,7 +124,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题4：翻转链表
+     * 面试题24：翻转链表
      * 1 -> 2 -> 3  翻转成 1 <- 2 <- 3
      */
     public ListNode reverseList(ListNode head) {
@@ -141,14 +141,14 @@ public class ListSolution {
     }
 
     /**
-     * 面试题5：链表中的数字相加
+     * 面试题25：链表中的数字相加 <a href="https://leetcode.cn/problems/lMSNwu/">...</a>
      * 给定两个表示非负整数的单向链表，如何实现这两个链表的相加，并且把他们的和仍然用单向链表表示？
      * 如：9 -> 8 -> 4        4 ->8 -> 9
      * 1 -> 8            8 -> 1
      * 结果应该是  2 -> 0 -> 0 -> 1，再翻转后 是1 -> 0 -> 0 -> 2
      * 解法：
      * 1. 如果单纯的把链表转成整数相加的话，如果链表很长有可能会溢出。
-     * 2. 所以还是先把链表反转，然后最后从第一个元素开始相加，并且进位的方式
+     * 2. 所以还是先把链表反转，然后最后从第一个元素开始相加，并且进位的方式，拿到结果后再反转。
      */
     public ListNode addTwoNumbers(ListNode head1, ListNode head2) {
         head1 = reverseList(head1);
@@ -163,11 +163,8 @@ public class ListSolution {
         int carry = 0;
         while (head1 != null || head2 != null) {
             int sum = (head1 == null ? 0 : head1.val) + (head2 == null ? 0 : head2.val) + carry;
-            carry = sum >= 10 ? 1 : 0;
-            sum = sum >= 10 ? sum - 10 : sum;
-            ListNode newNode = new ListNode(sum);
-
-            sumNode.next = newNode;
+            carry = sum / 10;
+            sumNode.next = new ListNode(sum % 10);
             sumNode = sumNode.next;
 
             head1 = head1 == null ? null : head1.next;
@@ -180,7 +177,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题6：重排链表
+     * 面试题6：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
      * 重排链表: 1 -> 2 -> 3 -> 4 -> 5 -> 6
      * 重排成：1 -> 6 -> 2 -> 5 -> 3 -> 4
      * <p>
@@ -195,11 +192,8 @@ public class ListSolution {
         ListNode slow = dummy;
         while (fast != null && fast.next != null) {
             slow = slow.next;
-            fast = fast.next;
+            fast = fast.next.next;
             // fast 走两步，slow 走一步，然后fast到终点后，slow后面的就是后半段
-            if (fast.next != null) {
-                fast = fast.next;
-            }
         }
         ListNode temp = slow.next;
         slow.next = null;
@@ -211,15 +205,17 @@ public class ListSolution {
     private void link(ListNode node1, ListNode node2, ListNode head) {
         ListNode prev = head;
         while (node1 != null && node2 != null) {
-            ListNode temp = node1.next;
+            ListNode temp = node1.next; // 保存node1的下一个节点
 
-            // 这个地方不是很理解
+            // 将node1链接到prev后面
             prev.next = node1;
+            // 将node2链接到node1后面
             node1.next = node2;
+            // 更新prev为node2，以便下一次循环时链接node1的下一个节点
             prev = node2;
 
-            node1 = temp;
-            node2 = node2.next;
+            node1 = temp; // 移动node1到它的下一个节点
+            node2 = node2.next; // 移动node2到它的下一个节点
         }
 
         if (node1 != null) {
@@ -237,7 +233,6 @@ public class ListSolution {
         return count;
     }
 
-    // 一块一慢指针，找到环中的一个节点。
     private ListNode getNodeInLoop(ListNode head) {
         if (head == null || head.next == null) {
             return null;

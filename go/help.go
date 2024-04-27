@@ -17,6 +17,15 @@ func CreateLinkedList(values []int) *ListNode {
 	return dummy.Next
 }
 
+func ListToSlice(head *ListNode) []int {
+	var result []int
+	for head != nil {
+		result = append(result, head.Val)
+		head = head.Next
+	}
+	return result
+}
+
 func PrintLinkedList(head *ListNode) {
 	current := head
 	for current != nil {
@@ -24,6 +33,15 @@ func PrintLinkedList(head *ListNode) {
 		current = current.Next
 	}
 	fmt.Println()
+}
+
+func CountList(head *ListNode) int {
+	count := 0
+	for head != nil {
+		head = head.Next
+		count++
+	}
+	return count
 }
 
 func listEquals(a, b *ListNode) bool {
