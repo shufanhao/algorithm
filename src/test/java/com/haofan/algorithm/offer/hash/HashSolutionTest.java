@@ -19,6 +19,14 @@ class HashSolutionTest {
     }
 
     @Test
+    void lruCache() {
+        HashSolution.LRUCache obj = new HashSolution.LRUCache(10);
+        obj.put(1, 1);
+        obj.put(2, 2);
+        obj.put(3, 3);
+        Assertions.assertEquals(2, obj.get(2));
+    }
+    @Test
     void groupAnagrams() {
         String[] strs = new String[] {"eat", "tea", "nat", "tan", "bat", "ate"};
         System.out.println(hashSolution.groupAnagrams(strs));
