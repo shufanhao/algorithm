@@ -71,3 +71,7 @@ func Test_reorderList(t *testing.T) {
 	resList := reorderList(_go.CreateLinkedList([]int{1, 2, 3, 4, 5, 6}))
 	assert.Equal(t, []int{1, 6, 2, 5, 3, 4}, _go.ListToSlice(resList))
 }
+
+func Test_isPalindrome(t *testing.T) {
+	assert.Equal(t, true, isPalindrome(_go.CreateLinkedList([]int{1, 2, 3, 3, 2, 1})))
+}

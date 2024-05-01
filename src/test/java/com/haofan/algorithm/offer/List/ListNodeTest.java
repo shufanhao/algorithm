@@ -12,7 +12,7 @@ class ListNodeTest {
 
     @Test
     void delete() {
-        Assertions.assertArrayEquals(new int[]{4, 6, 8}, listToArray(list.delete(arrayToList(new int[]{4, 5, 6, 8}),5)));
+        Assertions.assertArrayEquals(new int[]{4, 5, 6}, listToArray(list.delete(arrayToList(new int[]{4, 5, 6, 8}),8)));
     }
 
     @Test

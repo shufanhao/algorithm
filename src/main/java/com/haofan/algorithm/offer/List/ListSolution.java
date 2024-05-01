@@ -177,7 +177,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题6：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
+     * 面试题26：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
      * 重排链表: 1 -> 2 -> 3 -> 4 -> 5 -> 6
      * 重排成：1 -> 6 -> 2 -> 5 -> 3 -> 4
      * <p>
@@ -255,7 +255,7 @@ public class ListSolution {
 
 
     /**
-     * 面试题7：回文链表
+     * 面试题27：回文链表 <a href="https://leetcode.cn/problems/aMhZSa/">...</a>
      * 1 -> 2 -> 3 -> 3 -> 2 -> 1
      * <p>
      * 解法和上面的类似：
@@ -263,19 +263,21 @@ public class ListSolution {
      * 2. 判断反转后的链表和前半部分链表是否相同
      */
     public boolean isPalindrome(ListNode head) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode fast = dummy;
-        ListNode slow = dummy;
-        while (fast != null && fast.next != null) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
-            fast = fast.next;
-            // fast 走两步，slow 走一步，然后fast到终点后，slow后面的就是后半段
-            if (fast.next != null) {
-                fast = fast.next;
-            }
+            fast = fast.next.next;
         }
         ListNode secondHalf = slow.next;
+        if (fast.next != null) {
+            secondHalf = slow.next.next;
+        }
         slow.next = null;
         return equals(head, reverseList(secondHalf));
     }

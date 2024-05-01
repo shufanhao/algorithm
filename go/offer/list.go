@@ -185,7 +185,7 @@ func addReversed(l1 *_go.ListNode, l2 *_go.ListNode) *_go.ListNode {
 }
 
 /**
- * 面试题6：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
+ * 面试题26：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
  * 重排链表: 1 -> 2 -> 3 -> 4 -> 5 -> 6
  * 重排成：1 -> 6 -> 2 -> 5 -> 3 -> 4
  * <p>
@@ -234,4 +234,30 @@ func link(node1 *_go.ListNode, node2 *_go.ListNode, start *_go.ListNode) {
 	if node1 != nil {
 		prev.Next = node1
 	}
+}
+
+/**
+ * 判断是否是回文链表, 1, 2, 3, 3, 2, 1 假设是
+ * [1,0,1]
+ */
+func isPalindrome(head *_go.ListNode) bool {
+	if head == nil || head.Next == nil {
+		return true
+	}
+
+	slow := head      // slow: 1
+	fast := head.Next // fast 0
+	for fast.Next != nil && fast.Next.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+
+	secondHalf := slow.Next
+	if fast.Next != nil {
+		secondHalf = slow.Next.Next
+	}
+
+	slow.Next = nil
+
+	return _go.ListEquals(secondHalf, reverseList(head))
 }

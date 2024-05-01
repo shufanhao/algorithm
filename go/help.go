@@ -44,7 +44,7 @@ func CountList(head *ListNode) int {
 	return count
 }
 
-func listEquals(a, b *ListNode) bool {
+func ListEquals(a, b *ListNode) bool {
 	for a != nil && b != nil {
 		if a.Val != b.Val {
 			return false
