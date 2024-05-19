@@ -52,7 +52,7 @@ public class HashSolution {
     }
 
     /**
-     * 面试题32：LRU缓存的实现
+     * 面试题31：LRU缓存的实现
      * get(key), 如果缓存中之前包含key，则返回值。
      * put(key, value), 如果缓存中包含键，则返回value，如果不包含，则添加，如果容量满了，则添加新的key之前，删除最近最少使用的key
      * <p>
@@ -128,8 +128,9 @@ public class HashSolution {
         }
     }
 
+
     /**
-     * 面试题3：变位词组，互为变位词的是一组
+     * 面试题32：变位词组，互为变位词的是一组
      * 输入一组单词，[eat, tea, nat, tan, bat, ate] 这组单词可以分成3组，分别是eat, tea, ate, 和 tan, nat 和bat
      * <p>
      * 思路：

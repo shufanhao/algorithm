@@ -86,6 +86,9 @@ public class StringSolution {
      * 然后遍历26个英文字母判断是否有不是0的case
      */
     public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length() || s.length() == 1 || s.equals(t)) {
+            return false;
+        }
         int[] array = new int[26];
         for (int i = 0; i < s.length(); i++) {
             array[s.charAt(i) - 'a']++;
