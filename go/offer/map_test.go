@@ -2,8 +2,9 @@ package offer
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_randomizedSet(t *testing.T) {
