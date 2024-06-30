@@ -1,6 +1,7 @@
 package com.haofan.algorithm.queue;
 
 import com.haofan.algorithm.help.TreeNode;
+import com.haofan.algorithm.offer.queue.QueueSolution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
