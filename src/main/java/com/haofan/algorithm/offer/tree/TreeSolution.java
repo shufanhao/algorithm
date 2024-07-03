@@ -77,13 +77,105 @@ public class TreeSolution {
     }
 
     /**
-     * 面试题3：二叉树剪枝
+     * 前序遍历，中序遍历，后序遍历更加容易的解法：
+     * https://leetcode.cn/problems/binary-tree-inorder-traversal/solutions/25220/yan-se-biao-ji-fa-yi-chong-tong-yong-qie-jian-ming/
+     * 前序：加入栈的顺序是右左根（根左右的反向）。
+     * 中序，加入栈的顺序是右根左（左根右的反向）。
+     * 后序，加入栈的顺序是根右左（左右根的反向）。
+     *
+     * 思路：
+     * 使用颜色标记节点的状态，新节点为白色，已访问的节点为灰色。
+     * 如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈，中序遍历
+     * 如果遇到的节点为灰色，则将节点的值输出。
+     *
+     * 这种方法本质上是给 TreeNode 类添加了一个访问控制变量，对于没访问过的节点，先放入栈中，第二次访问的时候再出栈。
+     */
+    public List<Integer> middleTraversal(TreeNode root) {
+        if(root == null) return new ArrayList<Integer>();
+
+        List<Integer> res = new ArrayList<>();
+        Stack<ColorNode> stack = new Stack<>();
+        stack.push(new ColorNode(root,"white"));
+
+        while(!stack.empty()){
+            ColorNode cn = stack.pop();
+            if(cn.color.equals("white")){
+                // 中序遍历
+                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
+                stack.push(new ColorNode(cn.node,"gray"));
+                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
+                // 前序遍历 右左根
+                // 后序遍历 根右左
+            } else {
+                res.add(cn.node.val);
+            }
+        }
+
+        return res;
+    }
+    // 前序遍历
+    public List<Integer> beforeTraversal(TreeNode root) {
+        if(root == null) return new ArrayList<Integer>();
+
+        List<Integer> res = new ArrayList<>();
+        Stack<ColorNode> stack = new Stack<>();
+        stack.push(new ColorNode(root,"white"));
+
+        while(!stack.empty()){
+            ColorNode cn = stack.pop();
+            if(cn.color.equals("white")){
+                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
+                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
+                stack.push(new ColorNode(cn.node,"gray"));
+                // 前序遍历 右左根
+                // 后序遍历 根右左
+            } else {
+                res.add(cn.node.val);
+            }
+        }
+
+        return res;
+    }
+    // 后序遍历
+    public List<Integer> afterTraversal(TreeNode root) {
+        if(root == null) return new ArrayList<Integer>();
+
+        List<Integer> res = new ArrayList<>();
+        Stack<ColorNode> stack = new Stack<>();
+        stack.push(new ColorNode(root,"white"));
+
+        while(!stack.empty()){
+            ColorNode cn = stack.pop();
+            if(cn.color.equals("white")){
+                stack.push(new ColorNode(cn.node,"gray"));
+                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
+                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
+            } else {
+                res.add(cn.node.val);
+            }
+        }
+
+        return res;
+    }
+
+    static class ColorNode {
+        TreeNode node;
+        String color;
+
+        public ColorNode(TreeNode node,String color){
+            this.node = node;
+            this.color = color;
+        }
+    }
+
+    /**
+     * 面试题47：二叉树剪枝
      * 给你二叉树的根结点 root ，此外树的每个结点的值要么是 0 ，要么是 1 。
      * 返回移除了所有不包含 1 的子树的原二叉树。
      * <p>
-     * 解法：什么样的树可以剪枝 ？ 本节点是0，并且其所有子节点也是0的二叉树。
+     * 解法：什么样的树可以剪枝? 本节点是0，并且其所有子节点也是0的二叉树。
      * <p>
-     * 正好适合后序遍历
+     * 正好适合后序遍历。后序遍历的时候，如果每遍历到一个节点，如果左右子树是空的，并且该节点是0，则可以置为空
      */
     public TreeNode pruneTree(TreeNode root) {
         if (root == null) {
@@ -101,13 +193,13 @@ public class TreeSolution {
     }
 
     /**
-     * 面试题4：从根节点到叶节点的路径数字之和
+     * 面试题49：从根节点到叶节点的路径数字之和
      * <p>
      * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。每条从根节点到叶节点的路径都代表一个数字：
      * <p>
      * 例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123 。计算从根节点到叶节点生成的 所有数字之和。
      * <p>
-     * 解法：二叉树前序遍历即可。
+     * 解法：二叉树前序遍历即可。但是有点儿不太好理解呢
      */
     public int sumNumbers(TreeNode root) {
         return dfsSum(root, 0);
@@ -153,31 +245,56 @@ public class TreeSolution {
      * 将一个二叉搜索树，展平
      * <p>
      * 解法：其实就是一个中序遍历，改改。
-     */
-    public TreeNode increaseBST(TreeNode root) {
-        // Todo
-        return null;
+     * /**
+     *      * Build Search Tree
+     *      *  3
+     *      * / \
+     *      *1  4
+     *      * \
+     *      *  2
+     *      */
+    public TreeNode increasingBST(TreeNode root) {
+        if (root == null) return null;
+
+        Stack<ColorNode> stack = new Stack<>();
+
+        TreeNode dummy = new TreeNode(0);
+        TreeNode curr = dummy;
+
+        stack.push(new ColorNode(root, "white"));
+
+        while (!stack.isEmpty()) {
+            ColorNode node = stack.pop();
+            if (node.color.equals("white")) {
+                // 中序遍历: left, node, right
+                if (node.node.right != null) stack.push(new ColorNode(node.node.right, "white"));
+                stack.push(new ColorNode(node.node, "gray"));
+                if (node.node.left != null) stack.push(new ColorNode(node.node.left, "white"));
+            } else {
+                curr.right = new TreeNode(node.node.val);
+                curr = curr.right;
+            }
+        }
+        return dummy.right;
     }
 
     /**
      * 面试题7：二叉搜索树的下一个节点
      * 其实就是找到中序遍历的对应的节点的，下一个节点。
      * <p>
-     * 解法1：通过stack的方式进行中序遍历, 知道找到节点，时间复杂度O(N)
-     * 解法2：因为是平衡二叉树，所以left < root < right, 所以二叉树的下一个节点，一定是right tree中最小的一个
+     * 解法1：通过stack的方式进行中序遍历, 直到找到节点，时间复杂度O(N)
+     * 解法2：因为是平衡二叉树，所以left < root < right, 所以二叉树的下一个节点，一定是right tree中最小的一个, 时间：O(h), 空间O(1)
      */
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         TreeNode cur = root;
         TreeNode result = null;
         while (cur != null) {
             if (cur.val < p.val) {
-                // 找left tree
                 cur = cur.right;
             } else {
                 cur = cur.left;
                 // 下面这段，在剑指offer书中，说的是要在上面。
                 result = cur;
-            }
         }
         return result;
     }

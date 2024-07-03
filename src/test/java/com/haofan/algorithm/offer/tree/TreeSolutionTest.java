@@ -1,7 +1,10 @@
 package com.haofan.algorithm.offer.tree;
 
 import com.haofan.algorithm.help.TreeNode;
+import com.sun.source.tree.Tree;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +22,27 @@ class TreeSolutionTest {
     }
 
     @Test
+    void middleTraversal() {
+        assertArrayEquals(new Object[]{9, 10, 15, 20, 7}, tree.middleTraversal(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void beforeTraversal() {
+        assertArrayEquals(new Object[]{10, 9, 20, 15, 7}, tree.beforeTraversal(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void afterTraversal() {
+        assertArrayEquals(new Object[]{9, 15, 7, 20, 10}, tree.afterTraversal(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void pruneTree1() {
+        TreeNode root = tree.pruneTree(TreeNode.build01Tree());
+        assertNull(root.left);
+    }
+
+    @Test
     void sumNumbers() {
         assertEquals(2531, tree.sumNumbers(TreeNode.buildTreeNode()));
     }
@@ -28,6 +52,11 @@ class TreeSolutionTest {
         assertEquals(2, tree.searchBST(TreeNode.buildSearchTree(), 2).val);
     }
 
+    @Test
+    void increasingBST() {
+        TreeNode root = tree.increasingBST(TreeNode.buildSearchTree());
+        assertEquals(1, root.val);
+    }
     @Test
     void inorderSuccessor() {
         assertEquals(null, tree.inorderSuccessor(TreeNode.buildSearchTree(), TreeNode.buildSearchTree().right));
