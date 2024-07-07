@@ -3,10 +3,7 @@ package com.haofan.algorithm.offer.sort;
 import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.leetcodecn.easy.array.ArraySolution;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.haofan.algorithm.help.Common.swap;
 
@@ -15,7 +12,8 @@ public class SortSolution {
      * 面试题1：合并区间
      * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
      * <p>
-     * 输入：intervals = [[1,3],[8,10],[2,6]，[15,18]]
+     * 输入：intervals = [
+     *      [1,3],[8,10],[2,6]，[15,18]]
      * 输出：[[1,6],[8,10],[15,18]]
      * 解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
      * <p>
@@ -31,7 +29,7 @@ public class SortSolution {
 
         int i = 0;
         while (i < intervals.length) {
-            // 第一个元素
+            // 第一个元素， int[] temp = [1, 3]
             int[] temp = new int[]{intervals[i][0], intervals[i][1]};
             int j = i + 1;
             while (j < intervals.length && intervals[j][0] <= temp[1]) {
@@ -51,6 +49,7 @@ public class SortSolution {
      * <p>
      * 解法：先统计每个数组中每个整数在数组中出现的次数，然后按照从小到大顺序填入数组中。
      * 如: [2, 3, 2, 3, 2, 1]，1出现了1次，2出现3次，3出现2次。，所以依次在数组中填入1个1，,3个2，,2个3。
+     * 是不是 放到map中更加简单呢？
      */
     public int[] sortArray(int[] nums) {
         int min = Integer.MAX_VALUE;
@@ -80,7 +79,7 @@ public class SortSolution {
     }
 
     /**
-     * 面试题3：数组相对排序(<a href="https://leetcode.cn/problems/relative-sort-array/">link</a>)
+     * 面试题75：数组相对排序(<a href="https://leetcode.cn/problems/relative-sort-array/">link</a>)
      * <p>
      * 两个数组，arr1 和arr2，arr2中的元素各不相同，arr2 中的每个元素都出现在arr1中。
      * <p>
@@ -117,10 +116,48 @@ public class SortSolution {
      * 面试题4：快速排序
      * <p>
      * 思路：分治法。
-     * 1. 输入数组中，随机选取一个元素作为中间值(pivot)，然后对数组进行分区(partition)，使所有比中间小的数据移到数组的左边，所有比中间大的数据移到数组的右边。
-     * 2. 接下来再对中间值左右两侧的子数组再用相同的step排序，直到子数组个数为1
+     * <a href="https://www.bilibili.com/video/BV1j841197rQ/">...</a>
+     *
+     * 基本思想是 找出一个基准元素，然后排序完后，基准元素左边都比基准小，基本右边，都比基准大。
+     * 思路：左右指针，找出第一个元素是基准元素，然后右指针开始左移，直到找到一个比基准元素小的，然后交换位置
+     *     ，然后左指针开始右移，直到找到一个比基准元素大的，然后交换位置，最终，基准元素左边都比基准小，右边，都比基准大。
      */
-    public int[] sortArrayQuick(int[] nums) {
+    public void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // pi是partition的索引，arr[pi]现在位于正确的位置
+            int pi = partition(arr, low, high);
+
+            // 分别对基准值前后的子数组进行排序
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    // 这个函数用于分区操作，返回基准值的最终位置
+    private int partition(int[] arr, int low, int high) {
+        int pivot = arr[low]; // 选择第一个元素作为基准值
+        while (low < high) {
+            // 从后向前找第一个小于等于pivot的元素
+            while (low < high && arr[high] > pivot) {
+                high--;
+            }
+            // 将这个元素放到它应该在的位置
+            arr[low] = arr[high];
+
+            // 从前向后找第一个大于pivot的元素
+            while (low < high && arr[low] <= pivot) {
+                low++;
+            }
+            // 将这个元素放到它应该在的位置
+            arr[high] = arr[low];
+        }
+
+        // 将基准值放到中间
+        arr[low] = pivot;
+        return low;
+    }
+
+   /* public int[] sortArrayQuick(int[] nums) {
         quickSort(nums, 0, nums.length - 1);
         return nums;
     }
@@ -153,15 +190,15 @@ public class SortSolution {
         swap(nums, small, end);
         return small;
     }
-
+*/
     /**
      * 面试题5：归并排序 数组
-     *
+     * 参考MergeSort
      */
     // TODO
 
     /**
-     * 面试题5：排序链表
+     * 面试题77：排序链表
      * <p>
      * 如果是用快排的话，因为要随机取出一个值，但是随机从链表中取出一个值的复杂度是O(N)
      * 如果用归并排序的话，就不用随机取出。并且不像数组一样要创建一个新的数组，节省了空间复杂度
@@ -214,6 +251,47 @@ public class SortSolution {
         }
 
         cur.next = head1 == null ? head2 : head1;
+        return dummy.next;
+    }
+
+    /**
+     * 面试题78: 合并排序链表
+     *
+     * 输入k个排序的链表，请将他们合并成一个排序的链表。
+     *
+     * 1 -> 4 -> 7
+     * 2 -> 5 -> 8
+     * 3 -> 6 -> 9
+     * 合并之后:
+     * 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
+     *
+     * 思路：可以用最小堆来实现，因为目的是每次从三个排序链表中取出最小值，来构建新的排序后的链表。
+     *
+     * Time: nlogk, 排序链表一共是n个节点，堆的大小是k。
+     * Space: O(k)
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>((n1, n2) -> (n1.val - n2.val));
+
+        for (ListNode list : lists) {
+            if (list != null) {
+                minHeap.offer(list);
+            }
+        }
+
+        while (!minHeap.isEmpty()) {
+            ListNode least = minHeap.poll();
+            cur.next = least;
+            cur = least;
+
+            if (least.next != null) {
+                minHeap.offer(least.next);
+            }
+        }
+
         return dummy.next;
     }
 }

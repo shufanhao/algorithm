@@ -40,9 +40,9 @@ public class MergeSort {
     }
 
     public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
-        int i = left;
-        int j = mid + 1;
-        int t = 0;
+        int i = left; //左序列指针
+        int j = mid + 1; //右序列指针
+        int t = 0; //临时数组指针
         while (i <= mid && j <= right) {
             if (arr[i] <= arr[j]) {
                 temp[t++] = arr[i++];

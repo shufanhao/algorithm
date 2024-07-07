@@ -30,12 +30,21 @@ class SortSolutionTest {
     }
 
     @Test
-    void sortArrayQuick() {
-        System.out.println(Arrays.toString(sort.sortArrayQuick(new int[]{4, 3, 2, 8})));
+    void quickSort() {
+        int[] raw = new int[]{3, 5, 4, 7, 6};
+        sort.quickSort(raw, 0, 4);
+        System.out.println(Arrays.toString(raw));
     }
 
     @Test
     void sortList() {
         sort.sortList(ListNode.arrayToList(new int[]{4, 3, 2, 8}));
+    }
+
+    @Test
+    void mergeKLists() {
+        ListNode[] lists = new ListNode[]{ListNode.arrayToList(new int[]{1, 4, 7}), ListNode.arrayToList(new int[]{2, 5, 8})};
+        ListNode result = sort.mergeKLists(lists);
+        assertArrayEquals(new int[]{1, 2, 4, 5, 7, 8}, ListNode.listToArray(result));
     }
 }
