@@ -44,6 +44,10 @@ public class ArraySolutionMedium {
         int nums[] = {1, 2, 3};
         System.out.println("题目7: ");
         array.permute(nums);
+
+        int height[] = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+        System.out.println("题目11：" + array.maxArea(height));
+
     }
 
     /**
@@ -142,7 +146,7 @@ public class ArraySolutionMedium {
     }
 
     /**
-     * 题目3：字谜数组
+     * 题目3：字母异味词分组
      * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
      * 思路：将字符串转成字符数组，并排序，然后放入key中，判断map中是否要该key
      */
@@ -175,23 +179,23 @@ public class ArraySolutionMedium {
      * 最终可以O（n）
      */
     public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.isEmpty()) {
             return 0;
         }
         boolean[] chars = new boolean[256]; // 256 ASCII code
-        int rst = 0;
-        int start = 0;
-        int end = 0;
-        while (start < s.length()) {
-            while (end < s.length() && !chars[s.charAt(end)]) {
-                chars[s.charAt(end)] = true;
-                rst = Math.max(rst, end - start + 1);
-                end++;
+        int longest = 0;
+        int left = 0;
+        int right = 0;
+        while (left < s.length()) {
+            while (right < s.length() && !chars[s.charAt(right)]) {
+                chars[s.charAt(right)] = true;
+                longest = Math.max(longest, right - left + 1);
+                right++;
             }
-            chars[s.charAt(start)] = false; // 这个地方是关键
-            start++;
+            chars[s.charAt(left)] = false; // 这个地方是关键
+            left++;
         }
-        return rst;
+        return longest;
     }
 
     /**
@@ -202,7 +206,7 @@ public class ArraySolutionMedium {
      */
     public String longestPalindrome(String s) {
         if (s == null) return null;
-        if (s.length() == 0) return "";
+
         String longest = s.substring(0, 1);
         String temp;
         for (int i = 0; i < s.length(); i++) {
@@ -248,12 +252,12 @@ public class ArraySolutionMedium {
 
     /**
      * 全排列, 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
-     *
+     * <p>
      * 以{1,2,3}为例，它的排列是：
      * 以1开头，后面接着{2,3}的全排列，
      * 以2开头，后面接着{1,3}的全排列，
      * 以3开头，后面接着{1,2}的全排列。
-     *
+     * <p>
      * 输入：nums = [1,2,3]
      * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
      */
@@ -287,6 +291,175 @@ public class ArraySolutionMedium {
             numState[i] = false;
             tempList.removeLast();
         }
+    }
+
+    /**
+     * 面试题11: https://leetcode.cn/problems/container-with-most-water/description/
+     * <p>
+     * 盛最多水的容器
+     */
+    public int maxArea(int[] height) {
+        if (height == null) {
+            return 0;
+        }
+
+        int left = 0;
+        int right = height.length - 1;
+        int maxWater = 0;
+        while (left < right) {
+            int min = Math.min(height[left], height[right]);
+            maxWater = Math.max(min * (right - left), maxWater);
+            if (height[left] == min) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxWater;
+    }
+
+    /**
+     * 面试题31： 下一个排列
+     * <a href="https://leetcode.cn/problems/next-permutation/solutions/80560/xia-yi-ge-pai-lie-suan-fa-xiang-jie-si-lu-tui-dao-/">...</a>
+     * 解法，找规律
+     */
+    public void nextPermutation(int[] nums) {
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+
+        int i = nums.length - 2;
+        int j = nums.length - 1;
+
+        // 从右向左找到第一个满足递增的元素对 (nums[i] < nums[j])
+        while (i >= 0 && nums[i] >= nums[j]) {
+            i--;
+            j--;
+        }
+
+        if (i > 0) {
+            // 找到了
+            int k = nums.length - 1;
+            // 从右向左找到第一个大于 nums[i] 的元素 nums[k]
+            while (nums[i] >= nums[k]) {
+                k--;
+            }
+
+            // 交换 nums[i] 和 nums[k]
+            int temp = nums[i];
+            nums[i] = nums[k];
+            nums[k] = temp;
+        }
+
+        // 反转从 j 开始的剩余部分
+        int left = j;
+        int right = nums.length - 1;
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    /**
+     * 面试题32. 最长有效括号
+     * <a href="https://leetcode.cn/problems/longest-valid-parentheses/description/">...</a>
+     * <p>
+     * 容易理解：<a href="https://leetcode.cn/problems/longest-valid-parentheses/solutions/2719468/chao-jian-dan-fang-fa-zhi-hui-gua-hao-pi-nbby/">...</a>
+     */
+    public int longestValidParentheses(String s) {
+        if (s == null || s.length() == 1) {
+            return 0;
+        }
+
+        int[] temp = new int[s.length()];
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                if (!stack.isEmpty()) {
+                    int j = stack.pop();
+                    if (s.charAt(j) == '(') {
+                        temp[i] = 1;
+                        temp[j] = 1; // 匹配成功
+                    }
+                }
+            }
+        }
+
+        int cur = 0;
+        int maxLength = 0;
+        for (int num : temp) {
+            if (num == 1) {
+                cur ++;
+            } else {
+                maxLength = Math.max(cur, maxLength);
+                cur = 0;
+            }
+        }
+
+        return Math.max(cur, maxLength);
+    }
+
+
+    /**
+     * 面试题33：搜索旋转排序数组
+     * <a href="https://leetcode.cn/problems/search-in-rotated-sorted-array/description/">...</a>
+     * 思路：二分法查找
+     */
+
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 0) {
+            return -1;
+        }
+        if (n == 1) {
+            return nums[0] == target ? 0 : -1;
+        }
+        int l = 0, r = n - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[0] <= nums[mid]) {
+                if (nums[0] <= target && target < nums[mid]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[n - 1]) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 面试题55: 跳跃游戏
+     * <a href="https://leetcode.cn/problems/jump-game/description/">...</a>
+     * <p>
+     * 思路：看下最远能到的位置是否大于等于数组中的最后一个位置，即可。
+     */
+    public boolean canJump(int[] nums) {
+        int rightMost = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            if (i <= rightMost) { // 这个限定条件一定要写。
+                rightMost = Math.max(rightMost, i + nums[i]);
+                if (rightMost >= nums.length - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

@@ -44,30 +44,30 @@ public class ListSolution {
             return head1;
         }
         // 创建一个临时节点，用于添加元素时方便
-        ListNode root = new ListNode(0);
+        ListNode dummy = new ListNode(0);
         // 用于指向合并后的链表的指针
-        ListNode pointer = root;
+        ListNode root = dummy;
         while (head1 != null && head2 != null) {
             if (head1.val < head2.val) {
                 // 让指针指向head1，同时head1指针指向下一个元素
-                pointer.next = head1;
+                root.next = head1;
                 head1 = head1.next;
             } else {
-                pointer.next = head2;
+                root.next = head2;
                 head2 = head2.next;
             }
             // 合并后的链表的指针也要指向下一个
-            pointer = pointer.next;
+            root = root.next;
         }
 
         // 如果第一个链表的元素未处理完，则将其合并链表的最后一个节点之后
         if (head1 != null) {
-            pointer.next = head1;
+            root.next = head1;
         }
         // 如果第二个链表的元素未处理完，则将其合并链表的最后一个节点之后
         if (head2 != null) {
-            pointer.next = head2;
+            root.next = head2;
         }
-        return root.next;
+        return dummy.next;
     }
 }

@@ -87,42 +87,32 @@ public class StringSolution {
 
     /**
      * 面试题16：不含重复字符的最长子字符串
-     * 输入一个字符串，求该字符串中不含重复字符的最长子字符串的长度。例如，输入字符串"babcca"，其最长的不含重复字符的子字符串是"abc"，长度为3。
-     * <p>
-     * 解法：左右指针，按照书中的解法
-     * 假设到ba, 左：b, 右 a. 没有重复的话，右指针+1, 如果有重复左指针+1
-     * 因为没有说可能只有限定的字符，假设字符串只包含ASCII码的话，则有256种可能。还是像上面题目一样，讲char出现的次数放在hash表中。
+     * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+     * 思路：
+     * 从start开始遍历，但是第一步是while loop 来推进end, 直到推不动end, 然后start++
+     * 巧妙：为end是外围variable，在start的loop上，end不会重置；[start~end]中间不需要重复计算
+     * 最终可以O（n）
      */
     public int lengthOfLongestSubstring(String s) {
-        if (s.isEmpty()) {
+        if (s == null || s.isEmpty()) {
             return 0;
         }
-
-        int[] counts = new int[256];
+        boolean[] chars = new boolean[256]; // 256 ASCII code
+        int longest = 0;
+        int left = 0;
         int right = 0;
-        int left = -1;
-        int longest = 1;
-        for (; right < s.length(); right++) {
-            counts[s.charAt(right)]++;
-            while (hasGreaterThan1(counts)) {
-                // 有重复的那么左指针+1，并且将左指针对应的char清零
-                left++;
-                counts[s.charAt(left)]--;
+        while (left < s.length()) {
+            while (right < s.length() && !chars[s.charAt(right)]) {
+                chars[s.charAt(right)] = true;
+                longest = Math.max(longest, right - left + 1);
+                right++;
             }
-            longest = Math.max(right - left, longest);
+            chars[s.charAt(left)] = false; // 这个地方是关键
+            left++;
         }
         return longest;
     }
-
-    private boolean hasGreaterThan1(int[] counts) {
-        for (int count : counts) {
-            if (count > 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    
     private boolean areAllZero(int[] counts) {
         for (int count : counts) {
             if (count != 0) {

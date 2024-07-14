@@ -13,17 +13,16 @@ public class ArraySolution {
      * 1. 空间换时间。把数组中每个元素，以及index，都放入到Map中，然后遍历，map，如果发现有k-i的值则返回。time O(N)，space O(N)
      * 2. 双指针，因为是排序数组，从left, right指针，left + right的值如果大于K，则right 左移，反之右移，直到出现和等于8的值。time O(N), space O(1)
      */
-    public int[] twoSum1(int[] numbers, int target) {
+    public int[] twoSum1(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < numbers.length; i++) {
-            map.put(numbers[i], i);
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{i, map.get(target - nums[i])};
+            }
+
+            map.put(nums[i], i);
         }
 
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (map.containsKey(target - entry.getKey())) {
-                return new int[]{entry.getValue(), map.get(target - entry.getKey())};
-            }
-        }
         return null;
     }
 

@@ -7,11 +7,15 @@ public class DpSolution {
     /**
      * 面试题88：爬楼梯的最少成本。
      *
+     * <a href="https://leetcode.cn/problems/GzCJIP/description/">...</a>
+     * <p>
      * 分析：关键是每次爬的时候，可以往上爬1级台阶也可以爬2级台阶，所有就有了最优解。
      * f(i) = 从第i台阶 往上爬的最少成本，如果一个楼梯有n级台阶，那么最优解就是f(n-1) 和 f(n-2)的最小值，
      * f(i)= min(f(i-2), f(i-1)) + cost(i)
-     *
+     * <p>
      * 思路1：可以用递归解法，把大问题拆成小问题，然后再合并结果, 递归的问题是很多重复的解。
+     *
+     * 这里有很多的重复计算
      */
     public int minCostClimbingStaris(int[] cost) {
         int len = cost.length;
@@ -41,12 +45,12 @@ public class DpSolution {
             dp[i] = Math.min(dp[i - 2], dp[i - 1]) + cost[i];
         }
 
-        return Math.min(dp[len - 2], dp [len - 1]);
+        return Math.min(dp[len - 2], dp[len - 1]);
     }
 
     /***
      * 面试题89： 房屋偷盗
-     *
+     * <a href="https://leetcode.cn/problems/Gu0c2T/submissions/545062854/">...</a>
      * 分析，关键要找出状态转移方程，f(i) 表示小偷从标号为0的房屋开始到标号为i的房屋最多能偷到的财务。
      * 最后f(i) = max(f(i - 2) + nums[i], f(i - 1))
      */
@@ -86,7 +90,7 @@ public class DpSolution {
         int res1, res2 = 0;
         int[] arr1 = new int[nums.length - 1];
         int[] arr2 = new int[nums.length - 1];
-        for (int i =0; i<nums.length; i++) {
+        for (int i =0; i < nums.length; i++) {
             if (i <= nums.length - 2) {
                 arr1[i] = nums[i];
             }

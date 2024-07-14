@@ -3,6 +3,7 @@ package com.haofan.algorithm.offer.sort;
 import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.leetcodecn.easy.array.ArraySolution;
 
+import javax.management.StandardEmitterMBean;
 import java.util.*;
 
 import static com.haofan.algorithm.help.Common.swap;
@@ -13,7 +14,11 @@ public class SortSolution {
      * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
      * <p>
      * 输入：intervals = [
-     *      [1,3],[8,10],[2,6]，[15,18]]
+     *      [1,3],
+     *      [8,10],
+     *      [2,6]，
+     *      [15,18]
+     *   ]
      * 输出：[[1,6],[8,10],[15,18]]
      * 解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
      * <p>
@@ -267,6 +272,7 @@ public class SortSolution {
      *
      * 思路：可以用最小堆来实现，因为目的是每次从三个排序链表中取出最小值，来构建新的排序后的链表。
      *
+     * 还有一个思路是把把所有的数字取出后，排序，然后再构建新的，但是空间复杂度比较高，另外也可以两两 排序两个有序链表。
      * Time: nlogk, 排序链表一共是n个节点，堆的大小是k。
      * Space: O(k)
      */

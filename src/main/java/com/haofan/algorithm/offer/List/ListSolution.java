@@ -54,6 +54,7 @@ public class ListSolution {
             left = left.next;
         }
 
+        assert left.next != null;
         left.next = left.next.next;
         return dump.next;
     }
@@ -176,6 +177,7 @@ public class ListSolution {
         return dummy.next;
     }
 
+
     /**
      * 面试题26：重排链表 <a href="https://leetcode.cn/problems/LGjMqU/description/">...</a>
      * 重排链表: 1 -> 2 -> 3 -> 4 -> 5 -> 6
@@ -280,6 +282,43 @@ public class ListSolution {
         }
         slow.next = null;
         return equals(head, reverseList(secondHalf));
+    }
+
+    /**
+     *
+     * @param head1
+     * @param head2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+        if (head1 == null) {
+            return head2;
+        }
+        if (head2 == null) {
+            return head1;
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode root = dummy;
+        while (head1 != null && head2 != null) {
+            if (head1.val <= head2.val) {
+                root.next = head1;
+                head1 = head1.next;
+            } else {
+                root.next = head2;
+                head2 = head2.next;
+            }
+            root = root.next;
+        }
+
+        if (head1 != null) {
+            root.next = head1;
+        }
+        if (head2 != null) {
+            root.next = head2;
+        }
+
+        return dummy.next;
     }
 
     private boolean equals(ListNode head1, ListNode head2) {

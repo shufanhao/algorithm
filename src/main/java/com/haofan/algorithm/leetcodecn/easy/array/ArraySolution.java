@@ -316,7 +316,7 @@ public class ArraySolution {
      *
      * <a href="https://leetcode.cn/problems/rotate-image/description/">...</a>
      * 解法：因为要求不能新的矩阵，所以要看看没有规律，直接调换元素。
-     * 先调换所有对角元素，再上下调换列元素，就得到顺时针旋转90度后的元素。
+     * 先把矩阵的元素按照对角线翻转一下，然后再逐行逆序，就得到顺时针旋转90度后的元素。
      */
     public void rotate(int[][] matrix) {
         int length = matrix.length;

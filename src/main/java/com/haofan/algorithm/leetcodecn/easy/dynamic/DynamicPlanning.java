@@ -50,25 +50,20 @@ public class DynamicPlanning {
 
     /**
      * 题目3：最大子序列，给定一个整数数组nums, 找到一个具有最大和的连续子数组，
-     * https://blog.csdn.net/zwzsdy/article/details/80029796
+     * https://leetcode.cn/problems/maximum-subarray/solutions/228009/zui-da-zi-xu-he-by-leetcode-solution
      * 子数组最少包含一个元素，返回其最大和
-     * sum[i]是以第i个元素结尾且和最大的连续子数组：
-     * sum[i] = max(sum[i-1] + a[i], a[i], 实际上就是判断sum[i-1]是否大于0
      */
     public int maxSubArray(int[] nums) {
-        int sum = nums[0];
-        int sum_1 = nums[0]; // sum[i-1]
-        for (int i = 1; i < nums.length; i++) {
-            if (sum_1 > 0) {
-                sum_1 = sum_1 + nums[i];
-            } else {
-                sum_1 = nums[i];
-            }
-            if (sum < sum_1) {
-                sum = sum_1;
+        int result = Integer.MIN_VALUE;
+        int tempTotal = 0;
+        for (int i=0; i<nums.length; i++) {
+            tempTotal += nums[i];
+            result = Math.max(tempTotal, result);
+            if (tempTotal < 0) {
+                tempTotal = 0;
             }
         }
-        return sum;
+        return result;
     }
 
     /**
