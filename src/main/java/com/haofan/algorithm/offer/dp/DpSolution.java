@@ -102,4 +102,65 @@ public class DpSolution {
 
         return Math.max(rob(arr1), rob(arr2));
     }
+
+    /**
+     * 面试题62：不同路径
+     * <a href="https://leetcode.cn/problems/unique-paths/">...</a>
+     * 典型的 动态规划，因为：
+     * dp[i][j] = dp[i-1][j] + dp[i][j-1]
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+
+        // 初始化，第一行或者第一列肯定都是1
+        for (int i=0; i < m; i++) dp[i][0] = 1;
+        for (int i=0; i < n; i++) dp[0][i] = 1;
+
+        // 遍历二维数组，然后求出dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        for (int i=1; i < m; i++) {
+            for (int j=1; j < n; j++) {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m -1][n -1];
+    }
+
+    /**
+     * 面试题64：最小路径和
+     * https://leetcode.cn/problems/minimum-path-sum/description/
+     * 思路和上面的题目很像，找规律：
+     * dp[i][j] = Min(dp[i-1][j] + grid[i][j], dp[i][j-1] + grid[i][j])
+     */
+    public int minPathSum(int[][] grid) {
+        int width = grid[0].length;
+        int height = grid.length;
+        if (height == 0 || width == 0) return 0;
+
+        // 初始化
+        for (int i = 1; i < height; i++) grid[i][0] += grid[i -1][0];
+        for (int i = 1; i < width; i++) grid[0][i] += grid[0][i-1];
+
+        for (int i=1; i< height; i++) {
+            for (int j=1; j< width; j++) {
+                grid[i][j] += Math.min(grid[i-1][j], grid[i][j-1]);
+            }
+        }
+        return grid[height-1][width-1];
+    }
+
+    /**
+     * 面试题70: 爬楼梯
+     * <a href="https://leetcode.cn/problems/climbing-stairs/description/">...</a>
+     * 思路就是：dp[i] = dp[i-1] + dp[i-2]，这个需要通过规律递推出来
+     */
+    public int climbStairs(int n) {
+        if (n == 1) return 1;
+        int[] dp = new int[n +1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i=3; i<=n; i++) {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
 }

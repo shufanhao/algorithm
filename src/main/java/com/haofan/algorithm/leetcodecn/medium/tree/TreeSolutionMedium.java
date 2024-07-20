@@ -31,6 +31,8 @@ public class TreeSolutionMedium {
                 {'0', '0', '0', '0', '0'},
         };
         System.out.println("题目6：" + medium.numIslands(grid));
+
+
     }
 
     /**
@@ -84,7 +86,9 @@ public class TreeSolutionMedium {
      * 题目3：从前序遍历和中序遍历构造二叉树
      * https://www.cnblogs.com/xiagnming/archive/2018/09/07/9603925.html
      * 思路：前序遍历的第一个元素是根节点，然后找出改节点在中序遍历的位置，记为mid节点。在中序遍历中，mid节点
-     * 左边的元素时左子树，右边的元素时右子树。依次递归
+     * 左边的元素时左子树，右边的元素时右子树。依次递归。
+     *
+     * 有点儿难度。
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder == null || preorder.length == 0) return null;

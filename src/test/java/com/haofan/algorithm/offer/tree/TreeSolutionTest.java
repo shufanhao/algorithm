@@ -78,4 +78,10 @@ class TreeSolutionTest {
     void findTarget() {
         assertFalse(tree.findTarget(TreeNode.buildSearchTree(), 2));
     }
+
+    @Test
+    void flatten() {
+        TreeNode root = new TreeNode(0);
+        tree.flatten(root);
+    }
 }

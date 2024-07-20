@@ -43,4 +43,9 @@ class HashSolutionTest {
         String[] array = new String[] {"00:00","23:59","23:55"};
         Assertions.assertEquals(4, hashSolution.findMinDifference(Arrays.stream(array).toList()));
     }
+
+    @Test
+    void longestConsecutive() {
+        Assertions.assertEquals(4, hashSolution.longestConsecutive(new int[]{100,4,200,1,3,2}));
+    }
 }

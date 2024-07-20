@@ -1,9 +1,10 @@
 package com.haofan.algorithm.offer.string;
 
+import com.haofan.algorithm.help.ListNode;
+import com.haofan.algorithm.help.TreeNode;
+
 import java.nio.file.FileAlreadyExistsException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class StringSolution {
 
@@ -142,14 +143,17 @@ public class StringSolution {
             chartToCount.put(ch, chartToCount.getOrDefault(ch, 0) + 1);
         }
 
+        // count 是 是出现在出现在字符串t中，但是没有出现在字符串s中的子字符串的个数。
         int count = chartToCount.size();
         int start = 0, end = 0, minStart = 0, minEnd = 0;
         int minLength = Integer.MAX_VALUE;
         while (end < s.length() || (count == 0 && end == s.length())) {
             if (count > 0) {
+                // step 3, 右移指针
                 char endChar = s.charAt(end);
                 if (chartToCount.containsKey(endChar)) {
                     chartToCount.put(endChar, chartToCount.get(endChar) - 1);
+                    // = 0 说明
                     if (chartToCount.get(endChar) == 0) {
                         count--;
                     }

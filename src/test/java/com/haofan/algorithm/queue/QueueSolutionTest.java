@@ -50,6 +50,10 @@ class QueueSolutionTest {
     }
 
     @Test
+    void levelOrder() {
+        System.out.println(Arrays.toString(queue.levelOrder(TreeNode.buildTreeNode()).toArray()));
+    }
+    @Test
     void CBTInserter() {
         QueueSolution.CBTInserter cbtInserter = new QueueSolution.CBTInserter(TreeNode.buildTreeNode());
         Assertions.assertEquals(9, cbtInserter.insert(10));

@@ -102,8 +102,10 @@ public class TreeSolution {
         if (left == null || right == null) {
             return false;
         }
-        return (left.val == right.val) && (isSymmetricHelper(left.left, right.right))
-                && (isSymmetricHelper(left.right, right.left));
+        if (left.val != right.val) {
+            return false;
+        }
+        return (isSymmetricHelper(left.left, right.right)) && (isSymmetricHelper(left.right, right.left));
     }
 
     /**

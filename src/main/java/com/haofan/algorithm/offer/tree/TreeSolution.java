@@ -61,20 +61,41 @@ public class TreeSolution {
             cur = stack.pop();
             nodes.add(cur.val);
             cur = cur.right;
-
-            // 如果是前序便利的话
-            /**
-             while (cur != null) {
-             nodes.add(cur.val);
-             stack.push(cur);
-             cur = cur.left;
-             }
-
-             cur = stack.pop();
-             cur = cur.right;
-             **/
         }
+        /** 如果是前序遍历
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            System.out.print(node.val + " ");
+            // 注意压栈顺序，先右后左
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+        **/
         return nodes;
+    }
+    // 如果是前序遍历的话
+
+    /**
+     * 验证是否是一个二叉搜索树
+     *
+     * <a href="https://leetcode.cn/problems/validate-binary-search-tree/">...</a>
+     */
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null; //
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                // 遍历左子树
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();// 取到最后一个节点
+            if (pre != null && root.val <= pre.val) return false;
+            pre = root;
+            root = root.right;
+        }
+        return true;
     }
 
     /**
@@ -430,4 +451,32 @@ public class TreeSolution {
      *平衡二叉搜索树：任何两个子树的高度最大差别为1。这种特性确保了树的搜索、插入、删除等操作的时间复杂度保持在O(log n)
      */
 
+    /**
+     * 面试题114 二叉树展开为链表
+     *
+     * 展开后的单链表应该与二叉树 先序遍历 顺序相同。
+     * <a href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/">...</a>
+     *
+     * 思路: 先序遍历结果后，然后更新left和right
+     */
+    public void flatten(TreeNode root) {
+        List<TreeNode> list = new ArrayList<>();
+        preorderTraversal(root, list);
+        int size = list.size();
+        preorderTraversal(root, list);
+
+        for (int i = 1; i < size; i++) {
+            TreeNode prev = list.get(i - 1);
+            TreeNode curr = list.get(i);
+            prev.left = null;
+            prev.right = curr;
+        }
+    }
+    private void preorderTraversal(TreeNode root, List<TreeNode> list) {
+        if (root != null) {
+            list.add(root);
+            preorderTraversal(root.left, list);
+            preorderTraversal(root.right, list);
+        }
+    }
 }

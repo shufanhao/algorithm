@@ -212,6 +212,39 @@ public class QueueSolution {
 
 
     /**
+     * 二叉树层序遍历，
+     * https://leetcode.cn/problems/binary-tree-level-order-traversal/description/
+     * 输入：root = [3,9,20,null,null,15,7]
+     * 输出：[[3],[9,20],[15,7]]
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> temp = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                temp.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(temp);
+        }
+        return result;
+    }
+
+    /**
      * 面试题45：二叉树最底层最左边的值
      * <p>
      * 解法: 和上个题目类似，广度优先遍历，两个queue

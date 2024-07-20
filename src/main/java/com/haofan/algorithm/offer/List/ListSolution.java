@@ -331,4 +331,31 @@ public class ListSolution {
         }
         return head1 == null && head2 == null;
     }
+
+    /**
+     * 141 环形链表
+     *
+     * <a href="https://leetcode.cn/problems/linked-list-cycle/description/">...</a>
+     *
+     * 快慢指针，快指针走两步
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (fast == slow) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

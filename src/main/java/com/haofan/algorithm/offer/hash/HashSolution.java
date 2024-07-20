@@ -241,4 +241,35 @@ public class HashSolution {
         }
         return minDiff;
     }
+
+    /**
+     * 题目：128. 最长连续序列
+     * <a href="https://leetcode.cn/problems/longest-consecutive-sequence/description/">...</a>
+     * 思路：
+     * 1. 如果是先排序，然后再左右指针找的话，那么时间复杂度是O(nlogn) > O(n)
+     * 2. 利用hash, 如果n-1 不在的话，那么while判断是否n+1 存在。
+     */
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            numSet.add(num);
+        }
+
+        int longestStreak = 0;
+
+        for (int num : nums) {
+            // 如果不包含num - 1
+            if (!numSet.contains(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
+                while (numSet.contains(currentNum +1)) {
+                    currentNum += 1;
+                    currentStreak +=1;
+                }
+                longestStreak = Math.max(longestStreak, currentStreak);
+            }
+        }
+
+        return longestStreak;
+    }
 }

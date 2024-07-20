@@ -30,4 +30,19 @@ class DpSolutionTest {
     void robCycle() {
         assertEquals(8, dp.robCycle(new int[]{2, 3, 4, 5, 3}));
     }
+
+    @Test
+    void uniquePaths() {
+        assertEquals(28, dp.uniquePaths(7, 3));
+    }
+
+    @Test
+    void minPathSum() {
+        assertEquals(7, dp.minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+    }
+
+    @Test
+    void climbStairs() {
+        assertEquals(8, dp.climbStairs(5));
+    }
 }

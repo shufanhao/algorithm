@@ -4,6 +4,8 @@ import com.haofan.algorithm.help.ListNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static com.haofan.algorithm.help.ListNode.arrayToList;
 import static com.haofan.algorithm.help.ListNode.listToArray;
 
@@ -73,5 +75,14 @@ class ListNodeTest {
     @Test
     void isPalindrome() {
         list.isPalindrome(arrayToList(new int[]{1, 2, 3, 3, 2, 1}));
+    }
+
+    @Test
+    void hasCycle() {
+        ListNode node = new ListNode(3);
+        node.next = new ListNode(2);
+        node.next.next = new ListNode(1);
+        node.next.next = node;
+        Assertions.assertTrue(list.hasCycle(node));
     }
 }
