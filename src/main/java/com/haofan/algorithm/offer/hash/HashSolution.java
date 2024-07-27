@@ -128,7 +128,6 @@ public class HashSolution {
         }
     }
 
-
     /**
      * 面试题32：变位词组，互为变位词的是一组
      * 输入一组单词，[eat, tea, nat, tan, bat, ate] 这组单词可以分成3组，分别是eat, tea, ate, 和 tan, nat 和bat

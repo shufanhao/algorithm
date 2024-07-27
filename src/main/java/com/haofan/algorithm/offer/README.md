@@ -142,5 +142,12 @@ nlogn)，如果是在排序数组的头部或者尾部，则是O(n方)
 ### Leetcode top 100 
 https://leetcode.cn/problemset/?listId=2cktkvj&page=1
 
+https://programmercarl.com/qita/language.html
+
 todo
 * 回溯法
+
+### 递归三部曲
+1. 确定递归函数的参数和返回值。确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数， 并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。
+2. 确定终止条件。
+3. 确定单层递归的逻辑。

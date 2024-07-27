@@ -1,6 +1,5 @@
 package com.haofan.algorithm.offer.dp;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,5 +43,11 @@ class DpSolutionTest {
     @Test
     void climbStairs() {
         assertEquals(8, dp.climbStairs(5));
+    }
+
+    @Test
+    void maximalSquare() {
+        char[][] matrix = new char[][]{{'0','1'},{'1','0'}};
+        assertEquals(1, dp.maximalSquare(matrix));
     }
 }

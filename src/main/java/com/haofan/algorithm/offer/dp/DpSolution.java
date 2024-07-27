@@ -1,6 +1,7 @@
 package com.haofan.algorithm.offer.dp;
 
 
+import javax.naming.PartialResultException;
 import java.util.Arrays;
 
 public class DpSolution {
@@ -162,5 +163,52 @@ public class DpSolution {
             dp[i] = dp[i-1] + dp[i-2];
         }
         return dp[n];
+    }
+
+    // dp[i] = dp[i-2] + arr[i], dp[i-1]
+    public int rob1(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = 0;
+        dp[1] = nums[1];
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+        }
+        return nums[nums.length - 1];
+    }
+
+    /**
+     * 面试题221：最大正方形
+     * <a href="https://leetcode.cn/problems/maximal-square/description/">...</a>
+     *
+     * dp[i][j]表示以第i行第j列为右下角所能构成的最大正方形边长, 则递推式为:
+     * dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);
+     *
+     * 默念一句话: 动态规划每一步填表都建立在之前已经填完的表上.
+     * 表的值的意义和你return的值的意义一样（不要多想）！！！
+     * 不要考虑初始化边缘（千万不要从dp[0][0]想思路！！！），从中间取一个点，想这个点的值怎么根据它的左边、上边、左上边、左下边的值计算出来！！！
+     */
+    public int maximalSquare(char[][] matrix) {
+        int maxSide = 0;
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return maxSide;
+        }
+
+        int row = matrix.length;
+        int column = matrix[0].length;
+
+        int[][] dp = new int[row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (matrix[i][j] == '1') {
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = 1 + Math.min(Math.min(dp[i-1][j-1], dp[i-1][j]), dp[i][j-1]);
+                    }
+                    maxSide = Math.max(maxSide, dp[i][j]);
+                }
+            }
+        }
+        return maxSide * maxSide;
     }
 }

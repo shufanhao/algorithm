@@ -74,20 +74,25 @@ public class ListSolution {
      * 3. 如何取到环的数目，找到任意一个环中的节点后，绕环一圈就是环的数目。
      */
     public ListNode detectCycle(ListNode head) {
+        // 判断是否有环
         ListNode inLoop = getNodeInLoop(head);
         if (inLoop == null) {
             return null;
         }
 
+        // 判断环的数目
         int loopCount = 1;
         for (ListNode n = inLoop; n.next != inLoop; n = n.next) {
             loopCount++;
         }
 
+        // 快指针先走n步
         ListNode fast = head;
         for (int i = 0; i < loopCount; i++) {
             fast = fast.next;
         }
+
+        // 当快慢指针再次相遇时，就是环的入口节点
         ListNode slow = head;
         while (fast != slow) {
             fast = fast.next;
