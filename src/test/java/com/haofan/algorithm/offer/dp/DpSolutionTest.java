@@ -50,4 +50,14 @@ class DpSolutionTest {
         char[][] matrix = new char[][]{{'0','1'},{'1','0'}};
         assertEquals(1, dp.maximalSquare(matrix));
     }
+
+    @Test
+    void coinChange() {
+        assertEquals(4, dp.change(5, new int[]{1, 2, 5}));
+    }
+
+    @Test
+    void numSquares() {
+        assertEquals(3, dp.numSquares(12));
+    }
 }

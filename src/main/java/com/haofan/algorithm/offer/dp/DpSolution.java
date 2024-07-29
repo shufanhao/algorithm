@@ -1,7 +1,6 @@
 package com.haofan.algorithm.offer.dp;
 
 
-import javax.naming.PartialResultException;
 import java.util.Arrays;
 
 public class DpSolution {
@@ -210,5 +209,64 @@ public class DpSolution {
             }
         }
         return maxSide * maxSide;
+    }
+
+    /**
+     * 面试题322. 零钱兑换
+     * https://leetcode.cn/problems/coin-change/description/
+     *
+     * https://programmercarl.com/0518.零钱兑换II.html#总结
+     * 给你一个整数数组 coins，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+     *
+     * 计算并返回可以凑成总金额所需的 最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1 。
+     *
+     * 例子：amount = 5, coins = [1, 2, 5]
+     *
+     * 解题思路：
+     * 背包问题，实际上是装满 j 的背包，有多少种dp[j] 种方法，最终是dp[amount]，实际上是求的组合数
+     *
+     * // 如果j - coins[i]是一个有效的金额（即非负），
+     * // 那么它表示我们可以在组成金额j的过程中，先使用一枚coins[i]硬币，然后剩下的j - coins[i]金额可以由之前的组合方式组成。
+     * 递推公式：dp[j] += dp[j - coins[i]], 初始化：dp[0] = 1, dp[1] = 1
+     */
+    public int change(int amount, int[] coins) {
+        int [] dp = new int[amount + 1];
+        dp[0] = 1;
+        // 先遍历物品
+        for (int i = 0; i < coins.length; i++) {
+            // 再遍历背包，求的是组合数
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
+    }
+
+    /**
+     * 面试题279：完全平方数
+     *
+     * 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。
+     * 例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+     *
+     * 完全平方数就是物品(可以无限条件使用)，凑个正整数就是背包，问凑满背包最少多少个物品。
+     *
+     * dp[j]: 和为j的完全平方数最少得数量为dp[j]
+     * 有些难度。
+     * dp[j] = min(dp[j - i*i] + 1, dp[j])
+     */
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+
+        Arrays.fill(dp, Integer.MAX_VALUE);
+
+        dp[0] = 0;
+        // 遍历物品
+        for (int i = 1; i*i <=n; i++) {
+            // 遍历背包
+            for (int j = i*i; j <= n; j++) {
+                dp[j] = Math.min(dp[j], dp[j - i * i] + 1);
+            }
+        }
+        return dp[n];
     }
 }

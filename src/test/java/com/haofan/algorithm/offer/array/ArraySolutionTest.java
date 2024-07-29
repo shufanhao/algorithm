@@ -50,8 +50,21 @@ class ArraySolutionTest {
     void findMaxLength() {
         assertEquals(2, arraySolution.findMaxLength(new int[] {0, 1, 0}));
     }
+
     @Test
     void findDuplicate() {
         assertTrue(arraySolution.findDuplicate(new int[]{2, 3, 1, 0, 2, 5}));
+    }
+
+    @Test
+    void productExceptSelf() {
+        assertArrayEquals(new int[]{24,12,8,6}, arraySolution.productExceptSelf(new int[]{1, 2, 3, 4}));
+    }
+
+    @Test
+    void searchMatrix() {
+        int[][] matrix = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        assertTrue(arraySolution.searchMatrix(matrix, 5));
+        assertTrue(arraySolution.searchMatrix1(matrix, 5));
     }
 }

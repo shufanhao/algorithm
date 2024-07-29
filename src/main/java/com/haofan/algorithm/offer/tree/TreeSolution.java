@@ -1,6 +1,7 @@
 package com.haofan.algorithm.offer.tree;
 
 
+import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.help.TreeNode;
 import com.sun.source.tree.Tree;
 
@@ -477,6 +478,83 @@ public class TreeSolution {
             list.add(root);
             preorderTraversal(root.left, list);
             preorderTraversal(root.right, list);
+        }
+    }
+
+
+    /**
+     * 面试题226: 翻转二叉树
+     * <a href="https://leetcode.cn/problems/invert-binary-tree/">...</a>
+     *
+     * 给一颗二叉树的根节点，要求翻转二叉树
+     *
+     * 解题：
+     * 最常想到的思路是递归，第一次是自己做出来。
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode node = root;
+
+        invertTreeRecursive(node);
+
+        return root;
+    }
+    private void invertTreeRecursive(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        TreeNode temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+
+        invertTreeRecursive(node.left);
+        invertTreeRecursive(node.right);
+    }
+
+    /**
+     * 面试题236: 二叉树的最近公共祖先
+     * https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree
+     *
+     * 思路:
+     * 1. 递归。不是很容易理解。
+     * 2. 迭代法。用哈希表，存储所有节点的父节点，然后利用节点的父节点信息，从P开始不断地向上找，
+     *    并记录访问过的节点，再从q节点不断往上找，如果找到已经存在的节点，则说明是最近公共祖先。
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        Map<Integer, TreeNode> parent = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+
+        // dfs 遍历所有节点，然后构建parent map, key当前节点，value是父节点。
+        dfs(root, parent);
+
+        // 遍历p，并且把访问过的节点都放在visited set 中
+        while (p != null) {
+            visited.add(p.val);
+            p = parent.get(p.val);
+        }
+
+        // 遍历q，如果有访问过的节点，则说明是公共祖先。
+        while (q != null) {
+            if (visited.contains(q.val)) {
+                return q;
+            }
+            q = parent.get(q.val);
+        }
+
+        return null;
+    }
+
+    private void dfs(TreeNode root, Map<Integer, TreeNode> parent) {
+        if (root.left != null) {
+            parent.put(root.left.val, root);
+            dfs(root.left, parent);
+        }
+
+        if (root.right != null) {
+            parent.put(root.right.val, root);
+            dfs(root.right, parent);
         }
     }
 }

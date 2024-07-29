@@ -363,4 +363,5 @@ public class ListSolution {
 
         return false;
     }
+
 }

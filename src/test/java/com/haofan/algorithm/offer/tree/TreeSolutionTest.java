@@ -2,6 +2,7 @@ package com.haofan.algorithm.offer.tree;
 
 import com.haofan.algorithm.help.TreeNode;
 import com.sun.source.tree.Tree;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -83,5 +84,17 @@ class TreeSolutionTest {
     void flatten() {
         TreeNode root = new TreeNode(0);
         tree.flatten(root);
+    }
+
+    @Test
+    void invertTree() {
+        tree.invertTree(TreeNode.buildTreeNode());
+    }
+
+    @Test
+    void lowestCommonAncestor() {
+        TreeNode root = TreeNode.buildTreeNode();
+        TreeNode common = tree.lowestCommonAncestor(TreeNode.buildTreeNode(), root.right.left, root.right.right);
+        assertEquals(common.val, 20);
     }
 }

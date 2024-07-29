@@ -235,4 +235,96 @@ public class ArraySolution {
         }
         return false;
     }
+
+    /**
+     * 面试题 238: 除自身以外数组的乘积
+     *
+     * 给你一个整数数组 nums，返回数组 answer，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+     *
+     * 解题：
+     * 1. 左右乘积列表。索引左侧所有数字的乘积和右侧所有数字的乘积（即前缀与后缀）相乘得到答案。
+     *    所以先初始化两个数组，L, R。L[i] 代表i左侧所有的乘积，R[i]是i右侧所有的乘积。
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int[] L = new int[nums.length];
+        int[] R = new int[nums.length];
+
+        int[] answer = new int[nums.length];
+
+        // L[i] 为索引 i 左侧所有元素的乘积
+        // 因为第一个元素的左侧没有值
+        L[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            // 通过这种方式，来避免 duplicate的计算。
+            L[i] = nums[i - 1] * L[i - 1];
+        }
+
+        // R[i] 为索引 i 右侧所有元素的乘积
+        R[nums.length - 1] = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            // 通过这种方式，来避免 duplicate的计算.
+            R[i] = nums[i+1] * R[i+1];
+        }
+
+        for (int i = 0; i<nums.length; i++) {
+            answer[i] = L[i] * R[i];
+        }
+
+        return answer;
+    }
+
+    /**
+     * 面试题240: 搜索二维矩阵II
+     *
+     * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：
+     *
+     * 每行的元素从左到右升序排列。
+     * 每列的元素从上到下升序排列。
+     *
+     * 解法：
+     * 1. 暴力解法，time: O(m*n)
+     * 2. 二分查找，因为都是排序的。
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 暴力解法
+        for (int i=0; i< matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // 二分查找, time: O(M*LogN), 因为二分查找的time是O(logn)
+    public boolean searchMatrix1(int[][] matrix, int target) {
+        for (int[] row: matrix) {
+            int index = binarySearch(row, target);
+            if (index >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int binarySearch(int[] num, int target) {
+        if (num == null) {
+            return -1;
+        }
+
+        int left = 0;
+        int right = num.length - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (num[mid] < target) {
+                left = mid + 1;
+            } else if (num[mid] > target) {
+                right = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
 }
