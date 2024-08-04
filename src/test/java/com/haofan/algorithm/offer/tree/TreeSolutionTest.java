@@ -97,4 +97,10 @@ class TreeSolutionTest {
         TreeNode common = tree.lowestCommonAncestor(TreeNode.buildTreeNode(), root.right.left, root.right.right);
         assertEquals(common.val, 20);
     }
+
+    @Test
+    void pathSum() {
+        TreeNode root = TreeNode.buildTreeNode();
+        assertEquals(1, tree.pathSum(root, 27));
+    }
 }

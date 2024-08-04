@@ -47,4 +47,10 @@ class SortSolutionTest {
         ListNode result = sort.mergeKLists(lists);
         assertArrayEquals(new int[]{1, 2, 4, 5, 7, 8}, ListNode.listToArray(result));
     }
+
+    @Test
+    void reconstructQueue() {
+        int[][] arrays = new int[][]{{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
+        sort.reconstructQueue(arrays);
+    }
 }

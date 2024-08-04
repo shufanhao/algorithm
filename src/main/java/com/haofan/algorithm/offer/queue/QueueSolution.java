@@ -1,5 +1,6 @@
 package com.haofan.algorithm.offer.queue;
 
+import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.help.TreeNode;
 
 import java.util.ArrayList;

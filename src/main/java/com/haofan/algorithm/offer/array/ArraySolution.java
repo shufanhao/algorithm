@@ -205,27 +205,24 @@ public class ArraySolution {
     }
     /**
      * 剑指offer 2
-     * 面试题2：数组中的重复数字 <a href="https://github.com/todorex/Coding-Interviews/blob/master/notes/">...</a>数组中重复的数字.md
+     * <a href="https://leetcode.cn/problems/find-the-duplicate-number/solutions/261119/xun-zhao-zhong-fu-shu-by-leetcode-solution/">...</a>
+     * <p>
+     * 面试题2：数组中的重复数字 <a href="https://github.com/todorex/Coding-Interviews/blob/master/notes/数组中重复的数字.md">
      * <p>
      * 输入{2, 3, 1, 0, 2, 5} 找出2, 算法时间复杂度O(n), 空间是O(1), 核心是：
      */
-    public boolean findDuplicate(int[] array) {
-        // 杜绝数组为空
+    public int findDuplicate(int[] array) {
         if (array.length == 0) {
-            return false;
-        }
-        // 杜绝数组有非法数字
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] < 0 || array[i] > array.length - 1) {
-                return false;
-            }
+            return -1;
         }
 
         for (int i = 0; i < array.length; i++) {
+            // 首先比较这个数字（用m表示）是不是等于i，如果是，则继续扫描下一个
             while (array[i] != i) {
+                // 如果不是，就拿它和第m个数字比较，如果它和第m个数字相等，就找到了一个重复的数字；
+                // 如果不相等，就把第i个数字与第m个数字交换，把m放到属于它的位置，接下来再重复这个比较，交换的过程，直到我们发现一个重复的数字。
                 if (array[i] == array[array[i]]) {
-                    System.out.println("duplicate number: " + array[i]);
-                    return true;
+                    return array[i];
                 }
 
                 int temp = array[i];
@@ -233,7 +230,7 @@ public class ArraySolution {
                 array[temp] = temp;
             }
         }
-        return false;
+        return -1;
     }
 
     /**
@@ -326,5 +323,59 @@ public class ArraySolution {
             }
         }
         return -1;
+    }
+
+    /**
+     * 面试题448: 找到所有数组中消失的数字
+     *
+     * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
+     *
+     * 主要难点是在于空间复杂度必须是O(1)。
+     **
+     * 思路1
+     */
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        // 把nums 转成set，然后遍历1到n，拿出不在set的数值
+        Set<Integer> set = new HashSet<>();
+        for (Integer num : nums) {
+            set.add(num);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int i = 1; i <= nums.length ; i++) {
+            if (!set.contains(i)) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 思路2：
+     * 原地修数组
+     * 解题：<a href="https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/solutions/1/yi-zhang-dong-tu-bang-zhu-li-jie-yuan-di-uign/">...</a>
+     *
+     * 长度为 N 的数组可以用来统计 1 N 各数字出现的次数；题目给出的数组的长度正好为 N，所以可以原地修改数组实现计数。
+     *
+     * 当前元素是 nums[i]，那么我们把第 nums[i]−1 位置的元素 乘以 -1，表示这个该位置出现过。当然如果 第 nums[i]−1 位置的元素已经是负数了，
+     * 表示 nums[i] 已经出现过了，就不用再把第 nums[i]−1 位置的元素乘以 -1。最后，对数组中的每个位置遍历一遍，如果 i 位置的数字是正数，说明 i 未出现过。
+     * 就是利用了nums[i] 可以是数组的index
+     */
+    public List<Integer> findDisappearedNumbers1(int[] nums) {
+        for (int num : nums) {
+            // 数组是1到n, 而数组的索引是0到n-1, 所以要减去-1
+            if (nums[Math.abs(num) -1] > 0) {
+                nums[Math.abs(num) -1] *= -1;
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                result.add(i + 1);
+            }
+        }
+        return result;
     }
 }

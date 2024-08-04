@@ -301,4 +301,37 @@ public class SortSolution {
 
         return dummy.next;
     }
+
+    /**
+     * 面试题406: 根据身高重建队列
+     * <a href="https://leetcode.cn/problems/queue-reconstruction-by-height/description/">...</a>
+     * <p>
+     * 视频讲解：<a href="https://www.bilibili.com/video/BV1EA411675Y/?vd_source=a99571209c2d7a75b18bd709abc776ee">...</a>
+     * <p>
+     * 输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+     * 输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+     * <p>
+     * 思路：先按照身高h从高到低排序，然后身高排序好后，再按照k(前面有几个人再插入)
+     * 例子，按照身高排序后：
+     * [7,0],[7,1],[6,1],[5,0],[5,2],[4,4]
+     * 然后再插入顺序,
+     * 遍历到[6,1]，因为需要时前面1个人比自己高，所以要插入到1的位置：
+     * [7,0]，[6,1]，[7,1],[5,0],[5,2],[4,4]
+     * 再遍历到[5,0]，因为前面要有0个人比自己高，所以要掺入到0的位置：
+     * [5,0]，[7,0]，[6,1]，[7,1],[5,2],[4,4]
+     * ....
+     */
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, (a, b) -> {
+            if (a[0] == b[0]) return a[1] - b[1];
+            return b[0] - a[0];
+        });
+
+        List<int[]> que = new LinkedList<>();
+        for (int[] p : people) {
+            que.add(p[1], p);
+        }
+
+        return que.toArray(new int[people.length][]);
+    }
 }

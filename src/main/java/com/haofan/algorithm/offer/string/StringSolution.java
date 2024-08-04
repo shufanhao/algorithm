@@ -56,7 +56,7 @@ public class StringSolution {
      * s1 = "cbaebabacd", s2 = "abc"，输出{0, 6}
      * 给定两个字符串 s1 和 s2，找到 s2 中所有变位词在字符串s1的起始下标，返回这些子串的起始索引。不考虑答案输出的顺序。
      *
-     * 解法：上上面的面试14类似。
+     * 解法：上面的面试14类似。
      */
     public List<Integer> findAnagrams(String s1, String s2) {
         List<Integer> indices = new LinkedList<>();
@@ -272,4 +272,48 @@ public class StringSolution {
         }
         return str.toString();
     }
+
+    /**
+     * 面试题394: 字符串解码
+     * <a href="https://leetcode.cn/problems/decode-string/description/">...</a>
+     *
+     * 输入：s = "3[a]2[bc]"
+     * 输出："aaabcbc"
+     *
+     * 输入：s = "3[a2[c]]"
+     * 输出："accaccacc"
+     *
+     * 思路：
+     * 双栈法
+     */
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>(); // 存储数字
+        Stack<String> stringStack = new Stack<>(); // 存储字符串
+        String currentString = ""; // 当前解码字符串
+        int k = 0; // 当前的倍数
+
+        for (char ch : s.toCharArray()) {
+            if (Character.isDigit(ch)) {
+                k  = k * 10 + (ch - '0'); //处理多位数，向 '20'
+            } else if (ch == '[') {
+                // 遇到[. push to stack
+                countStack.push(k);
+                stringStack.push(currentString);
+                currentString = "";
+                k = 0;
+            } else if (ch == ']') {
+                // 解码
+                StringBuilder temp = new StringBuilder(stringStack.pop());
+                int repeatTimes = countStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    temp.append(currentString);
+                }
+                currentString = temp.toString();
+            } else {
+                currentString += ch;
+            }
+        }
+        return currentString;
+    }
+
 }

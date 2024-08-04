@@ -14,7 +14,7 @@ class BinarySolutionTest {
 
     @Test
     void countBit() {
-        assertArrayEquals(new int[]{0, 1, 0}, binarySolution.countBits(2));
+        assertArrayEquals(new int[]{0,1,1,2,1,2}, binarySolution.countBits(5));
     }
 
     @Test

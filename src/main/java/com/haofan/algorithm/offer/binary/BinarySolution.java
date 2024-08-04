@@ -1,5 +1,7 @@
 package com.haofan.algorithm.offer.binary;
 
+import java.util.Arrays;
+
 public class BinarySolution {
     private static int getInt(char c) {
         return c == '1' ? 1 : 0;
@@ -42,6 +44,8 @@ public class BinarySolution {
 
     /**
      * 题目3：前n个数字二进制形式中1的个数
+     * <a href="https://leetcode.cn/problems/counting-bits/">...</a>
+     * <p>
      * 输入一个非负数n，请计算0到n之间每个数字的二进制形式中1的个数，并输出一个数组。例如，输入的n为4，由于0、1、2、3、4的二进制形式中
      * 1的个数分别为0、1、1、2、1，因此输出数组[0，1，1，2，1]。
      * 解法：计算每个整数的二进制形式中1的个数可以通过i&(i-1) 计算i的二进制行驶中1的个数
@@ -49,9 +53,10 @@ public class BinarySolution {
      **/
     public int[] countBits(int num) {
         int[] result = new int[num + 1];
-        for (int i = 1; i < num; i++) {
+        for (int i = 1; i <= num; ++i) {
             result[i] = result[i & (i - 1)] + 1;
         }
+        System.out.println(Arrays.toString(result));
         return result;
     }
 

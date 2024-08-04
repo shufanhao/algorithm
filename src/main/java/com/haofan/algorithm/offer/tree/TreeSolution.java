@@ -8,6 +8,8 @@ import com.sun.source.tree.Tree;
 import java.util.*;
 
 public class TreeSolution {
+    private int pathNumber;
+
     /**
      * 面试题1：二叉树的广度优先遍历。中序，前序和后序遍历 用递归法
      * <p>
@@ -24,25 +26,28 @@ public class TreeSolution {
 
     private void dfs(TreeNode root, List<Integer> nodes) {
         if (root != null) {
+
+            // 前序遍历
+            nodes.add(root.val);
+            dfs(root.left, nodes);
+            dfs(root.right, nodes);
+
+            /**
             // 中序遍历
             dfs(root.left, nodes);
             nodes.add(root.val);
             dfs(root.right, nodes);
 
-            // 前序遍历
-            /*nodes.add(root.val);
-            dfs(root.left, nodes);
-            dfs(root.right, nodes);
-
             // 后序遍历
             dfs(root.left, nodes);
             dfs(root.right, nodes);
-            nodes.add(root.val);*/
+            nodes.add(root.val);
+             */
         }
     }
 
     /**
-     * 面试题2：二叉树的广度优先遍历。中序，前序和后序遍历 用迭代法
+     * 面试题2：二叉树的广度优先遍历。中序，前序和后序遍历 用迭代法。其中前序遍历和后序遍历差不多。
      * <p>
      * 把递归代码改写成迭代的代码常用到stack，
      */
@@ -63,6 +68,7 @@ public class TreeSolution {
             nodes.add(cur.val);
             cur = cur.right;
         }
+        // 前序遍历顺序：中-左-右，入栈顺序：中-右-左
         /** 如果是前序遍历
         while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
@@ -72,6 +78,8 @@ public class TreeSolution {
             if (node.left != null) stack.push(node.left);
         }
         **/
+        // 后序遍历顺序 左-右-中 入栈顺序：中-左-右 出栈顺序：中-右-左， 最后翻转结果
+
         return nodes;
     }
     // 如果是前序遍历的话
@@ -351,10 +359,14 @@ public class TreeSolution {
 
     /**
      * 面试题54：所有大于或等于节点的值之和
+     * <p>
+     * leetcode: <a href="https://leetcode.cn/problems/convert-bst-to-greater-tree/">...</a>
      * 给定一个二叉搜索树，请将它的每个节点的值替换成树中大于或者等于该节点值的所有节点值之和。
      * <p>
      * 解法1：先遍历一遍二叉树，然后拿到sum，然后中序遍历二叉搜索树，并记录之前所有节点的值，然后将该节点赋值成sum - total
      * 解法2：可以颠倒遍历二叉搜索树，先遍历right tree -> root -> left tree，这样就拿到了比该节点的大的和。
+     *
+     * 下面的方案是用的解法2：
      */
     public TreeNode convertBST(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
@@ -366,6 +378,7 @@ public class TreeSolution {
                 // traverse right tree instead of left tree
                 cur = cur.right;
             }
+            // 拿出右子树的值
             cur = stack.pop();
             sum += cur.val;
             cur.val = sum;
@@ -556,5 +569,34 @@ public class TreeSolution {
             parent.put(root.right.val, root);
             dfs(root.right, parent);
         }
+    }
+
+    /**
+     * 面试题437: 路径总和 III
+     * <a href="https://leetcode.cn/problems/path-sum-iii/description/">...</a>
+     *
+     * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
+     *
+     * java 双重递归 思路：
+     * 首先先序递归遍历每个节点，再以每个节点作为起始点递归寻找满足条件的路径。
+     */
+    public int pathSum(TreeNode root, long targetSum) {
+        if (root == null) return 0;
+        sum(root, targetSum);
+        pathSum(root.left, targetSum);
+        pathSum(root.right, targetSum);
+        return pathNumber;
+    }
+
+    private void sum(TreeNode node, long sum) {
+        if (node == null) return;
+        sum = sum - node.val;
+        if (sum == 0) {
+            pathNumber ++;
+        }
+        // 继续遍历左子树
+        sum(node.left, sum);
+        // 继续遍历右子树
+        sum(node.right, sum);
     }
 }

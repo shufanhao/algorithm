@@ -1,7 +1,11 @@
 package com.haofan.algorithm.offer.dp;
 
 
+import com.haofan.algorithm.help.TreeNode;
+
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DpSolution {
     /**
@@ -268,5 +272,79 @@ public class DpSolution {
             }
         }
         return dp[n];
+    }
+
+    /**
+     * 面试题300：最长递增子序列
+     *
+     * 有些难以理解。
+     * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/description/">...</a>
+     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+     *
+     * 思路：
+     * 1. 确定dp数组，dp[i] 为考虑前i个元素的最长子序列。
+     * 2. dp[i] = Max(dp[j]) + 1, 这里的j其实是从0到i的枚举。
+     */
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxans = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            // 初始化dp[i] = 1
+            dp[i] = 1;
+            // 枚举从j，从0到i
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    // 因为i和j 可能不连续，所以这里一定是dp[j] + 1
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxans = Math.max(maxans, dp[i]);
+        }
+        return maxans;
+    }
+
+    /**
+     * 打家劫舍 III
+     * <a href="https://leetcode.cn/problems/house-robber-iii/">...</a>
+     *
+     * 思路：一颗二叉树，树上每个节点都有权值，就是选中和不选中，问不能同时选中有父子关系的点的情况下，能选中节点的最大权值的和
+     * 是多少？
+     * f(o) 表示选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
+     * g(o) 表示不选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和.
+     *
+     * l 和 r 代表 o 的左右孩子
+     *
+     * 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加，即 f(o)=g(l)+g(r)。
+     * 当 o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
+     */
+    public int rob3(TreeNode root) {
+        // two map to store f,g
+        Map<TreeNode, Integer> f = new HashMap<>();
+        Map<TreeNode, Integer> g = new HashMap<>();
+
+        // 一定是后序遍历，因为后续遍历才能找到最后的累加的和
+        dfs(root, f, g);
+        return Math.max(f.getOrDefault(root, 0), g.getOrDefault(root, 0));
+    }
+
+    private void dfs(TreeNode node, Map<TreeNode, Integer> f,  Map<TreeNode, Integer> g) {
+        if (node == null) {
+            return;
+        }
+
+        dfs(node.left, f, g);
+        dfs(node.right, f, g);
+
+        // 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加。
+        f.put(node, node.val + g.getOrDefault(node.left, 0) + g.getOrDefault(node.right, 0));
+
+        // o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
+        g.put(node, Math.max(f.getOrDefault(node.left, 0), g.getOrDefault(node.left, 0)) + Math.max(f.getOrDefault(node.right, 0), g.getOrDefault(node.right, 0)));
     }
 }

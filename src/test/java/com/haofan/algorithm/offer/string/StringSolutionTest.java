@@ -38,4 +38,9 @@ class StringSolutionTest {
     void replaceSpace() {
         assertEquals("We%20are%20happy", offer.replaceSpace("We are happy"));
     }
+
+    @Test
+    void decodeString() {
+        assertEquals("accaccacc", offer.decodeString( "3[a2[c]]"));
+    }
 }

@@ -1,5 +1,6 @@
 package com.haofan.algorithm.offer.dp;
 
+import com.haofan.algorithm.help.TreeNode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,5 +60,15 @@ class DpSolutionTest {
     @Test
     void numSquares() {
         assertEquals(3, dp.numSquares(12));
+    }
+
+    @Test
+    void lengthOfLIS() {
+        assertEquals(4, dp.lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
+    }
+
+    @Test
+    void rob3() {
+        assertEquals(32, dp.rob3(TreeNode.buildTreeNode()));
     }
 }
