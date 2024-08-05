@@ -103,4 +103,9 @@ class TreeSolutionTest {
         TreeNode root = TreeNode.buildTreeNode();
         assertEquals(1, tree.pathSum(root, 27));
     }
+
+    @Test
+    void diameterOfBinaryTree() {
+        assertEquals(3, tree.diameterOfBinaryTree(TreeNode.buildTreeNode()));
+    }
 }

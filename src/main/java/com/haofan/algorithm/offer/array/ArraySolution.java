@@ -378,4 +378,54 @@ public class ArraySolution {
         }
         return result;
     }
+
+    /**
+     * 面试题560: 和为k的子数组
+     *
+     * <a href="https://leetcode.cn/problems/subarray-sum-equals-k/description/">...</a>
+     *
+     * time： O(n2)
+     */
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            // 从后往前找，这样可以包括了是否是等于自己的情况
+            for (int j = i; j >= 0; j--) {
+                sum += nums[j];
+                if (sum == k) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 比较难想吧:
+     *
+     * pre[i] 为 [0..i] 里所有数的和
+     * pre[i] = pre[i - 1] + nums[i]
+     *
+     * [j..i] 这个子数组和为 k, 可以转化为:
+     * pre[i] - pre[j -1] == k
+     * 所以pre[j - 1] == pre[i] - k
+     *
+     * 所以：建立hash表，和为key,出现次数为value，从左到右更新map.
+     */
+    public int subarraySum1(int[] nums, int k) {
+        int count = 0, pre = 0;
+        // key: 是和，value: 次数
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        for (int i = 0; i < nums.length; i++) {
+            // 计算pre的值，前i的和
+            pre += nums[i];
+            if (map.containsKey(pre -k)) {
+                count += map.get(pre -k);
+            }
+            map.put(pre, map.getOrDefault(pre, 0 ) + 1);
+        }
+        return count;
+    }
 }

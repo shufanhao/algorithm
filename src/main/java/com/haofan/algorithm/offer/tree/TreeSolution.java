@@ -599,4 +599,35 @@ public class TreeSolution {
         // 继续遍历右子树
         sum(node.right, sum);
     }
+
+    /**
+     * 面试题543: 二叉树的直径
+     *
+     * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
+     *
+     * 其实就是求某节点的左右儿子的深度，
+     *
+     */
+    private int ans = 1;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        depth(root);
+        return ans - 1;
+    }
+
+    private int depth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        // 左儿子深度
+        int left = depth(node.left);
+        // 右儿子深度
+        int right = depth(node.right);
+
+        ans = Math.max(ans, left + right + 1);
+        // 返回以该节点为根的最大深度。
+        return Math.max(left, right) + 1;
+    }
 }

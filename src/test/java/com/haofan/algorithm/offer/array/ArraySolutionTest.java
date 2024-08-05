@@ -85,5 +85,9 @@ class ArraySolutionTest {
         assertTrue(result.contains(6));
     }
 
+    @Test
+    void subarraySum() {
+        assertEquals(2, array.subarraySum(new int[]{1, 1, 1}, 2));
+    }
 
 }
