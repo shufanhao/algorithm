@@ -108,4 +108,9 @@ class TreeSolutionTest {
     void diameterOfBinaryTree() {
         assertEquals(3, tree.diameterOfBinaryTree(TreeNode.buildTreeNode()));
     }
+
+    @Test
+    void mergeTrees() {
+        assertEquals(20, tree.mergeTrees(TreeNode.buildTreeNode(), TreeNode.buildTreeNode()).val);
+    }
 }

@@ -428,4 +428,29 @@ public class ArraySolution {
         }
         return count;
     }
+
+    /**
+     * 题目581: 最短无序连续子数组。
+     * <a href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/description/">...</a>
+     *
+     * 输入：nums = [2,6,4,8,10,9,15]
+     * 输出: 你只需要对 [6, 4, 8, 10, 9] 进行升序排序，那么整个表都会变为升序排序。
+     * 思路：
+     * 1. 先排序，然后和原数组比较，从前往后和从后往前，第一个不同的记录下来即可。时间复杂度O(nlogn)
+     * 2. O(n)，从左到右循环，记录最大值Max，若nums[i] < max, 则表明i需要调整，循环结束，记录需要调整的
+     * 最大位置i为high,同理，从右到左循环，记录最小值为min，若nums[i] > min，则表明i需要调整，循环结束，最小位置i为low.
+     */
+    public int findUnsortedSubarray(int[] nums) {
+        int len = nums.length;
+        int high = 0, low = len - 1, max = nums[0], min = nums[len - 1];
+
+        for (int i = 1; i < len; i++) {
+            max = Math.max(max, nums[i]);
+            min = Math.min(min, nums[len -1 - i]);
+            if (nums[i] < max) high = i;
+            if (nums[len - 1 - i] > min) low = len - 1 - i;
+        }
+
+        return high > low ? high - low + 1 : 0;
+    }
 }

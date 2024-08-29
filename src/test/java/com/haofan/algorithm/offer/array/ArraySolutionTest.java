@@ -90,4 +90,8 @@ class ArraySolutionTest {
         assertEquals(2, array.subarraySum(new int[]{1, 1, 1}, 2));
     }
 
+    @Test
+    void findUnsortedSubarray() {
+        assertEquals(5, array.findUnsortedSubarray(new int[]{2,6,4,8,10,9,15}));
+    }
 }

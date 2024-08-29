@@ -630,4 +630,24 @@ public class TreeSolution {
         // 返回以该节点为根的最大深度。
         return Math.max(left, right) + 1;
     }
+
+    /**
+     * 面试题617: 合并二叉树
+     *
+     * <a href="https://leetcode.cn/problems/merge-two-binary-trees/description/">...</a>
+     */
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        // 如果root1为空，合并之后就应该是root2
+        if (root1 == null) return root2;
+        // 如果root2为空，合并之后就应该是root1
+        if (root2 == null) return root1;
+
+        // 修改root1的结构
+        root1.val += root2.val;
+        root1.left = mergeTrees(root1.left, root2.left);
+        root1.right = mergeTrees(root1.right, root2.right);
+        return root1;
+    }
+
+
 }
