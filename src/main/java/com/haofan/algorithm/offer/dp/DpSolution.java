@@ -9,47 +9,46 @@ import java.util.Map;
 
 public class DpSolution {
     /**
+     * 斐波那契数列
+     * <a href="https://leetcode.cn/problems/fibonacci-number/description/">...</a>
+     */
+    public int fib(int n) {
+        if (n <=1) return n;
+
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    /**
      * 面试题88：爬楼梯的最少成本。
      *
      * <a href="https://leetcode.cn/problems/GzCJIP/description/">...</a>
      * <p>
      * 分析：关键是每次爬的时候，可以往上爬1级台阶也可以爬2级台阶，所有就有了最优解。
-     * f(i) = 从第i台阶 往上爬的最少成本，如果一个楼梯有n级台阶，那么最优解就是f(n-1) 和 f(n-2)的最小值，
-     * f(i)= min(f(i-2), f(i-1)) + cost(i)
+     * f(i) = 从第i台阶 往上爬的最少成本，如果一个楼梯有n级台阶，那么状态转移方程：
+     * f(i)= min(f(i - 1) + cost[i - 1], f(i - 2) + cost[i - 2])
      * <p>
-     * 思路1：可以用递归解法，把大问题拆成小问题，然后再合并结果, 递归的问题是很多重复的解。
-     *
-     * 这里有很多的重复计算
-     */
-    public int minCostClimbingStaris(int[] cost) {
-        int len = cost.length;
-        return Math.min(helper(cost, len - 2), helper(cost, len - 1));
-    }
 
-    private int helper(int[] cost, int i) {
-        if (i < 2) {
-            return cost[i];
-        }
-
-        return Math.min(helper(cost, i - 2), helper(cost, i - 1)) + cost[i];
-    }
-
-    /**
      * 上面问题的思路2：可以从小问题开始。dp数组用于记录每一步的缓存结果
      * 时间复杂度：O(n)
      * 空间: O(n)
      */
-    public int minCostClimbingStaris2(int[] cost) {
+    public int minCostClimbingStaris(int[] cost) {
         int len = cost.length;
-        int[] dp = new int[len];
-        dp[0] = cost[0];
-        dp[1] = cost[1];
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = 1;
 
-        for (int i=2; i< cost.length; i++) {
-            dp[i] = Math.min(dp[i - 2], dp[i - 1]) + cost[i];
+        for (int i=2; i<= cost.length; i++) {
+            dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
         }
 
-        return Math.min(dp[len - 2], dp[len - 1]);
+        return dp[len];
     }
 
     /***
@@ -75,7 +74,7 @@ public class DpSolution {
     }
 
     /**
-     * 面试题89：环形房屋
+     * 面试题213：打家劫舍II
      *
      * 分析：和上面的题目类似，区别在于小偷不能连续进入 第0个房屋和第n-1个房屋。那么问题可以分解成
      * 取：0 -> n -2 ，取出最大值
@@ -91,7 +90,6 @@ public class DpSolution {
             return nums[0];
         }
 
-        int res1, res2 = 0;
         int[] arr1 = new int[nums.length - 1];
         int[] arr2 = new int[nums.length - 1];
         for (int i =0; i < nums.length; i++) {
@@ -106,6 +104,31 @@ public class DpSolution {
 
         return Math.max(rob(arr1), rob(arr2));
     }
+
+    /**
+     * 打家劫舍 III
+     * <a href="https://leetcode.cn/problems/house-robber-iii/">...</a>
+     *
+     * 思路：一颗二叉树，树上每个节点都有权值，就是选中和不选中，问不能同时选中有父子关系的点的情况下，能选中节点的最大权值的和
+     * 是多少？
+     * f(o) 表示选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
+     * g(o) 表示不选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和.
+     *
+     * l 和 r 代表 o 的左右孩子
+     *
+     * 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加，即 f(o)=g(l)+g(r)。
+     * 当 o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
+     */
+    public int rob3(TreeNode root) {
+        // two map to store f,g
+        Map<TreeNode, Integer> f = new HashMap<>();
+        Map<TreeNode, Integer> g = new HashMap<>();
+
+        // 一定是后序遍历，因为后续遍历才能找到最后的累加的和
+        dfs(root, f, g);
+        return Math.max(f.getOrDefault(root, 0), g.getOrDefault(root, 0));
+    }
+
 
     /**
      * 面试题62：不同路径
@@ -130,8 +153,44 @@ public class DpSolution {
     }
 
     /**
+     * 面试题63：不同路径 II
+     * <a href="https://leetcode.cn/problems/unique-paths-ii/description/">...</a>
+     * 典型的 动态规划，因为：
+     * dp[i][j] = dp[i-1][j] + dp[i][j-1]
+     *
+     * 和上面的题目的区别是，如果有遇到障碍物，那么dp就应该设置成0
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+
+        int[][] dp = new int[m][n];
+
+        // 注意这个条件，因为只有默认值都是0，所以只有当obstacleGrid[i][0] == 0，才赋值是1
+        for (int i=0; i < m && obstacleGrid[i][0] == 0; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i=0; i < n && obstacleGrid[0][i] == 0; i++) {
+            dp[0][i] = 1;
+        }
+
+        // 遍历二维数组，然后求出dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        for (int i=1; i < m; i++) {
+            for (int j=1; j < n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[i][j] = 0;
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+        return dp[m -1][n -1];
+    }
+
+
+    /**
      * 面试题64：最小路径和
-     * https://leetcode.cn/problems/minimum-path-sum/description/
+     * <a href="https://leetcode.cn/problems/minimum-path-sum/description/">...</a>
      * 思路和上面的题目很像，找规律：
      * dp[i][j] = Min(dp[i-1][j] + grid[i][j], dp[i][j-1] + grid[i][j])
      */
@@ -140,7 +199,7 @@ public class DpSolution {
         int height = grid.length;
         if (height == 0 || width == 0) return 0;
 
-        // 初始化
+        // 初始化, 直接在原grid的基础上修改，而并没有创建一个dp数组
         for (int i = 1; i < height; i++) grid[i][0] += grid[i -1][0];
         for (int i = 1; i < width; i++) grid[0][i] += grid[0][i-1];
 
@@ -168,15 +227,151 @@ public class DpSolution {
         return dp[n];
     }
 
-    // dp[i] = dp[i-2] + arr[i], dp[i-1]
-    public int rob1(int[] nums) {
-        int[] dp = new int[nums.length];
-        dp[0] = 0;
-        dp[1] = nums[1];
-        for (int i = 2; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+    /**
+     * 面试题121：买卖股票的最佳时机
+     * <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/">...</a>
+     * 贪心算法：选取最小的买，最大的卖，这样利润最大
+     */
+    public int maxProfit(int[] prices) {
+        int min = prices[0];
+        int result = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            result = Math.max(result, prices[i] - min);
+            min = Math.min(prices[i], min);
         }
-        return nums[nums.length - 1];
+        return result;
+    }
+
+    /**
+     * 动态规划算法是解决股票类问题的解决方案。
+     *
+     * https://programmercarl.com/0121.买卖股票的最佳时机.html#思路
+     *
+     * 定义dp 数组:
+     * dp[i][0] 是持有股票所得的最多现金， dp[i][1] 是不持有股票的最多现金
+     * 注意是持有，不是买入。
+     *
+     *
+     * dp[i][0] = max(dp[i - 1][0], -prices[i]) 也就是：第i-1天所持有股票的最多现金，和第i天如果要买入股票后的现金最大值。
+     * dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + prices[i]) 也就是：第i-1天不持有股票的最多现金，和第i-1天持有股票，并且第I天卖掉
+     *
+     */
+    public int maxProfit1(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int len = prices.length;
+
+        int[][] dp = new int[len][2];
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        for (int i = 1; i < len; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+        }
+        // 不持有股票一定比持有股票获取的利益最大
+        return dp[len - 1][1];
+    }
+
+    /**
+     * 买卖股票的最佳时机 II
+     * https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/
+     *
+     * 本题目和上一个题目的区别是：本题可以买卖同一只股票多次。
+     *
+     *
+     * 持有股票所得现金: dp[i][0] = dp[i-1][0] 维持现状, dp[i-1][1] - prices[i] 不持有股票的新进-今天股票的价格. 这个地方和上一个题目不一样
+     */
+    public int maxProfitII(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int len = prices.length;
+
+        int[][] dp = new int[len][2];
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        for (int i = 1; i < len; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]); // 不同的地方
+            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+        }
+        // 不持有股票一定比持有股票获取的利益最大
+        return dp[len - 1][1];
+    }
+
+    /**
+     * 面试题300：最长递增子序列
+     *
+     * 有些难以理解。
+     * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/description/">...</a>
+     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+     *
+     * 思路：
+     * 1. 确定dp数组，dp[i]为i之前包括i的以nums[i]为结尾的最长递增子序列的长度
+     * 2. dp[i] = Max(dp[j]) + 1, 这里的j其实是从0到i的枚举。
+     */
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxans = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            // 初始化dp[i] = 1
+            dp[i] = 1;
+            // 枚举从j，从0到i
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    // 这个状态转移方程比较难想
+                    // 因为i和j 可能不连续，所以这里一定是dp[j] + 1
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxans = Math.max(maxans, dp[i]);
+        }
+        return maxans;
+    }
+
+    /**
+     * 面试题674: 最长连续递增序列
+     * 比较简单。
+     * <a href="https://leetcode.cn/problems/longest-continuous-increasing-subsequence/description/">...</a>
+     */
+    public int findLengthOfLCIS(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
+        }
+
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxans = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i-1]) {
+                dp[i] = dp[i - 1] + 1;
+            } else {
+                dp[i] = 1;
+            }
+            maxans = Math.max(maxans, dp[i]);
+        }
+        return maxans;
+    }
+
+    private void dfs(TreeNode node, Map<TreeNode, Integer> f,  Map<TreeNode, Integer> g) {
+        if (node == null) {
+            return;
+        }
+
+        dfs(node.left, f, g);
+        dfs(node.right, f, g);
+
+        // 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加。
+        f.put(node, node.val + g.getOrDefault(node.left, 0) + g.getOrDefault(node.right, 0));
+
+        // o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
+        g.put(node, Math.max(f.getOrDefault(node.left, 0), g.getOrDefault(node.left, 0)) + Math.max(f.getOrDefault(node.right, 0), g.getOrDefault(node.right, 0)));
     }
 
     /**
@@ -217,18 +412,18 @@ public class DpSolution {
 
     /**
      * 面试题322. 零钱兑换
-     * https://leetcode.cn/problems/coin-change/description/
-     *
+     * <a href="https://leetcode.cn/problems/coin-change/description/">...</a>
+     * <p>
      * https://programmercarl.com/0518.零钱兑换II.html#总结
      * 给你一个整数数组 coins，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
-     *
+     * <p>
      * 计算并返回可以凑成总金额所需的 最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1 。
-     *
+     * <p>
      * 例子：amount = 5, coins = [1, 2, 5]
-     *
+     * <p>
      * 解题思路：
      * 背包问题，实际上是装满 j 的背包，有多少种dp[j] 种方法，最终是dp[amount]，实际上是求的组合数
-     *
+     * <p>
      * // 如果j - coins[i]是一个有效的金额（即非负），
      * // 那么它表示我们可以在组成金额j的过程中，先使用一枚coins[i]硬币，然后剩下的j - coins[i]金额可以由之前的组合方式组成。
      * 递推公式：dp[j] += dp[j - coins[i]], 初始化：dp[0] = 1, dp[1] = 1
@@ -274,77 +469,4 @@ public class DpSolution {
         return dp[n];
     }
 
-    /**
-     * 面试题300：最长递增子序列
-     *
-     * 有些难以理解。
-     * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/description/">...</a>
-     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
-     *
-     * 思路：
-     * 1. 确定dp数组，dp[i] 为考虑前i个元素的最长子序列。
-     * 2. dp[i] = Max(dp[j]) + 1, 这里的j其实是从0到i的枚举。
-     */
-    public int lengthOfLIS(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
-
-        int[] dp = new int[nums.length];
-        dp[0] = 1;
-        int maxans = 1;
-
-        for (int i = 1; i < nums.length; i++) {
-            // 初始化dp[i] = 1
-            dp[i] = 1;
-            // 枚举从j，从0到i
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    // 因为i和j 可能不连续，所以这里一定是dp[j] + 1
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-            maxans = Math.max(maxans, dp[i]);
-        }
-        return maxans;
-    }
-
-    /**
-     * 打家劫舍 III
-     * <a href="https://leetcode.cn/problems/house-robber-iii/">...</a>
-     *
-     * 思路：一颗二叉树，树上每个节点都有权值，就是选中和不选中，问不能同时选中有父子关系的点的情况下，能选中节点的最大权值的和
-     * 是多少？
-     * f(o) 表示选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
-     * g(o) 表示不选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和.
-     *
-     * l 和 r 代表 o 的左右孩子
-     *
-     * 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加，即 f(o)=g(l)+g(r)。
-     * 当 o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
-     */
-    public int rob3(TreeNode root) {
-        // two map to store f,g
-        Map<TreeNode, Integer> f = new HashMap<>();
-        Map<TreeNode, Integer> g = new HashMap<>();
-
-        // 一定是后序遍历，因为后续遍历才能找到最后的累加的和
-        dfs(root, f, g);
-        return Math.max(f.getOrDefault(root, 0), g.getOrDefault(root, 0));
-    }
-
-    private void dfs(TreeNode node, Map<TreeNode, Integer> f,  Map<TreeNode, Integer> g) {
-        if (node == null) {
-            return;
-        }
-
-        dfs(node.left, f, g);
-        dfs(node.right, f, g);
-
-        // 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加。
-        f.put(node, node.val + g.getOrDefault(node.left, 0) + g.getOrDefault(node.right, 0));
-
-        // o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
-        g.put(node, Math.max(f.getOrDefault(node.left, 0), g.getOrDefault(node.left, 0)) + Math.max(f.getOrDefault(node.right, 0), g.getOrDefault(node.right, 0)));
-    }
 }

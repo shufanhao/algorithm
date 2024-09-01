@@ -10,20 +10,24 @@ class DpSolutionTest {
     private DpSolution dp = new DpSolution();
 
     @Test
-    void minCostClimbingStaris() {
-        int res = dp.minCostClimbingStaris(new int[]{1, 100, 1, 1, 100, 1});
-        assertEquals(4, res);
+    void fib() {
+        assertEquals(3, dp.fib(4));
     }
 
     @Test
     void minCostClimbingStaris2() {
-        int res = dp.minCostClimbingStaris2(new int[]{1, 100, 1, 1, 100, 1});
+        int res = dp.minCostClimbingStaris(new int[]{1, 100, 1, 1, 100, 1});
         assertEquals(4, res);
     }
 
     @Test
     void rob() {
         assertEquals(9, dp.rob(new int[]{2, 3, 4, 5, 3}));
+    }
+
+    @Test
+    void rob3() {
+        assertEquals(32, dp.rob3(TreeNode.buildTreeNode()));
     }
 
     @Test
@@ -37,6 +41,10 @@ class DpSolutionTest {
     }
 
     @Test
+    void uniquePathsWithObstacles() {
+        assertEquals(2, dp.uniquePathsWithObstacles(new int[][]{{0,0,0},{0,1,0},{0,0,0}}));
+    }
+    @Test
     void minPathSum() {
         assertEquals(7, dp.minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
     }
@@ -44,6 +52,15 @@ class DpSolutionTest {
     @Test
     void climbStairs() {
         assertEquals(8, dp.climbStairs(5));
+    }
+
+    @Test
+    void maxProfit() {
+        int[] prices = new int[]{7,1,5,3,6,4};
+        assertEquals(5, dp.maxProfit(prices));
+
+        assertEquals(5, dp.maxProfit1(prices));
+        assertEquals(7, dp.maxProfitII(prices));
     }
 
     @Test
@@ -68,7 +85,7 @@ class DpSolutionTest {
     }
 
     @Test
-    void rob3() {
-        assertEquals(32, dp.rob3(TreeNode.buildTreeNode()));
+    void findLengthOfLCIS() {
+        assertEquals(3, dp.findLengthOfLCIS(new int[]{1,3,5,4,7}));
     }
 }
