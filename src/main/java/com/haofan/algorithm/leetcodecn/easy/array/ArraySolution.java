@@ -170,22 +170,6 @@ public class ArraySolution {
     }
 
     /**
-     * 题目 5： 只出现一次的数字
-     * 任何一个数字异或它自己都等于0。也就是说，如果我们从头到尾依次异或数组中的每一个数字，
-     * 那么最终的结果刚好是那个只出现依次的数字，因为那些出现两次的数字全部在异或中抵消掉了。
-     */
-    public int singleNumber(int[] nums) {
-        if (nums == null) {
-            return 0;
-        }
-        int temp = 0;
-        for (int i = 0; i < nums.length; i++) {
-            temp = temp ^ nums[i];
-        }
-        return temp;
-    }
-
-    /**
      * 题目6：两个数组的交集 II
      * <a href="https://leetcode.cn/problems/intersection-of-two-arrays-ii/description/">...</a>
      * 先将两个数组排序，然后两个指针分别指向数组1，数组2，根据两个数组的元素大小，决定是否移动指针

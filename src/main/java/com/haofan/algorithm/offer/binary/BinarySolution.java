@@ -9,6 +9,9 @@ public class BinarySolution {
 
     /**
      * 题目2：二进制加法
+     *
+     * <a href="https://leetcode.cn/problems/add-binary/description/">...</a>
+     * <p>
      * 输入两个表示二进制的字符串，请计算它们的和，并以二进制字符串的形式输出。例如，输入的二进制字符串分别是"11"和"10"，则输出"101"。
      * 思考：一般看到这个题目后，可能会把两个整数相加后得到和，再转成二进制，这种方法会导致溢出。
      * 解法：
@@ -61,14 +64,33 @@ public class BinarySolution {
     }
 
     /**
-     * 题目4
+     * 题目136： 只出现一次的数字
+     * <a href="https://leetcode.cn/problems/single-number/description/">...</a>
+     * 任何一个数字异或它自己都等于0。也就是说，如果我们从头到尾依次异或数组中的每一个数字，
+     * 那么最终的结果刚好是那个只出现依次的数字，因为那些出现两次的数字全部在异或中抵消掉了。
+     */
+    public int singleNumberEasy(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        int temp = 0;
+        for (int i = 0; i < nums.length; i++) {
+            temp = temp ^ nums[i];
+        }
+        return temp;
+    }
+
+    /**
+     * 题目4:
+     * <a href="https://leetcode.cn/problems/single-number-ii/description/">...</a>
+     * <p>
      * 输入一个整数数组，数组中只有一个数字出现了一次，而其他数字都出现了3次。请找出那个只出现一次的数字。
      * 例如，如果输入的数组为[0，1，0，1，0，1，100]，则只出现一次的数字是100。
      * 解法：一个整数是由32个0或1组成的。我们可以将数组中所有数字的同一位置的数位相加。
      * 如果将出现3次的数字单独拿出来，那么这些出现了3次的数字的任意第i个数位之和都能被3整除。因此，如果数组中所有数字的第i个数位相加之和能被3整除，
      * 那么只出现一次的数字的第i个数位一定是0；如果数组中所有数字的第i个数位相加之和被3除余1，那么只出现一次的数字的第i个数位一定是1。
      * 这样只出现一次的任意第i个数位可以由数组中所有数字的第i个数位之和推算出来
-     *
+     * <p>
      * Time: O(n*32), Space: O(1)
      **/
     public int singleNumber(int[] nums) {

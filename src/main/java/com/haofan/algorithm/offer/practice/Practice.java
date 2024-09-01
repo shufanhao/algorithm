@@ -100,4 +100,28 @@ public class Practice {
         }
         return maxSide * maxSide;
      }
+
+    public String addBinary(String a, String b) {
+        StringBuilder result = new StringBuilder();
+
+        int max = Math.max(a.length(), b.length());
+        int carry = 0;
+        for (int i = 0; i < max; i++) {
+            if (i < a.length()) {
+                carry += getInt(a.charAt(a.length() - i - 1));
+            }
+            if (i < b.length()) {
+                carry += getInt(b.charAt(b.length() - i - 1));
+            }
+            result.append(carry % 2);
+            carry /= 2;
+        }
+        if (carry > 0) result.append('1');
+        return result.reverse().toString();
+    }
+
+    private static int getInt(char c) {
+        return c == '1' ? 1 : 0;
+    }
+
 }

@@ -53,12 +53,6 @@ class ArraySolutionTest {
         assertTrue(array.containsDuplicate(new int[] {0, 1, 0}));
     }
 
-    @Test
-    void singleNumber() {
-        // 题目5：
-        int[] single = {4, 1, 2, 1, 2};
-        System.out.println("题目5：只出现一次的数字： " + array.singleNumber(single));
-    }
 
     @Test
     void intersect() {

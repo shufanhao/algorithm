@@ -19,6 +19,7 @@ class BinarySolutionTest {
 
     @Test
     void singleNumber() {
+        assertEquals(100, binarySolution.singleNumberEasy(new int[]{0, 1, 0, 1, 100}));
         assertEquals(100, binarySolution.singleNumber(new int[]{0, 1, 0, 1, 0, 1, 100}));
     }
 
