@@ -84,6 +84,9 @@ public class BinarySolution {
      * 题目4:
      * <a href="https://leetcode.cn/problems/single-number-ii/description/">...</a>
      * <p>
+     *
+     * 感觉用一个hash map 更简单，但是有多余的Space.
+     *
      * 输入一个整数数组，数组中只有一个数字出现了一次，而其他数字都出现了3次。请找出那个只出现一次的数字。
      * 例如，如果输入的数组为[0，1，0，1，0，1，100]，则只出现一次的数字是100。
      * 解法：一个整数是由32个0或1组成的。我们可以将数组中所有数字的同一位置的数位相加。

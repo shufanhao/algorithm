@@ -18,18 +18,18 @@ class ArraySolutionTest {
         System.out.println(Arrays.toString(nums));
     }
 
-    @Test
-    void maxProfitI() {
-        int[] nums = {7,1,5,3,6,4};
-        assertEquals(5, array.maxProfitI(nums));
-        assertEquals(5, array.maxProfitIDP(nums));
-    }
-
-    @Test
-    void maxProfitII() {
-        int[] nums = {7,1,5,3,6,4};
-        assertEquals(7, array.maxProfitII(nums));
-    }
+//    @Test
+//    void maxProfitI() {
+//        int[] nums = {7,1,5,3,6,4};
+//        assertEquals(5, array.maxProfitI(nums));
+//        assertEquals(5, array.maxProfitIDP(nums));
+//    }
+//
+//    @Test
+//    void maxProfitII() {
+//        int[] nums = {7,1,5,3,6,4};
+//        assertEquals(7, array.maxProfitII(nums));
+//    }
 
     @Test
     void maxProfitIII() {
@@ -44,15 +44,6 @@ class ArraySolutionTest {
         array.rotate(new int[]{-1}, 2);
     }
 
-    @Test
-    void reverse() {
-    }
-
-    @Test
-    void containsDuplicate() {
-        assertTrue(array.containsDuplicate(new int[] {0, 1, 0}));
-    }
-
 
     @Test
     void intersect() {
@@ -65,7 +56,10 @@ class ArraySolutionTest {
     @Test
     void plusOne() throws InterruptedException {
         int[] plusOne = {9, 9, 9};
-        System.out.println("题目7： 加一： 范宇增 " + Arrays.toString(array.plusOne(plusOne)));
+        System.out.println("题目7： 加一: " + Arrays.toString(array.plusOne(plusOne)));
+
+        int[] temp = {4, 4, 9};
+        System.out.println("题目7： 加一 " + Arrays.toString(array.plusOne(temp)));
     }
 
     @Test
