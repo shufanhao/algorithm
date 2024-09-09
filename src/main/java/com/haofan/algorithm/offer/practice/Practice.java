@@ -1,9 +1,6 @@
 package com.haofan.algorithm.offer.practice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.haofan.algorithm.help.Common.swap;
 
@@ -246,5 +243,184 @@ public class Practice {
         }
     }
 
+    public int minSubArrayLen(int target, int[] nums) {
+        int left = 0;
+        int right = 0;
+        int minLen = 0;
+        int sum = 0;
+        while (left < nums.length) {
+            if (right < nums.length && sum < target) {
+                sum += nums[right++];
+            } else {
+                sum -= nums[left++];
+            }
+
+            if (sum >= target) {
+                minLen = Math.min(minLen, right - left);
+            }
+        }
+
+        if (minLen == nums.length + 1) {
+            return 0;
+        }
+
+        return minLen;
+    }
+
+    public double findMaxAverage(int[] nums, int k) {
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+
+        int maxSum = sum;
+        for (int i = k; i < nums.length ; i++) {
+            sum = sum - nums[i - k] + nums[i];
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        return 1.0 * maxSum/k;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        int p = 0;
+        int q = nums.length - 1;
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            p = i + 1;
+            while (p < q) {
+                if (nums[p] + nums[q] + nums[i] == 0) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[p]);
+                    list.add(nums[q]);
+                    ans.add(list);
+                    p++;
+                    q--;
+                    // avoid duplicate
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
+                        p++;
+                    }
+                } else if (nums[p] + nums[q] + nums[i] < 0) {
+                    p++;
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
+                        p++;
+                    }
+                } else {
+                    // > 0
+                    q--;
+                }
+            }
+            // 这个地方要注意，为了防止重复，一定要加
+            while ((i + 1) < nums.length && (nums[i] == nums[i + 1])) {
+                i++;
+            }
+        }
+        return ans;
+    }
+
+    public void setZeroes(int[][] matrix) {
+        int[] rowsZero = new int[matrix.length];
+        int[] columnZero = new int[matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    rowsZero[0] = 1;
+                    columnZero[j] = 1;
+                }
+            }
+        }
+
+        // 遍历每一行和每一个列
+        for (int i = 0; i < rowsZero.length; i++) {
+            if (rowsZero[i] == 1) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = 0; i < columnZero.length; i++) {
+            if (columnZero[i] == 1) {
+                for (int j = 0; j < matrix.length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (int i = 0; i < strs.length; i++) {
+            char[] temp = strs[i].toCharArray();
+            Arrays.sort(temp);
+            String tempStr = String.valueOf(temp);
+            if (map.containsKey(tempStr)) {
+                map.get(tempStr).add(strs[i]);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(strs[i]);
+                map.put(tempStr, list);
+            }
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    public int maxArea(int[] height) {
+        int l = 0;
+        int r = height.length - 1;
+        int max = 0;
+        while (l < r) {
+            int gap = Math.min(height[l], height[r]);
+            max = Math.max(max, gap * (r - l));
+            if (height[l] == gap) {
+                l++;
+            } else {
+                r --;
+            }
+        }
+        return max;
+    }
+
+    public int longestValidParentheses(String s) {
+        if (s == null || s.length() == 1) {
+            return 0;
+        }
+
+        int[] temp = new int[s.length()];
+
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                if (!stack.isEmpty()) {
+                    int j = stack.pop();
+                    if (s.charAt(j) == '(') {
+                        temp[i] = 1;
+                        temp[j] = 1; // 匹配成功
+                    }
+                }
+            }
+        }
+
+        int cur = 0;
+        int maxLength = 0;
+        for (int num : temp) {
+            if (num == 1) {
+                cur ++;
+            } else {
+                maxLength = Math.max(cur, maxLength);
+                // 关键点。
+                cur = 0;
+            }
+        }
+
+        return Math.max(cur, maxLength);
+    }
 
 }

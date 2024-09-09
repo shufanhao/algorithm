@@ -1,10 +1,9 @@
 package com.haofan.algorithm.offer.practice;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,5 +60,29 @@ class PracticeTest {
         for (int i = 0; i < rotateArr.length; i++) {
             System.out.println("题目11： 旋转图像 " + Arrays.toString(rotateArr[i]));
         }
+    }
+
+    @Test
+    void minSubArrayLen() {
+        int[] arr = {2, 3, 1, 2, 4, 3};
+        assertEquals(2, p.minSubArrayLen(7, arr));
+    }
+
+    @Test
+    void findMaxAverage() {
+        int[] arr = {1,12,-5,-6,50,3};
+        assertEquals(12.75, p.findMaxAverage(arr, 4));
+    }
+
+    @Test
+    void groupAnagrams() {
+        String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> listsIssue3 = p.groupAnagrams(strsIssue3);
+        System.out.println(Arrays.toString(listsIssue3.toArray()));
+    }
+
+    @Test
+    public void longestValidParentheses() {
+        Assertions.assertEquals(2, p.longestValidParentheses("()(()"));
     }
 }

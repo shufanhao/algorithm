@@ -104,12 +104,6 @@ class ArraySolutionTest {
     }
 
     @Test
-    void getOnsecutiveMaxLen() {
-        int[] arr = {1, 1, 2, 2, 3, 3, 1, 1, 1, 1};
-        System.out.println("题目12：输出数组中最大的连续子序列的长度 " + array.getOnsecutiveMaxLen(arr));
-    }
-
-    @Test
     void minSubArrayLen() {
         int[] arr = {2, 3, 1, 2, 4, 3};
         assertEquals(2, array.minSubArrayLen(7, arr));

@@ -283,7 +283,7 @@ public class ArraySolution {
     }
 
     /**
-     * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组,  滑动窗口方法, 因为是正整数，可以用滑动窗口。
+     * 题目13：长度最小的子数组, 找出该数组中满足其和 ≥ s 的长度最小的子数组, 滑动窗口方法, 因为是正整数，可以用滑动窗口。
      * <a href="https://leetcode.cn/problems/2VG8Kg/description/">...</a>
      * 思路：左右两个指针移动，指针之间的距离就像一个窗口一样，发现窗口内的和比目标值大时，就left ++, 小时就right++
      * <p>
@@ -316,6 +316,8 @@ public class ArraySolution {
     /**
      * 题目13： <a href="https://leetcode.cn/problems/maximum-average-subarray-i/">...</a>
      * 给一个由 n 个元素组成的整数数组 nums 和一个整数 k 。
+     *
+     * 自己做出来的
      * <p>
      * 请你找出平均数最大且 长度为 k 的连续子数组，并输出该最大平均数。
      *

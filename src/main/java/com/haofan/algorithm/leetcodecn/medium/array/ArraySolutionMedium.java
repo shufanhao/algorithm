@@ -9,48 +9,11 @@ public class ArraySolutionMedium {
     private List<List<Integer>> ret = new LinkedList<>();
     private LinkedList<Integer> tempList = new LinkedList<>();
 
-    public static void main(String args[]) {
-        ArraySolutionMedium array = new ArraySolutionMedium();
-        int nums_1[] = {-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> listList = array.threeSum(nums_1);
-        System.out.println("题目1：" + Arrays.toString(listList.toArray()));
-
-        int nums_2[][] = {
-                {0, 1, 2, 0},
-                {3, 4, 5, 2},
-                {1, 3, 1, 5}};
-        array.setZeroes(nums_2);
-        System.out.println("题目2：");
-        for (int i = 0; i < nums_2.length; i++) {
-            for (int j = 0; j < nums_2[i].length; j++) {
-                System.out.print(nums_2[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        String[] strsIssue3 = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        List<List<String>> listsIssue3 = array.groupAnagrams(strsIssue3);
-        System.out.println(Arrays.toString(listsIssue3.toArray()));
-
-        String strsIssue4 = "pwwkew";
-        System.out.println("题目4：" + array.lengthOfLongestSubstring(strsIssue4));
-
-        String strsIssue5 = "babad";
-        System.out.println("题目5：" + array.longestPalindrome(strsIssue5));
-
-        int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
-        System.out.println("题目6：" + array.increasingTriplet(numsIssue6));
-
-        int nums[] = {1, 2, 3};
-        System.out.println("题目7: ");
-        array.permute(nums);
-
-        int height[] = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-        System.out.println("题目11：" + array.maxArea(height));
-
-    }
-
     /**
+     * <a href="https://leetcode.cn/problems/3sum/">...</a>
+     *
+     * 没有什么思路，自己没能够解答出来。
+     *
      * 三数之和：给定一个包含n个整数的数组nums, 判断nums中是否存在三个元素a,b,c，使得
      * a + b + c = 0, 并找出满足条件且不重复的三元组
      * https://blog.csdn.net/MebiuW/article/details/50918450
@@ -107,6 +70,8 @@ public class ArraySolutionMedium {
 
     /**
      * 题目2：矩阵置0
+     * 这个没做出来
+     * <a href="https://leetcode.cn/problems/set-matrix-zeroes/description/">...</a>
      * 给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法
      * 1. O(m*n)解法：原数据x[m][n]，复制一份数据到y[m][n]，遍历y，根据其中的元素是否是0，对x中元素置0。
      * 2. O(m+n)空间的解法, X[m]来记录某一列是否需要置零，用Y[n]来记录某一行是否需要置零，遍历原始数据，如果
@@ -147,6 +112,8 @@ public class ArraySolutionMedium {
 
     /**
      * 题目3：字母异味词分组
+     * <a href="https://leetcode.cn/problems/group-anagrams/">...</a>
+     * <p>
      * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
      * 思路：将字符串转成字符数组，并排序，然后放入key中，判断map中是否要该key
      */
@@ -174,6 +141,7 @@ public class ArraySolutionMedium {
      * 题目4：无重复字符的最长子串
      * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
      * 思路：
+     * 并不是那么的容易想到这个解决思路，通过创建一个boolean[256] 来统计是否char出现过
      * 从start开始遍历，但是第一步是while loop 来推进end, 直到推不动end, 然后start++
      * 巧妙：为end是外围variable，在start的loop上，end不会重置；[start~end]中间不需要重复计算
      * 最终可以O（n）
@@ -210,7 +178,7 @@ public class ArraySolutionMedium {
         String longest = s.substring(0, 1);
         String temp;
         for (int i = 0; i < s.length(); i++) {
-            // 两次求，i, i一次，另外一次：i, i+1
+            // 两次求，i, i,次，另外一次：i, i+1
             temp = findPalindrome(s, i, i);
             longest = temp.length() > longest.length() ? temp : longest;
             temp = findPalindrome(s, i, i + 1);
@@ -230,6 +198,11 @@ public class ArraySolutionMedium {
 
     /**
      * 递增的三元子序列：给定一个未排序的数组，判断数组是否存在长度为3的递增子序列
+     *
+     * 不好想，没想出来。
+     * <a href="https://leetcode.cn/problems/increasing-triplet-subsequence/">...</a>
+     * <p>
+     *
      * 思路：有点像动态规划，维护一个二元组，first,second, 记录第i个元素之前的最小递增二元子序列
      */
     public boolean increasingTriplet(int[] nums) {
@@ -271,7 +244,7 @@ public class ArraySolutionMedium {
         return ret;
     }
 
-    public void backTracking(int[] nums, boolean[] numState) {
+    private void backTracking(int[] nums, boolean[] numState) {
         // tempList 和 nums 长度相等表明所有元素都已经添加
         if (tempList.size() == nums.length) {
             ret.add(new ArrayList<>(tempList));
@@ -294,7 +267,7 @@ public class ArraySolutionMedium {
     }
 
     /**
-     * 面试题11: https://leetcode.cn/problems/container-with-most-water/description/
+     * 面试题11: <a href="https://leetcode.cn/problems/container-with-most-water/description/">...</a>
      * <p>
      * 盛最多水的容器
      */
@@ -303,16 +276,16 @@ public class ArraySolutionMedium {
             return 0;
         }
 
-        int left = 0;
-        int right = height.length - 1;
+        int l = 0;
+        int r = height.length - 1;
         int maxWater = 0;
-        while (left < right) {
-            int min = Math.min(height[left], height[right]);
-            maxWater = Math.max(min * (right - left), maxWater);
-            if (height[left] == min) {
-                left++;
+        while (l < r) {
+            int min = Math.min(height[l], height[r]);
+            maxWater = Math.max(min * (r - l), maxWater);
+            if (height[l] == min) {
+                l++;
             } else {
-                right--;
+                r--;
             }
         }
         return maxWater;
@@ -391,6 +364,7 @@ public class ArraySolutionMedium {
             }
         }
 
+        // 下面这段代码是为了防止不连续的括号，比方: )()()), 应该输出是2 而不是4，因为是不连续的括号。
         int cur = 0;
         int maxLength = 0;
         for (int num : temp) {
@@ -411,7 +385,6 @@ public class ArraySolutionMedium {
      * <a href="https://leetcode.cn/problems/search-in-rotated-sorted-array/description/">...</a>
      * 思路：二分法查找
      */
-
     public int search(int[] nums, int target) {
         int n = nums.length;
         if (n == 0) {
