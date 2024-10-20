@@ -44,8 +44,9 @@ class ArraySolutionTest {
 
     @Test
     void subArraySum() {
-        int[] sums = {3, 4, 7, 2, -3, 1, 4, 2};
-        assertEquals(4, array.subArraySum(sums, 7));
+        // int[] sums = {3, 4, 7, 2, -3, 1, 4, 2};
+        int[] sums = {1, 2, 3};
+        assertEquals(2, array.subArraySum(sums, 3));
     }
 
     @Test

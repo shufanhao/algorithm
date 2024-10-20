@@ -85,4 +85,10 @@ class PracticeTest {
     public void longestValidParentheses() {
         Assertions.assertEquals(2, p.longestValidParentheses("()(()"));
     }
+
+    @Test
+    void numSubarrayProductLessThanK() {
+        int[] nums = {10, 5, 2, 6};
+        assertEquals(8, p.numSubarrayProductLessThanK(nums, 100));
+    }
 }

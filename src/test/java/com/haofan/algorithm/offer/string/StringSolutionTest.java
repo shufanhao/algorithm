@@ -35,6 +35,10 @@ class StringSolutionTest {
     }
 
     @Test
+    void validPalindrome() {
+        assertTrue(offer.validPalindrome("abca"));
+    }
+    @Test
     void replaceSpace() {
         assertEquals("We%20are%20happy", offer.replaceSpace("We are happy"));
     }

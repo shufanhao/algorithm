@@ -1,9 +1,5 @@
 package com.haofan.algorithm.offer.string;
 
-import com.haofan.algorithm.help.ListNode;
-import com.haofan.algorithm.help.TreeNode;
-
-import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
 public class StringSolution {
@@ -52,10 +48,10 @@ public class StringSolution {
     }
 
     /**
-     * 面试题15：字符串中的所有变位词
+     * 面试题15：字符串中的所有变位词 <a href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/">...</a>
      * s1 = "cbaebabacd", s2 = "abc"，输出{0, 6}
      * 给定两个字符串 s1 和 s2，找到 s2 中所有变位词在字符串s1的起始下标，返回这些子串的起始索引。不考虑答案输出的顺序。
-     *
+     * <p>
      * 解法：上面的面试14类似。
      */
     public List<Integer> findAnagrams(String s1, String s2) {
@@ -124,7 +120,7 @@ public class StringSolution {
     }
 
     /**
-     * 题目3：包含所有字符的最短字符串, 比较难理解。
+     * 题目3：包含所有字符的最短字符串, 比较难理解。 <a href="https://leetcode.cn/problems/M1oyTv/description/">...</a>
      * 输入两个字符串s和t，请找出字符串s中包含字符串t的所有字符的最短子字符串。
      * 例如，输入的字符串s为"ADDBANCAD"，字符串t为"ABC"，则字符串s中包含字符'A'、'B'和'C'的最短子字符串是"BANC"。
      * 如果不存在符合条件的子字符串，则返回空字符串""。如果存在多个符合条件的子字符串，则返回任意一个。
@@ -143,7 +139,7 @@ public class StringSolution {
             chartToCount.put(ch, chartToCount.getOrDefault(ch, 0) + 1);
         }
 
-        // count 是 是出现在出现在字符串t中，但是没有出现在字符串s中的子字符串的个数。
+        // count 是出现在出现在字符串t中，但是没有出现在字符串s中的子字符串的个数。
         int count = chartToCount.size();
         int start = 0, end = 0, minStart = 0, minEnd = 0;
         int minLength = Integer.MAX_VALUE;
@@ -244,33 +240,33 @@ public class StringSolution {
      * 剑指offer 2：
      * 面试题5：
      * 请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为 "We Are Happy". 则经过替换之后的字符串为 "We%20Are%20Happy"。
-     *
+     * 即在不使用额外数组空间的情况下（除了必要的输出缓冲区）原地替换字符串中的字符。
      * 快慢指针，从后往前
      */
     public String replaceSpace(String input) {
-        StringBuffer str = new StringBuffer(input);
-
-        int oldLength = str.length();
-        for (int i = 0; i < oldLength; i++) {
-            if (str.charAt(i) == ' ') {
-                str.append("  ");
+        int spaceCount = 0;
+        // 计算空格数量
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == ' ') {
+                spaceCount ++;
             }
         }
-        int newLength = str.length();
-
-        int p1 = oldLength - 1;
+        int newLength = input.length() + 2 * spaceCount;
+        // 创建新的字符数组存储新字符串，这是必要的输出缓冲区
+        char[] newStr = new char[newLength];
+        int p1 = input.length() - 1;
         int p2 = newLength - 1;
-        while (p1 != p2) {
-            if (str.charAt(p1) == ' ') {
-                str.setCharAt(p2--, '0');
-                str.setCharAt(p2--, '2');
-                str.setCharAt(p2--, '%');
-                p1--;
+        while (p1 >=0) {
+            if (input.charAt(p1) == ' ') {
+                newStr[p2--] = '0';
+                newStr[p2--] = '2';
+                newStr[p2--] = '%';
             } else {
-                str.setCharAt(p2--, str.charAt(p1--));
+                newStr[p2 --] = input.charAt(p1);
             }
+            p1 --;
         }
-        return str.toString();
+        return new String(newStr);
     }
 
     /**

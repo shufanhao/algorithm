@@ -56,28 +56,47 @@ public class ArraySolution {
      * 其实是和上面题目的逻辑是类似的
      */
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums == null || nums.length <= 2) {
+            return result;
+        }
         Arrays.sort(nums);
-        int n = nums.length;
-        for (int i = 0; i < n; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            int j = i + 1, k = n - 1;
-            while (j < k) {
-                while (j > i + 1 && j < n && nums[j] == nums[j - 1]) j++;
-                if (j >= k) break;
-                int sum = nums[i] + nums[j] + nums[k];
-                if (sum == 0) {
-                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    j++;
-                } else if (sum > 0) {
-                    k--;
+        int i, p, q, reverse;
+        for (i = 0; i < nums.length - 2; i++) {
+            reverse = -nums[i];
+            p = i + 1;
+            q = nums.length - 1;
+            while (p < q) {
+                if ((nums[p] + nums[q]) == reverse) {
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(nums[i]);
+                    temp.add(nums[p]);
+                    temp.add(nums[q]);
+                    result.add(temp);
+                    p++;
+                    // 这个地方要注意，为了防止重复，一定要加
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
+                        p++;
+                    }
+                    q--;
+                } else if ((nums[p] + nums[q]) < reverse) {
+                    p++;
+                    // 这个地方要注意，为了防止重复，一定要加
+                    while ((p < q) && (nums[p - 1] == nums[p])) {
+                        p++;
+                    }
                 } else {
-                    j++;
+                    q--;
                 }
             }
+            // 这个地方要注意，为了防止重复，一定要加
+            while ((i + 1) < nums.length && (nums[i] == nums[i + 1])) {
+                i++;
+            }
         }
-        return ans;
+        return result;
     }
+
 
     /**
      * 题目8: 和大于或等于k的最短子数组
@@ -112,6 +131,8 @@ public class ArraySolution {
 
     /**
      * 面试题9：乘积小于k的子数组
+     *
+     * <a href="https://leetcode.cn/problems/subarray-product-less-than-k/description/">...</a>
      * 输入一个由正整数组成的数组和一个正整数k，请问数组中有多少个数字乘积小于k的连续子数组？例如，输入数组[10，5，2，6]，k的值为100，
      * 有8个子数组的所有数字的乘积小于100，它们分别是[10]、[5]、[2]、[6]、[10，5]、[5，2]、[2，6]和[5，2，6]
      * <p>
@@ -122,7 +143,7 @@ public class ArraySolution {
      * 3. 遍历数组计算乘积total
      * 4. 每遍历一个数，那么将total和K进行比较，如果total 大于等于k, total 不断除以nums[l++]，直到total小于k
      * 5. 此时当前指针r对应的乘积小于k的情况有r-l+1种。
-     *
+     * <p>
      * Time: O(n), space: O(1)
      */
     public int numSubarrayProductLessThanK(int[] nums, int k) {
@@ -170,7 +191,8 @@ public class ArraySolution {
             } else {
                 map.put(preSum[i], map.get(preSum[i]) + 1);
             }
-            // 这个地方是核心。
+            // 这个地方是核心。为啥呢？
+            // 对于当前的前缀和 preSum[i]，我们检查 preSum[i] - k 是否已经在哈希表中。如果在，这意味着从某个之前的位置 j（使得 preSum[j] = preSum[i] - k）到当前位置 i 的子数组的和为 k。
             res += map.getOrDefault(preSum[i] - k, 0);
         }
         return res;
@@ -209,7 +231,8 @@ public class ArraySolution {
      * <p>
      * 面试题2：数组中的重复数字 <a href="https://github.com/todorex/Coding-Interviews/blob/master/notes/数组中重复的数字.md">
      * <p>
-     * 输入{2, 3, 1, 0, 2, 5} 找出2, 算法时间复杂度O(n), 空间是O(1), 核心是：
+     * 输入{2, 3, 1, 0, 2, 5} 找出2, 算法时间复杂度O(n), 空间是O(1), 核心是：可以把数组的元素交换到应该放置的位置，比方：
+     * 数组元素1，要放到index 1的位置，如果已经有元素了，说明就重复了。
      */
     public int findDuplicate(int[] array) {
         if (array.length == 0) {
