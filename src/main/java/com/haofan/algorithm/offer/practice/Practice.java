@@ -470,4 +470,40 @@ public class Practice {
         }
         return ans;
     }
+
+    public int strStr(String haystack, String needle) {
+        if (haystack == null || needle == null) {
+            return -1;
+        }
+
+        for (int i = 0; i < haystack.length() - needle.length(); i++) {
+            if (haystack.substring(i, i + needle.length()).equals(needle)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        Arrays.sort(strs);
+        // 比较第一个和最后一个即可。
+        int m = strs[0].length();
+        int n = strs[strs.length - 1].length();
+        int len = Math.min(m, n);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (strs[0].charAt(i) == strs[strs.length - 1].charAt(i)) {
+                sb.append(strs[0].charAt(i));
+            } else {
+                break;
+            }
+        }
+        return sb.toString();
+    }
 }

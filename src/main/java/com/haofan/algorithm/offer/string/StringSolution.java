@@ -270,7 +270,7 @@ public class StringSolution {
     }
 
     /**
-     * 面试题394: 字符串解码
+     * 面试题394: 字符串解码，有点儿难度。
      * <a href="https://leetcode.cn/problems/decode-string/description/">...</a>
      *
      * 输入：s = "3[a]2[bc]"

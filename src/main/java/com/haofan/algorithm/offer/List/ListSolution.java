@@ -2,8 +2,6 @@ package com.haofan.algorithm.offer.List;
 
 import com.haofan.algorithm.help.ListNode;
 
-import java.util.List;
-
 public class ListSolution {
     /**
      * 理解哨兵节点

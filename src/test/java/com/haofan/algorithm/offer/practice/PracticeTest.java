@@ -91,4 +91,14 @@ class PracticeTest {
         int[] nums = {10, 5, 2, 6};
         assertEquals(8, p.numSubarrayProductLessThanK(nums, 100));
     }
+
+    @Test
+    void strStr() {
+        Assertions.assertEquals(2, p.strStr("hello", "ll"));
+    }
+
+    @Test
+    void longestCommonPrefix() {
+        Assertions.assertEquals("fl", p.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
+    }
 }

@@ -105,7 +105,7 @@ public class StringSolution {
     }
 
     /**
-     * 题目5：字符串转整数
+     * 题目5：字符串转整数 <a href="https://leetcode.cn/problems/string-to-integer-atoi/description/">...</a>
      * 思路：循环，char 转正int 可以通过 char - '0' 获得，然后可以通过base*10,获取最终的int 值
      */
     public int myAtoi(String str) {
@@ -169,7 +169,7 @@ public class StringSolution {
         for (int i = 1; i < n; i++) {
             StringBuilder builder = new StringBuilder();
             int index = 0;
-            // 假设结果 result = 1211, 那么预期输出是1个1，,1个2，,2个1
+            // 假设结果 result = 1211, 那么预期输出是1个1，1个2，,2个1
             while (index < result.length()) {
                 // 记录值
                 char val = result.charAt(index);
