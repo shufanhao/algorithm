@@ -1,10 +1,14 @@
 package com.haofan.algorithm.offer.practice;
 
+import com.haofan.algorithm.help.ListNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static com.haofan.algorithm.help.ListNode.arrayToList;
+import static com.haofan.algorithm.help.ListNode.listToArray;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PracticeTest {
@@ -100,5 +104,59 @@ class PracticeTest {
     @Test
     void longestCommonPrefix() {
         Assertions.assertEquals("fl", p.longestCommonPrefix(new String[]{"flower", "flow", "flight"}));
+    }
+
+    @Test
+    void delete() {
+        Assertions.assertArrayEquals(new int[]{4, 5, 6}, listToArray(p.delete(arrayToList(new int[]{4, 5, 6, 8}),8)));
+    }
+
+    @Test
+    void removeNthFromEnd() {
+        Assertions.assertArrayEquals(new int[]{4, 5, 6, 7}, listToArray(p.removeNthFromEnd(arrayToList(new int[]{4, 5, 6, 8, 7}), 2)));
+        // p.removeNthFromEnd(arrayToList(new int[]{1}), 1);
+    }
+
+    @Test
+    void detectCycle() {
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+        head.next.next.next.next.next = head.next.next;
+
+        Assertions.assertEquals(3, p.detectCycle(head).val);
+    }
+
+    @Test
+    void addTwoNumbers() {
+        ListNode head = p.addTwoNumbers(arrayToList(new int[]{9, 8, 4}), arrayToList(new int[]{1, 8}));
+        Assertions.assertArrayEquals(new int[]{1, 0, 0, 2}, listToArray(head));
+    }
+
+    @Test
+    void reorderList() {
+        int[] res = listToArray(p.reorderList(arrayToList(new int[]{1, 2, 3, 4, 5, 6})));
+        Assertions.assertArrayEquals(new int[] {1, 6, 2, 5, 3, 4}, res);
+    }
+
+    @Test
+    void mergeTwoLists() {
+        ListNode res = p.mergeTwoLists(ListNode.arrayToList(new int[]{1, 2, 4}), ListNode.arrayToList(new int[]{1, 3, 4}));
+        assertArrayEquals(new int[]{1, 1, 2, 3, 4, 4}, ListNode.listToArray(res));
+    }
+
+    @Test
+    void deleteNode() {
+        ListNode head = ListNode.arrayToList(new int[]{-3,5,-99});
+        p.deleteNode(head, 5);
+        assertArrayEquals(new int[]{-3, -99}, ListNode.listToArray(head));
+    }
+
+    @Test
+    void oddEvenList() {
+        ListNode head = ListNode.arrayToList(new int[]{1, 2, 3, 4, 5});
+        ListNode res = p.oddEvenList(head);
     }
 }

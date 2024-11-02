@@ -31,7 +31,7 @@ public class ListSolution {
 
     /**
      * 面试题21：删除链表的倒数第k个节点
-     * <p>
+     * <p> <a href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/">...</a>
      * 解法：
      * 删除倒数第k个节点，主要要找到第k+1个节点即可。
      * left, right 指针，right先走，走k步，从k+1开始，left也走，当right到尾部时，left就是第k+1个节点
@@ -67,7 +67,7 @@ public class ListSolution {
      * <p>
      * 解法：
      * 1. 首先要判断是否有环。快慢指针，快指针走2步，慢指针走一步，最终如果快慢指针相遇，则说明有环。
-     * 2. 如果找到环的入口节点。两个指针，指向头结点，如果链表中环有n个节点，第一个指针先向前移动n步，两个指针相同的速度向前移动，
+     * 2. 如何找到环的入口节点。两个指针，指向头结点，如果链表中环有n个节点，第一个指针先向前移动n步，两个指针相同的速度向前移动，
      * 当两个指针相遇时，正好是环的入口节点。
      * 3. 如何取到环的数目，找到任意一个环中的节点后，绕环一圈就是环的数目。
      */
@@ -101,7 +101,7 @@ public class ListSolution {
     }
 
     /**
-     * 面试题23：两个链表的第一个重合点，如下 找出 第一个重合点 4 <a href="https://leetcode.cn/problems/3u1WK4/">...</a>
+     * 面试题23：两个链表的第一个重合点，如下 找出 第一个重合点 <a href="https://leetcode.cn/problems/3u1WK4/">...</a>
      * 1 -> 2 -> 3 ->
      * 4 -> 5 -> 6
      * 7 -> 8 ->
@@ -288,39 +288,42 @@ public class ListSolution {
     }
 
     /**
+     * 题目4：合并两个有序链表，新链表是通过拼接给定的两个链表的所有节点组成的
+     * 输入的是递增排序的
      *
-     * @param head1
-     * @param head2
-     * @return
+     * @return 合并后的链表
      */
     public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
         if (head1 == null) {
             return head2;
-        }
-        if (head2 == null) {
+        } else if (head2 == null) {
             return head1;
         }
-
+        // 创建一个临时节点，用于添加元素时方便
         ListNode dummy = new ListNode(0);
-        ListNode root = dummy;
+        // 用于指向合并后的链表的指针
+        ListNode node = dummy;
         while (head1 != null && head2 != null) {
-            if (head1.val <= head2.val) {
-                root.next = head1;
+            if (head1.val < head2.val) {
+                // 让指针指向head1，同时head1指针指向下一个元素
+                node.next = head1;
                 head1 = head1.next;
             } else {
-                root.next = head2;
+                node.next = head2;
                 head2 = head2.next;
             }
-            root = root.next;
+            // 合并后的链表的指针也要指向下一个
+            node = node.next;
         }
 
+        // 如果第一个链表的元素未处理完，则将其合并链表的最后一个节点之后
         if (head1 != null) {
-            root.next = head1;
+            node.next = head1;
         }
+        // 如果第二个链表的元素未处理完，则将其合并链表的最后一个节点之后
         if (head2 != null) {
-            root.next = head2;
+            node.next = head2;
         }
-
         return dummy.next;
     }
 

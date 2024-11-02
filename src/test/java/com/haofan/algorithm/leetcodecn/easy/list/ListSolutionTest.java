@@ -17,10 +17,4 @@ class ListSolutionTest {
         assertArrayEquals(new int[]{-3, -99}, ListNode.listToArray(head));
 
     }
-
-    @Test
-    void mergeTwoLists() {
-        ListNode res = list.mergeTwoLists(ListNode.arrayToList(new int[]{1, 2, 4}), ListNode.arrayToList(new int[]{1, 3, 4}));
-        assertArrayEquals(new int[]{1, 1, 2, 3, 4, 4}, ListNode.listToArray(res));
-    }
 }

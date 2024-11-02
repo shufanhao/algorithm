@@ -30,44 +30,4 @@ public class ListSolution {
 
         return head;
     }
-
-    /**
-     * 题目4：合并两个有序链表，新链表是通过拼接给定的两个链表的所有节点组成的
-     * 输入的是递增排序的
-     *
-     * @return 合并后的链表
-     */
-    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
-        if (head1 == null) {
-            return head2;
-        } else if (head2 == null) {
-            return head1;
-        }
-        // 创建一个临时节点，用于添加元素时方便
-        ListNode dummy = new ListNode(0);
-        // 用于指向合并后的链表的指针
-        ListNode root = dummy;
-        while (head1 != null && head2 != null) {
-            if (head1.val < head2.val) {
-                // 让指针指向head1，同时head1指针指向下一个元素
-                root.next = head1;
-                head1 = head1.next;
-            } else {
-                root.next = head2;
-                head2 = head2.next;
-            }
-            // 合并后的链表的指针也要指向下一个
-            root = root.next;
-        }
-
-        // 如果第一个链表的元素未处理完，则将其合并链表的最后一个节点之后
-        if (head1 != null) {
-            root.next = head1;
-        }
-        // 如果第二个链表的元素未处理完，则将其合并链表的最后一个节点之后
-        if (head2 != null) {
-            root.next = head2;
-        }
-        return dummy.next;
-    }
 }

@@ -1,5 +1,8 @@
 package com.haofan.algorithm.offer.practice;
 
+import com.haofan.algorithm.help.ListNode;
+
+import java.security.cert.CertificateNotYetValidException;
 import java.util.*;
 
 import static com.haofan.algorithm.help.Common.swap;
@@ -505,5 +508,270 @@ public class Practice {
             }
         }
         return sb.toString();
+    }
+
+    public ListNode delete(ListNode head, int value) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode node = dummy;
+        while (node.next != null) {
+            if (node.next.val == value) {
+                node.next = node.next.next;
+                break;
+            }
+            node = node.next;
+        }
+        return head;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode nodeRight = dummy;
+        ListNode nodeLeft = dummy;
+
+        for (int i = 0; i < k + 1; i++) { // 加1是因为我们要让 nodeRight 提前一步，用于判断结束
+            nodeRight = nodeRight.next;
+        }
+
+        while (nodeRight != null) {
+            nodeRight = nodeRight.next;
+            nodeLeft = nodeLeft.next;
+        }
+
+        // nodeLeft 就是要被删除的节点
+        nodeLeft.next= nodeLeft.next.next;
+
+        return dummy.next;
+    }
+
+    public ListNode detectCycle(ListNode head) {
+        // 判断是否有环
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+
+        ListNode inside = null;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                inside = fast;
+                break;
+            }
+        }
+        if (inside == null) {
+            return null;
+        }
+
+        // 找到在环形链表中的节点后，然后再看一下长度是多少。
+        int count = 1;
+        for (ListNode temp = inside; temp.next != inside; temp = temp.next) {
+            count ++;
+        }
+
+        ListNode fastNode = dummy.next;
+        ListNode slowNode = dummy.next;
+        // 先走n步
+        for (int i = 0; i < count; i++) {
+            fastNode = fastNode.next;
+        }
+
+        while (fastNode != slowNode) {
+            fastNode = fastNode.next;
+            slowNode = slowNode.next;
+        }
+
+        return fastNode;
+    }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        // current node
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+
+    public ListNode addTwoNumbers(ListNode head1, ListNode head2) {
+        head1 = reverseList(head1);
+        head2 = reverseList(head2);
+
+        ListNode sum = addReversed(head1, head2);
+        return reverseList(sum);
+    }
+
+    private ListNode addReversed(ListNode head1, ListNode head2) {
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode sumNode = dummy;
+
+        while (head1 != null || head2 != null) {
+            int sum = (head1 == null ? 0 : head1.val) + (head2 == null ? 0 : head2.val) + carry;
+            carry = sum / 10;
+            sumNode.next = new ListNode(sum % 10);
+            sumNode = sumNode.next;
+
+            head1 = head1 == null ? null : head1.next;
+            head2 = head2 == null ? null : head2.next;
+        }
+
+        if (carry > 0) {
+            sumNode.next = new ListNode(carry);
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode reorderList(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode temp = slow;
+        slow.next = null;
+
+        link(head, reverseList(slow), dummy);
+        return head;
+    }
+
+    private void link(ListNode node1, ListNode node2, ListNode head) {
+        ListNode prev = head;
+        while (node1 != null && node2 != null) {
+            ListNode temp = node1.next;
+            prev.next = node1;
+            node1.next = node2;
+            prev = node2;
+
+            node2 = node2.next;
+            node1 = temp;
+        }
+
+        if (node1 != null) {
+            prev.next = node1;
+        }
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode node = dummy;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                node.next = list1;
+                list1 = list1.next;
+            } else {
+                node.next = list2;
+                list2 = list2.next;
+            }
+            node = node.next;
+        }
+        if (list1 != null) {
+            node.next = list1;
+        }
+        if (list2 != null) {
+            node.next = list2;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode deleteNode(ListNode head, int val) {
+        if (head == null || head.val == val) {
+            return null;
+        }
+
+        ListNode prev = head;
+        ListNode cur = head.next;
+        while (cur != null && cur.val != val) {
+            prev = cur;
+            cur = cur.next;
+        }
+
+        if (cur != null) {
+            prev.next = cur.next;
+        }
+        return head;
+    }
+
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode odd = head;
+        ListNode even = odd.next;
+
+        ListNode evenHead = even;
+        while (odd.next != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;
+
+        return head;
+    }
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+
+        int headALen = 1;
+        ListNode tempHeadA = headA;
+        while (tempHeadA.next != null) {
+            headALen++;
+            tempHeadA = tempHeadA.next;
+        }
+
+        int headBLen = 1;
+        ListNode tempHeadB = headB;
+        while (tempHeadB.next != null) {
+            headBLen++;
+            tempHeadB = tempHeadB.next;
+        }
+
+        // 移动长的。
+        while (headALen > headBLen && headA != null) {
+            headA = headA.next;
+            headALen--;
+        }
+
+        while (headBLen > headALen && headB != null) {
+            headB = headB.next;
+            headBLen--;
+        }
+
+        while (headA != null) {
+            if (headA == headB) {
+                return headA;
+            }
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return null;
     }
 }
