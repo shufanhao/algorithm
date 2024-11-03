@@ -41,7 +41,7 @@ class HashSolutionTest {
     @Test
     void findMinDifference() {
         String[] array = new String[] {"00:00","23:59","23:55"};
-        Assertions.assertEquals(4, hashSolution.findMinDifference(Arrays.stream(array).toList()));
+        Assertions.assertEquals(1, hashSolution.findMinDifference1(Arrays.stream(array).toList()));
     }
 
     @Test

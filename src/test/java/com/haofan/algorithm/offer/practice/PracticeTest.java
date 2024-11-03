@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.haofan.algorithm.help.ListNode.arrayToList;
 import static com.haofan.algorithm.help.ListNode.listToArray;
@@ -158,5 +159,11 @@ class PracticeTest {
     void oddEvenList() {
         ListNode head = ListNode.arrayToList(new int[]{1, 2, 3, 4, 5});
         ListNode res = p.oddEvenList(head);
+    }
+
+    @Test
+    void findMinDifference() {
+        String[] array = new String[] {"00:00","23:59","23:55"};
+        Assertions.assertEquals(4, p.findMinDifference(Arrays.stream(array).collect(Collectors.toList())));
     }
 }

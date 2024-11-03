@@ -774,4 +774,36 @@ public class Practice {
         }
         return null;
     }
+
+    public int findMinDifference(List<String> timePoints) {
+        Collections.sort(timePoints, new Comparator<String>() {
+            @Override
+            public int compare(String t1, String t2) {
+                int hour1 = Integer.parseInt(t1.substring(0, 2));
+                int minute1 = Integer.parseInt(t1.substring(3, 5));
+                int hour2 = Integer.parseInt(t2.substring(0, 2));
+                int minute2 = Integer.parseInt(t2.substring(3, 5));
+
+                // 将时间转换为总分钟数进行比较
+                int totalMinutes1 = hour1 * 60 + minute1;
+                int totalMinutes2 = hour2 * 60 + minute2;
+
+                return Integer.compare(totalMinutes1, totalMinutes2);
+            }
+        });
+
+        int minMinutes = Integer.MAX_VALUE;
+        for (int i = 0; i < timePoints.size() - 1; i++) {
+            int hour1 = Integer.parseInt(timePoints.get(i).substring(0, 2));
+            int minute1 = Integer.parseInt(timePoints.get(i).substring(3, 5));
+            int hour2 = Integer.parseInt(timePoints.get(i+1).substring(0, 2));
+            int minute2 = Integer.parseInt(timePoints.get(i+1).substring(3, 5));
+
+            // 将时间转换为总分钟数进行比较
+            int delta = Math.abs((hour1 * 60 + minute1) - (hour2 * 60 + minute2));
+            minMinutes = Math.min(minMinutes, delta);
+        }
+
+        return minMinutes;
+    }
 }

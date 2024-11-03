@@ -57,7 +57,7 @@ public class HashSolution {
      * put(key, value), 如果缓存中包含键，则返回value，如果不包含，则添加，如果容量满了，则添加新的key之前，删除最近最少使用的key
      * <p>
      * 解法：
-     * 1. 需要知道缓存表中最近最少使用的元素，可以把存入的元素放在链表中，每次访问一个元素，则元素移到链表的尾部，位于头部的元素则是最近最少使用的。
+     * 1. 需要知道缓存表中最近最少使用的元素，可以把存入的元素放在链表中，每次访问一个元素，则元素移到链表的尾部，位于头部的元素则是最近最少使用的，如果已经达到capacity则需要删除的时候头结点
      * 2. 那如何把元素移动到尾部呢？先把节点从原来的位置删除，再添加到尾部。那如何把节点从原来的位置删除呢？要删除原来的位置，其实就是把它
      * 的前一个节点的next指针指向下一个节点就可以，但是在单向链表中找到前一个节点需要o(N)，所以需要双向链表。
      * 3. 数据结构可以是map 存key和链表节点，双向链表的tail节点存最近刚访问的节点。
@@ -93,7 +93,7 @@ public class HashSolution {
                 moveToTail(map.get(key), value);
             } else {
                 if (map.size() == capacity) {
-                    // 删除节点
+                    // 删除节点， 删除的是头结点，表示没有被使用过
                     ListNode toBeDeleted = head.next;
                     deleteNode(toBeDeleted);
 
@@ -120,6 +120,7 @@ public class HashSolution {
         }
 
         private void insertToTail(ListNode node) {
+            // 有点儿不好理解
             // 因为tail是哨兵接节点，所以insert to tail 实际上是交换tail的前一个节点和node
             tail.prev.next = node;
             node.prev = tail.prev;
@@ -148,7 +149,7 @@ public class HashSolution {
     }
 
     /**
-     * 面试题4：外星语言是否排序
+     * 面试题4：外星语言是否排序 <a href="https://leetcode.cn/problems/lwyVBB/description/">...</a>
      * 输入：words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
      * 输出：true
      * 解释：在该语言的字母表中，'h' 位于 'l' 之前，所以单词序列是按字典序排列的。
@@ -199,7 +200,7 @@ public class HashSolution {
      * 思路：
      * 1. 可以先将timePoints排序，然后再计算任意两个之间差值，取最小即可。那时间复杂度是O(nlogn)
      * 2. 如果想要更好的时间复杂度，因为之前是将时间花费在排序上，那么就优化排序。
-     * 一天又24小时，一共1440分钟，可以创建一个长度为1440分钟的数组，数组的index代表分钟数，值为true/false代表的是是否有这个timepoint
+     * 一天24小时，一共1440分钟，可以创建一个长度为1440分钟的数组，数组的index代表分钟数，值为true/false代表的是是否有这个time point
      * 最后遍历这个数组，然后看下相邻为true的值的差值是多少，求出最小差值即可。
      */
     public int findMinDifference(List<String> timePoints) {
@@ -239,6 +240,21 @@ public class HashSolution {
             }
         }
         return minDiff;
+    }
+
+    public int findMinDifference1(List<String> timePoints) {
+        int[] nums = timePoints.stream().mapToInt(s -> {
+            String[] ss = s.split(":");
+            return Integer.parseInt(ss[0]) * 60 + Integer.parseInt(ss[1]);
+        }).sorted().toArray();
+
+        // 这个非常有技巧， 60 * 24, 避免这种情况：00:00 23:59，然后判断出不是想差是1的这种情况。
+        int res = nums[0] + 60 * 24 - nums[nums.length - 1];
+        for (int i = 1; i < nums.length; i++) {
+            res = Math.min(res, nums[i] - nums[i - 1]);
+        }
+
+        return res;
     }
 
     /**
