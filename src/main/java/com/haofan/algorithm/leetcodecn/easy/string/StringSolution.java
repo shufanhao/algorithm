@@ -15,7 +15,7 @@ public class StringSolution {
     /**
      * 题目1：反转字符串
      * <a href="https://leetcode.cn/problems/reverse-string/description/">...</a>
-     *  要求space: O(1)
+     * 要求space: O(1)
      * 1. 解法：放到栈中，利用栈的先进后出，实现倒叙
      * 2. 解法：将前后两个字符颠倒
      */
@@ -61,7 +61,7 @@ public class StringSolution {
      * 题目3：字符串中的第一个唯一字符 <a href="https://leetcode.cn/problems/first-unique-character-in-a-string/description/">...</a>
      * 思路：26个英文字母放到数组中，然后遍历string, 让数组中的26个英文字母加1，最后循环
      * check 哪个是1，返回即可.
-     *
+     * <p>
      * Time: O(N), space: O(1)
      */
     public int firstUniqChar(String s) {

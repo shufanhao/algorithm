@@ -2,13 +2,12 @@ package com.haofan.algorithm.offer.string;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringSolutionTest {
 
     private StringSolution offer = new StringSolution();
+
     @Test
     void checkInclusion() {
         assertTrue(offer.checkInclusion("ab", "eidbaooo"));
@@ -18,6 +17,7 @@ class StringSolutionTest {
     void findAnagrams() {
         assertArrayEquals(new Object[]{0, 6}, offer.findAnagrams("cbaebabacd", "abc").toArray());
     }
+
     @Test
     void lengthOfLongestSubstring() {
         assertEquals(3, offer.lengthOfLongestSubstring("babcca"));
@@ -38,6 +38,7 @@ class StringSolutionTest {
     void validPalindrome() {
         assertTrue(offer.validPalindrome("abca"));
     }
+
     @Test
     void replaceSpace() {
         assertEquals("We%20are%20happy", offer.replaceSpace("We are happy"));
@@ -45,6 +46,6 @@ class StringSolutionTest {
 
     @Test
     void decodeString() {
-        assertEquals("accaccacc", offer.decodeString( "3[a2[c]]"));
+        assertEquals("accaccacc", offer.decodeString("3[a2[c]]"));
     }
 }

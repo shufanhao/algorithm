@@ -1,16 +1,19 @@
 package com.haofan.algorithm.offer.practice;
 
 import com.haofan.algorithm.help.ListNode;
+import com.haofan.algorithm.help.TreeNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.haofan.algorithm.help.ListNode.arrayToList;
 import static com.haofan.algorithm.help.ListNode.listToArray;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PracticeTest {
 
@@ -18,17 +21,17 @@ class PracticeTest {
 
     @Test
     void minPathSum() {
-        System.out.println(p.minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        System.out.println(p.minPathSum(new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}));
     }
 
     @Test
     void rob() {
-        System.out.println(p.rob(new int[]{1,2,3,1}));
+        System.out.println(p.rob(new int[]{1, 2, 3, 1}));
     }
 
     @Test
     void rob3() {
-        assertEquals(16, p.maxProduct(new String[] {"abcw","baz","foo","bar","fxyz","abcdef"}));
+        assertEquals(16, p.maxProduct(new String[]{"abcw", "baz", "foo", "bar", "fxyz", "abcdef"}));
     }
 
     @Test
@@ -75,7 +78,7 @@ class PracticeTest {
 
     @Test
     void findMaxAverage() {
-        int[] arr = {1,12,-5,-6,50,3};
+        int[] arr = {1, 12, -5, -6, 50, 3};
         assertEquals(12.75, p.findMaxAverage(arr, 4));
     }
 
@@ -109,7 +112,7 @@ class PracticeTest {
 
     @Test
     void delete() {
-        Assertions.assertArrayEquals(new int[]{4, 5, 6}, listToArray(p.delete(arrayToList(new int[]{4, 5, 6, 8}),8)));
+        Assertions.assertArrayEquals(new int[]{4, 5, 6}, listToArray(p.delete(arrayToList(new int[]{4, 5, 6, 8}), 8)));
     }
 
     @Test
@@ -139,7 +142,7 @@ class PracticeTest {
     @Test
     void reorderList() {
         int[] res = listToArray(p.reorderList(arrayToList(new int[]{1, 2, 3, 4, 5, 6})));
-        Assertions.assertArrayEquals(new int[] {1, 6, 2, 5, 3, 4}, res);
+        Assertions.assertArrayEquals(new int[]{1, 6, 2, 5, 3, 4}, res);
     }
 
     @Test
@@ -150,7 +153,7 @@ class PracticeTest {
 
     @Test
     void deleteNode() {
-        ListNode head = ListNode.arrayToList(new int[]{-3,5,-99});
+        ListNode head = ListNode.arrayToList(new int[]{-3, 5, -99});
         p.deleteNode(head, 5);
         assertArrayEquals(new int[]{-3, -99}, ListNode.listToArray(head));
     }
@@ -163,7 +166,35 @@ class PracticeTest {
 
     @Test
     void findMinDifference() {
-        String[] array = new String[] {"00:00","23:59","23:55"};
+        String[] array = new String[]{"00:00", "23:59", "23:55"};
         Assertions.assertEquals(4, p.findMinDifference(Arrays.stream(array).collect(Collectors.toList())));
+    }
+
+    @Test
+    void isValid() {
+        Assertions.assertTrue(p.isValid("()[]{}"));
+    }
+
+    @Test
+    void bfs() {
+        Assertions.assertArrayEquals(new Object[]{10, 9, 20, 15, 7}, p.bfs(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void largestValues() {
+        System.out.printf(String.valueOf(TimeUnit.HOURS.toMillis(12)));
+        List<String> list = new ArrayList<>();
+        list.add(null);
+        Assertions.assertArrayEquals(new Object[]{10, 20, 15}, p.largestValues(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void convertBST() {
+        assertEquals(7, p.convertBST1(TreeNode.buildSearchTree()).val);
+    }
+
+    @Test
+    void findTarget() {
+        assertFalse(p.findTarget(TreeNode.buildSearchTree(), 2));
     }
 }

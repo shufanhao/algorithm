@@ -1,6 +1,9 @@
 package com.haofan.algorithm.offer.string;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 public class StringSolution {
 
@@ -63,8 +66,8 @@ public class StringSolution {
         int[] counts = new int[26];
         //
         for (int i = 0; i < s2.length(); i++) {
-            counts[s2.charAt(i) - 'a'] ++;
-            counts[s1.charAt(i) - 'a'] --;
+            counts[s2.charAt(i) - 'a']++;
+            counts[s1.charAt(i) - 'a']--;
         }
 
         if (areAllZero(counts)) {
@@ -72,8 +75,8 @@ public class StringSolution {
         }
 
         for (int i = s2.length(); i < s1.length(); i++) {
-            counts[s1.charAt(i) - 'a'] --;
-            counts[s1.charAt(i - s2.length()) - 'a'] ++;
+            counts[s1.charAt(i) - 'a']--;
+            counts[s1.charAt(i - s2.length()) - 'a']++;
             if (areAllZero(counts)) {
                 indices.add(i - s2.length() + 1);
             }
@@ -109,7 +112,7 @@ public class StringSolution {
         }
         return longest;
     }
-    
+
     private boolean areAllZero(int[] counts) {
         for (int count : counts) {
             if (count != 0) {
@@ -183,7 +186,7 @@ public class StringSolution {
     public boolean isPalindrome(String s) {
         int i = 0;
         int j = s.length() - 1;
-        while ( i < j) {
+        while (i < j) {
             char ch1 = s.charAt(i);
             char ch2 = s.charAt(j);
             if (!Character.isLetterOrDigit(ch1)) {
@@ -248,7 +251,7 @@ public class StringSolution {
         // 计算空格数量
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == ' ') {
-                spaceCount ++;
+                spaceCount++;
             }
         }
         int newLength = input.length() + 2 * spaceCount;
@@ -256,15 +259,15 @@ public class StringSolution {
         char[] newStr = new char[newLength];
         int p1 = input.length() - 1;
         int p2 = newLength - 1;
-        while (p1 >=0) {
+        while (p1 >= 0) {
             if (input.charAt(p1) == ' ') {
                 newStr[p2--] = '0';
                 newStr[p2--] = '2';
                 newStr[p2--] = '%';
             } else {
-                newStr[p2 --] = input.charAt(p1);
+                newStr[p2--] = input.charAt(p1);
             }
-            p1 --;
+            p1--;
         }
         return new String(newStr);
     }
@@ -272,13 +275,13 @@ public class StringSolution {
     /**
      * 面试题394: 字符串解码，有点儿难度。
      * <a href="https://leetcode.cn/problems/decode-string/description/">...</a>
-     *
+     * <p>
      * 输入：s = "3[a]2[bc]"
      * 输出："aaabcbc"
-     *
+     * <p>
      * 输入：s = "3[a2[c]]"
      * 输出："accaccacc"
-     *
+     * <p>
      * 思路：
      * 双栈法
      */
@@ -290,7 +293,7 @@ public class StringSolution {
 
         for (char ch : s.toCharArray()) {
             if (Character.isDigit(ch)) {
-                k  = k * 10 + (ch - '0'); //处理多位数，向 '20'
+                k = k * 10 + (ch - '0'); //处理多位数，向 '20'
             } else if (ch == '[') {
                 // 遇到[. push to stack
                 countStack.push(k);

@@ -1,6 +1,10 @@
 package com.haofan.algorithm.leetcodecn.medium.sort;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class SortSolutionMedium {
 
@@ -15,7 +19,7 @@ class SortSolutionMedium {
 //        int[] nums4 = new int[]{1, 2, 1, 3, 5, 6, 4};
 //        System.out.println("题目4：" + medium.findPeakElement(nums4));
 
-        int[] nums5 = new int[]{5,7,7,8,8,10};
+        int[] nums5 = new int[]{5, 7, 7, 8, 8, 10};
         System.out.println("题目5: " + Arrays.toString(medium.searchRange2(nums5, 8)));
     }
 
@@ -92,9 +96,9 @@ class SortSolutionMedium {
      *
      * @param nums   -- 升序数组
      * @param target -- 目标值
-     *
-     * searchRange1 这种解法，超出了时间限制。因为最坏的时间复杂度有可能是O(n)
-     * searchRange2 分成两步，第一步是二分查找先找到第一个元素，第二步二分查找找到最后一个元素即可。时间复杂度O(logn)
+     *               <p>
+     *               searchRange1 这种解法，超出了时间限制。因为最坏的时间复杂度有可能是O(n)
+     *               searchRange2 分成两步，第一步是二分查找先找到第一个元素，第二步二分查找找到最后一个元素即可。时间复杂度O(logn)
      */
     public int[] searchRange2(int[] nums, int target) {
         if (nums == null || nums.length == 0) return new int[]{-1, -1};
@@ -106,6 +110,7 @@ class SortSolutionMedium {
         int lastPosition = findLastPosition(nums, target);
         return new int[]{firstPosition, lastPosition};
     }
+
     private int findFirstPosition(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
@@ -139,7 +144,7 @@ class SortSolutionMedium {
                 // 这里因为是要找到第一个元素，所以还要继续二分查找，比方这种case
                 // 5,7,8,8,8,8,8,8,9。目的是继续查找
                 // 和第一个findFirstPosition 的区别。
-                left = mid ;
+                left = mid;
             } else {
                 right = mid - 1;
             }

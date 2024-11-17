@@ -2,7 +2,11 @@ package com.haofan.algorithm.leetcodecn.easy.tree;
 
 import com.haofan.algorithm.help.TreeNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * 二叉树问题：

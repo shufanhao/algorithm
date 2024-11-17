@@ -1,7 +1,5 @@
 package com.haofan.algorithm.help;
 
-import com.sun.source.tree.Tree;
-
 public class TreeNode {
     public int val;
     public TreeNode left;
@@ -16,8 +14,8 @@ public class TreeNode {
      * 10
      * / \
      * 9  20
-     *   / \
-     *  15  7
+     * / \
+     * 15  7
      */
     public static TreeNode buildTreeNode() {
         TreeNode root = new TreeNode(10);

@@ -8,6 +8,7 @@ import java.util.Arrays;
 class HashSolutionTest {
 
     HashSolution hashSolution = new HashSolution();
+
     @Test
     void randomizedSet() {
         HashSolution.RandomizedSet randomizedSet = new HashSolution.RandomizedSet();
@@ -26,26 +27,27 @@ class HashSolutionTest {
         obj.put(3, 3);
         Assertions.assertEquals(2, obj.get(2));
     }
+
     @Test
     void groupAnagrams() {
-        String[] strs = new String[] {"eat", "tea", "nat", "tan", "bat", "ate"};
+        String[] strs = new String[]{"eat", "tea", "nat", "tan", "bat", "ate"};
         System.out.println(hashSolution.groupAnagrams(strs));
         Assertions.assertEquals(3, hashSolution.groupAnagrams(strs).size());
     }
 
     @Test
     void isAlienSorted() {
-        Assertions.assertTrue(hashSolution.isAlienSorted(new String[]{"hello","leetcode"}, "hlabcdefgijkmnopqrstuvwxyz"));
+        Assertions.assertTrue(hashSolution.isAlienSorted(new String[]{"hello", "leetcode"}, "hlabcdefgijkmnopqrstuvwxyz"));
     }
 
     @Test
     void findMinDifference() {
-        String[] array = new String[] {"00:00","23:59","23:55"};
+        String[] array = new String[]{"00:00", "23:59", "23:55"};
         Assertions.assertEquals(1, hashSolution.findMinDifference1(Arrays.stream(array).toList()));
     }
 
     @Test
     void longestConsecutive() {
-        Assertions.assertEquals(4, hashSolution.longestConsecutive(new int[]{100,4,200,1,3,2}));
+        Assertions.assertEquals(4, hashSolution.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
     }
 }

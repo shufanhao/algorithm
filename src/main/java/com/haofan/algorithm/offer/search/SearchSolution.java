@@ -13,13 +13,14 @@ public class SearchSolution {
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] > target) {
-                right = mid -1;
+                right = mid - 1;
             } else {
                 left = mid + 1;
             }
         }
-        return  -1;
+        return -1;
     }
+
     /**
      * 面试题68：给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
      * 请必须使用时间复杂度为 O(log n) 的算法。
@@ -73,10 +74,10 @@ public class SearchSolution {
 
     /**
      * 面试题70：排序数组中只出现一次的数组
-     *
+     * <p>
      * 排序数组中，除了一个数字外，其他数字都出现两次。例如[1,1,2,2,3,4,4,5,5]，只有3出现了一次。
      * 要求找到这个数字。
-     *
+     * <p>
      * 解法：如果不是排序数组的话，那么可以通过异或，最后的结果就是只出现了一次的数字。但是时间复杂度是O(n)，因为是排序数组，则可以考虑O(logn)的解法
      * 通过两两分组，{1, 1}，{2, 2}, {3, 4}, {4, 5}, {5} 可以发现，找到第一个分组中不相同的数字，就是要求找到的只出现一次的数字。
      * 所有可以用二分查找: 分成6组，
@@ -87,8 +88,8 @@ public class SearchSolution {
         while (left <= right) {
             int mid = (left + right) / 2;
             int i = mid * 2;
-            if (i < nums.length - 1 && nums[i] != nums[i+1]) {
-                if (mid == 0 || nums[i-2] == nums[i-1]) {
+            if (i < nums.length - 1 && nums[i] != nums[i + 1]) {
+                if (mid == 0 || nums[i - 2] == nums[i - 1]) {
                     return nums[i];
                 }
                 right = mid - 1;
@@ -96,6 +97,6 @@ public class SearchSolution {
                 left = mid + 1;
             }
         }
-        return nums[nums.length -1 ];
+        return nums[nums.length - 1];
     }
 }

@@ -1,6 +1,12 @@
 package com.haofan.algorithm.offer.array;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ArraySolution {
     /**
@@ -52,7 +58,7 @@ public class ArraySolution {
      * 解法：
      * 通过遍历数组，从第一个数i开始，两个指针j, k分别从i+1,n-1往中间移动，去找到满足sum = nums[i] + nums[j] + nums[k] == 0 的所有组合
      * j K移动逻辑，几居室 sum > 0; k 左移，sum < 0; j右移。sum = 0，则找到。
-     *
+     * <p>
      * 其实是和上面题目的逻辑是类似的
      */
     public List<List<Integer>> threeSum(int[] nums) {
@@ -202,14 +208,14 @@ public class ArraySolution {
     /**
      * 面试题11：输入一个只包含0和1的子数组，求出0和1的个数相同的子数组
      * 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
-     *
+     * <p>
      * 解法：因为是输入只包含0和1，所有可以把0换成-1，这样题目就变成找到含有相同数量的-1和1的最长连续子数组，也就是和为0。这就和上上面的题目类似了。
-     *
+     * <p>
      * 输入是{0,1,0} 输出是2，time: o(n), space: o(n)
      */
     public int findMaxLength(int[] nums) {
         // key: sum, value: index of num.
-        Map<Integer, Integer> sumToIndex= new HashMap<>();
+        Map<Integer, Integer> sumToIndex = new HashMap<>();
         sumToIndex.put(0, -1);
         int sum = 0;
         int maxLength = 0;
@@ -225,6 +231,7 @@ public class ArraySolution {
         }
         return maxLength;
     }
+
     /**
      * 剑指offer 2
      * <a href="https://leetcode.cn/problems/find-the-duplicate-number/solutions/261119/xun-zhao-zhong-fu-shu-by-leetcode-solution/">...</a>
@@ -258,12 +265,12 @@ public class ArraySolution {
 
     /**
      * 面试题 238: 除自身以外数组的乘积
-     *
+     * <p>
      * 给你一个整数数组 nums，返回数组 answer，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
-     *
+     * <p>
      * 解题：
      * 1. 左右乘积列表。索引左侧所有数字的乘积和右侧所有数字的乘积（即前缀与后缀）相乘得到答案。
-     *    所以先初始化两个数组，L, R。L[i] 代表i左侧所有的乘积，R[i]是i右侧所有的乘积。
+     * 所以先初始化两个数组，L, R。L[i] 代表i左侧所有的乘积，R[i]是i右侧所有的乘积。
      */
     public int[] productExceptSelf(int[] nums) {
         int[] L = new int[nums.length];
@@ -283,10 +290,10 @@ public class ArraySolution {
         R[nums.length - 1] = 1;
         for (int i = nums.length - 2; i >= 0; i--) {
             // 通过这种方式，来避免 duplicate的计算.
-            R[i] = nums[i+1] * R[i+1];
+            R[i] = nums[i + 1] * R[i + 1];
         }
 
-        for (int i = 0; i<nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             answer[i] = L[i] * R[i];
         }
 
@@ -295,19 +302,19 @@ public class ArraySolution {
 
     /**
      * 面试题240: 搜索二维矩阵II
-     *
+     * <p>
      * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：
-     *
+     * <p>
      * 每行的元素从左到右升序排列。
      * 每列的元素从上到下升序排列。
-     *
+     * <p>
      * 解法：
      * 1. 暴力解法，time: O(m*n)
      * 2. 二分查找，因为都是排序的。
      */
     public boolean searchMatrix(int[][] matrix, int target) {
         // 暴力解法
-        for (int i=0; i< matrix.length; i++) {
+        for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == target) {
                     return true;
@@ -319,7 +326,7 @@ public class ArraySolution {
 
     // 二分查找, time: O(M*LogN), 因为二分查找的time是O(logn)
     public boolean searchMatrix1(int[][] matrix, int target) {
-        for (int[] row: matrix) {
+        for (int[] row : matrix) {
             int index = binarySearch(row, target);
             if (index >= 0) {
                 return true;
@@ -350,11 +357,11 @@ public class ArraySolution {
 
     /**
      * 面试题448: 找到所有数组中消失的数字
-     *
+     * <p>
      * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
-     *
+     * <p>
      * 主要难点是在于空间复杂度必须是O(1)。
-     **
+     * *
      * 思路1
      */
     public List<Integer> findDisappearedNumbers(int[] nums) {
@@ -365,7 +372,7 @@ public class ArraySolution {
         }
 
         List<Integer> result = new ArrayList<>();
-        for (int i = 1; i <= nums.length ; i++) {
+        for (int i = 1; i <= nums.length; i++) {
             if (!set.contains(i)) {
                 result.add(i);
             }
@@ -377,9 +384,9 @@ public class ArraySolution {
      * 思路2：
      * 原地修数组
      * 解题：<a href="https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/solutions/1/yi-zhang-dong-tu-bang-zhu-li-jie-yuan-di-uign/">...</a>
-     *
+     * <p>
      * 长度为 N 的数组可以用来统计 1 N 各数字出现的次数；题目给出的数组的长度正好为 N，所以可以原地修改数组实现计数。
-     *
+     * <p>
      * 当前元素是 nums[i]，那么我们把第 nums[i]−1 位置的元素 乘以 -1，表示这个该位置出现过。当然如果 第 nums[i]−1 位置的元素已经是负数了，
      * 表示 nums[i] 已经出现过了，就不用再把第 nums[i]−1 位置的元素乘以 -1。最后，对数组中的每个位置遍历一遍，如果 i 位置的数字是正数，说明 i 未出现过。
      * 就是利用了nums[i] 可以是数组的index
@@ -387,8 +394,8 @@ public class ArraySolution {
     public List<Integer> findDisappearedNumbers1(int[] nums) {
         for (int num : nums) {
             // 数组是1到n, 而数组的索引是0到n-1, 所以要减去-1
-            if (nums[Math.abs(num) -1] > 0) {
-                nums[Math.abs(num) -1] *= -1;
+            if (nums[Math.abs(num) - 1] > 0) {
+                nums[Math.abs(num) - 1] *= -1;
             }
         }
 
@@ -406,7 +413,7 @@ public class ArraySolution {
      * 面试题560: 和为k的子数组
      *
      * <a href="https://leetcode.cn/problems/subarray-sum-equals-k/description/">...</a>
-     *
+     * <p>
      * time： O(n2)
      */
     public int subarraySum(int[] nums, int k) {
@@ -426,14 +433,14 @@ public class ArraySolution {
 
     /**
      * 比较难想吧:
-     *
+     * <p>
      * pre[i] 为 [0..i] 里所有数的和
      * pre[i] = pre[i - 1] + nums[i]
-     *
+     * <p>
      * [j..i] 这个子数组和为 k, 可以转化为:
      * pre[i] - pre[j -1] == k
      * 所以pre[j - 1] == pre[i] - k
-     *
+     * <p>
      * 所以：建立hash表，和为key,出现次数为value，从左到右更新map.
      */
     public int subarraySum1(int[] nums, int k) {
@@ -444,10 +451,10 @@ public class ArraySolution {
         for (int i = 0; i < nums.length; i++) {
             // 计算pre的值，前i的和
             pre += nums[i];
-            if (map.containsKey(pre -k)) {
-                count += map.get(pre -k);
+            if (map.containsKey(pre - k)) {
+                count += map.get(pre - k);
             }
-            map.put(pre, map.getOrDefault(pre, 0 ) + 1);
+            map.put(pre, map.getOrDefault(pre, 0) + 1);
         }
         return count;
     }
@@ -455,7 +462,7 @@ public class ArraySolution {
     /**
      * 题目581: 最短无序连续子数组。
      * <a href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/description/">...</a>
-     *
+     * <p>
      * 输入：nums = [2,6,4,8,10,9,15]
      * 输出: 你只需要对 [6, 4, 8, 10, 9] 进行升序排序，那么整个表都会变为升序排序。
      * 思路：
@@ -469,7 +476,7 @@ public class ArraySolution {
 
         for (int i = 1; i < len; i++) {
             max = Math.max(max, nums[i]);
-            min = Math.min(min, nums[len -1 - i]);
+            min = Math.min(min, nums[len - 1 - i]);
             if (nums[i] < max) high = i;
             if (nums[len - 1 - i] > min) low = len - 1 - i;
         }

@@ -1,9 +1,57 @@
 package com.haofan.algorithm.offer.heap;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class HeapSolution {
+    /**
+     * 面试题60：出现频率最高的K个数字
+     * 给定一个整数数组 nums 和一个整数 k ，请返回其中出现频率前 k 高的元素。可以按 任意顺序 返回答案。
+     * <p>
+     * 解法：先用HashMap，key: 数组元素，value: 出现的次数.
+     * <p>
+     * 然后创建一个最小堆，遍历HashMap，去fill in 最小堆，如果min heap中已经有k个元素，则如果添加的数字>peak的频率，则删除栈顶元素，并添加
+     * <p>
+     * 时间复杂度O(klogk),
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> numToCount = new HashMap<>();
+        for (int num : nums) {
+            numToCount.put(num, numToCount.getOrDefault(num, 0) + 1);
+        }
+
+        // 因为比较的是value, 所以要pass一个comparator,
+        Queue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>(
+                (e1, e2) -> e1.getValue() - e2.getValue()
+        );
+
+        for (Map.Entry<Integer, Integer> entry : numToCount.entrySet()) {
+            if (minHeap.size() < k) {
+                minHeap.offer(entry);
+            } else if (entry.getValue() > minHeap.peek().getValue()) {
+                minHeap.poll();
+                minHeap.offer(entry);
+            }
+        }
+
+        List<Integer> result = new LinkedList<>();
+        for (Map.Entry<Integer, Integer> entry : minHeap) {
+            result.add(entry.getKey());
+        }
+
+        int[] intArray = new int[result.size()];
+
+        for (int i = 0; i < result.size(); i++) {
+            intArray[i] = result.get(i);
+        }
+
+        return intArray;
+    }
+
     /**
      * 面试题59：
      * <a href="https://leetcode.cn/problems/kth-largest-element-in-a-stream/description/">...</a>
@@ -41,49 +89,5 @@ public class HeapSolution {
             // 返回的就是第k大的元素
             return minHeap.peek();
         }
-    }
-
-    /**
-     * 面试题60：出现频率最高的K个数字
-     * 给定一个整数数组 nums 和一个整数 k ，请返回其中出现频率前 k 高的元素。可以按 任意顺序 返回答案。
-     * <p>
-     * 解法：先用HashMap，key: 数组元素，value: 出现的次数.
-     * <p>
-     * 然后创建一个最小堆，遍历HashMap，去fill in 最小堆，如果min heap中已经有k个元素，则如果添加的数字>peak的频率，则删除栈顶元素，并添加
-     *
-     * 时间复杂度O(klogk),
-     */
-    public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> numToCount = new HashMap<>();
-        for (int num : nums) {
-            numToCount.put(num, numToCount.getOrDefault(num, 0) + 1);
-        }
-
-        // 因为比较的是value, 所以要pass一个comparator,
-        Queue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>(
-                (e1, e2) -> e1.getValue() - e2.getValue()
-        );
-
-        for (Map.Entry<Integer, Integer> entry : numToCount.entrySet()) {
-            if (minHeap.size() < k) {
-                minHeap.offer(entry);
-            } else if (entry.getValue() > minHeap.peek().getValue()) {
-                minHeap.poll();
-                minHeap.offer(entry);
-            }
-        }
-
-        List<Integer> result = new LinkedList<>();
-        for (Map.Entry<Integer, Integer> entry : minHeap) {
-            result.add(entry.getKey());
-        }
-
-        int[] intArray = new int[result.size()];
-
-        for (int i = 0; i < result.size(); i++) {
-            intArray[i] = result.get(i);
-        }
-
-        return intArray;
     }
 }

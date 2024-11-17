@@ -18,7 +18,7 @@ public class DynamicPlanning {
     public int maxSubArray(int[] nums) {
         int result = Integer.MIN_VALUE;
         int tempTotal = 0;
-        for (int i=0; i<nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             tempTotal += nums[i];
             result = Math.max(tempTotal, result);
             if (tempTotal < 0) {

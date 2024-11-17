@@ -1,9 +1,12 @@
 package com.haofan.algorithm.leetcodecn.medium.array;
 
-import java.util.*;
-import java.util.function.BinaryOperator;
-
-import static com.haofan.algorithm.help.Common.swap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 public class ArraySolutionMedium {
     private List<List<Integer>> ret = new LinkedList<>();
@@ -11,9 +14,9 @@ public class ArraySolutionMedium {
 
     /**
      * <a href="https://leetcode.cn/problems/3sum/">...</a>
-     *
+     * <p>
      * 没有什么思路，自己没能够解答出来。
-     *
+     * <p>
      * 三数之和：给定一个包含n个整数的数组nums, 判断nums中是否存在三个元素a,b,c，使得
      * a + b + c = 0, 并找出满足条件且不重复的三元组
      * https://blog.csdn.net/MebiuW/article/details/50918450
@@ -198,11 +201,11 @@ public class ArraySolutionMedium {
 
     /**
      * 递增的三元子序列：给定一个未排序的数组，判断数组是否存在长度为3的递增子序列
-     *
+     * <p>
      * 不好想，没想出来。
      * <a href="https://leetcode.cn/problems/increasing-triplet-subsequence/">...</a>
      * <p>
-     *
+     * <p>
      * 思路：有点像动态规划，维护一个二元组，first,second, 记录第i个元素之前的最小递增二元子序列
      */
     public boolean increasingTriplet(int[] nums) {
@@ -369,7 +372,7 @@ public class ArraySolutionMedium {
         int maxLength = 0;
         for (int num : temp) {
             if (num == 1) {
-                cur ++;
+                cur++;
             } else {
                 maxLength = Math.max(cur, maxLength);
                 cur = 0;

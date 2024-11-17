@@ -9,6 +9,7 @@ import java.util.Arrays;
 class StringSolutionTest {
 
     StringSolution s = new StringSolution();
+
     @Test
     void reverseString() {
         char[] c = "haofan".toCharArray();

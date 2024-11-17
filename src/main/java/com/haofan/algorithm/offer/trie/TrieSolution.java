@@ -2,18 +2,6 @@ package com.haofan.algorithm.offer.trie;
 
 
 public class TrieSolution {
-    // Trie data structure.
-    public static class TrieNode {
-        // 子节点可能有多个，子节点的index是对应的char, value是TrieNode
-        TrieNode children[];
-        boolean isWorld;
-
-        public TrieNode() {
-            // 最多有26个小写字母
-            children = new TrieNode[26];
-        }
-    }
-
     private TrieNode root = new TrieNode();
 
     public void insert(String world) {
@@ -50,5 +38,17 @@ public class TrieSolution {
         }
 
         return true;
+    }
+
+    // Trie data structure.
+    public static class TrieNode {
+        // 子节点可能有多个，子节点的index是对应的char, value是TrieNode
+        TrieNode children[];
+        boolean isWorld;
+
+        public TrieNode() {
+            // 最多有26个小写字母
+            children = new TrieNode[26];
+        }
     }
 }

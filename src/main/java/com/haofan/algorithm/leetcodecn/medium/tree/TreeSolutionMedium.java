@@ -3,7 +3,12 @@ package com.haofan.algorithm.leetcodecn.medium.tree;
 import com.haofan.algorithm.help.TreeNode;
 import com.haofan.algorithm.leetcodecn.easy.tree.TreeSolution;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class TreeSolutionMedium {
 
@@ -87,7 +92,7 @@ public class TreeSolutionMedium {
      * https://www.cnblogs.com/xiagnming/archive/2018/09/07/9603925.html
      * 思路：前序遍历的第一个元素是根节点，然后找出改节点在中序遍历的位置，记为mid节点。在中序遍历中，mid节点
      * 左边的元素时左子树，右边的元素时右子树。依次递归。
-     *
+     * <p>
      * 有点儿难度。
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {

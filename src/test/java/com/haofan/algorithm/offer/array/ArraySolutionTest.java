@@ -2,7 +2,6 @@ package com.haofan.algorithm.offer.array;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +25,7 @@ class ArraySolutionTest {
 
     @Test
     void threeSum() {
-        int[] nums = {-1, 0, 1, 2 , -1, -4};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
         System.out.println("Three sum: " + Arrays.toString(array.threeSum(nums).toArray()));
     }
 
@@ -51,7 +50,7 @@ class ArraySolutionTest {
 
     @Test
     void findMaxLength() {
-        assertEquals(2, array.findMaxLength(new int[] {0, 1, 0}));
+        assertEquals(2, array.findMaxLength(new int[]{0, 1, 0}));
     }
 
     @Test
@@ -61,19 +60,19 @@ class ArraySolutionTest {
 
     @Test
     void productExceptSelf() {
-        assertArrayEquals(new int[]{24,12,8,6}, array.productExceptSelf(new int[]{1, 2, 3, 4}));
+        assertArrayEquals(new int[]{24, 12, 8, 6}, array.productExceptSelf(new int[]{1, 2, 3, 4}));
     }
 
     @Test
     void searchMatrix() {
-        int[][] matrix = new int[][]{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        int[][] matrix = new int[][]{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}};
         assertTrue(array.searchMatrix(matrix, 5));
         assertTrue(array.searchMatrix1(matrix, 5));
     }
 
     @Test
     void findDisappearedNumbers() {
-        int[] input = new int[]{4,3,2,7,8,2,3,1};
+        int[] input = new int[]{4, 3, 2, 7, 8, 2, 3, 1};
 
         // O(n) 空间复杂度
         List<Integer> result = array.findDisappearedNumbers(input);
@@ -93,6 +92,6 @@ class ArraySolutionTest {
 
     @Test
     void findUnsortedSubarray() {
-        assertEquals(5, array.findUnsortedSubarray(new int[]{2,6,4,8,10,9,15}));
+        assertEquals(5, array.findUnsortedSubarray(new int[]{2, 6, 4, 8, 10, 9, 15}));
     }
 }

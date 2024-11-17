@@ -4,8 +4,6 @@ import com.haofan.algorithm.help.ListNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static com.haofan.algorithm.help.ListNode.arrayToList;
 import static com.haofan.algorithm.help.ListNode.listToArray;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -15,7 +13,7 @@ class ListNodeTest {
 
     @Test
     void delete() {
-        assertArrayEquals(new int[]{4, 5, 6}, listToArray(list.delete(arrayToList(new int[]{4, 5, 6, 8}),8)));
+        assertArrayEquals(new int[]{4, 5, 6}, listToArray(list.delete(arrayToList(new int[]{4, 5, 6, 8}), 8)));
     }
 
     @Test
@@ -70,7 +68,7 @@ class ListNodeTest {
     @Test
     void reorderList() {
         int[] res = listToArray(list.reorderList(arrayToList(new int[]{1, 2, 3, 4, 5, 6})));
-        assertArrayEquals(new int[] {1, 6, 2, 5, 3, 4}, res);
+        assertArrayEquals(new int[]{1, 6, 2, 5, 3, 4}, res);
     }
 
     @Test

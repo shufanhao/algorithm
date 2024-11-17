@@ -1,14 +1,30 @@
 package com.haofan.algorithm.offer.tree;
 
 
-import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.help.TreeNode;
-import com.sun.source.tree.Tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
 public class TreeSolution {
+    int sum = 0;
     private int pathNumber;
+    /**
+     * 面试题543: 二叉树的直径
+     *
+     * <a href="https://leetcode.cn/problems/diameter-of-binary-tree/description/">...</a>
+     * <p>
+     * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
+     * <p>
+     * 其实就是左右儿子的深度相加然后减一
+     */
+    private int ans = 1;
 
     /**
      * 面试题1：二叉树的广度优先遍历。中序，前序和后序遍历 用递归法
@@ -33,15 +49,15 @@ public class TreeSolution {
             dfs(root.right, nodes);
 
             /**
-            // 中序遍历
-            dfs(root.left, nodes);
-            nodes.add(root.val);
-            dfs(root.right, nodes);
+             // 中序遍历
+             dfs(root.left, nodes);
+             nodes.add(root.val);
+             dfs(root.right, nodes);
 
-            // 后序遍历
-            dfs(root.left, nodes);
-            dfs(root.right, nodes);
-            nodes.add(root.val);
+             // 后序遍历
+             dfs(root.left, nodes);
+             dfs(root.right, nodes);
+             nodes.add(root.val);
              */
         }
     }
@@ -70,23 +86,23 @@ public class TreeSolution {
         }
         // 前序遍历顺序：中-左-右，入栈顺序：中-右-左
         /** 如果是前序遍历
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            System.out.print(node.val + " ");
-            // 注意压栈顺序，先右后左
-            if (node.right != null) stack.push(node.right);
-            if (node.left != null) stack.push(node.left);
-        }
-        **/
+         while (!stack.isEmpty()) {
+         TreeNode node = stack.pop();
+         System.out.print(node.val + " ");
+         // 注意压栈顺序，先右后左
+         if (node.right != null) stack.push(node.right);
+         if (node.left != null) stack.push(node.left);
+         }
+         **/
         // 后序遍历顺序 左-右-中 入栈顺序：中-左-右 出栈顺序：中-右-左， 最后翻转结果
 
         return nodes;
     }
-    // 如果是前序遍历的话
 
     /**
      * 验证是否是一个二叉搜索树
-     *
+     * <p>
+     * 其实就是一个中序遍历，看下中序遍历是否是从小到大的顺序。
      * <a href="https://leetcode.cn/problems/validate-binary-search-tree/">...</a>
      */
     public boolean isValidBST(TreeNode root) {
@@ -108,33 +124,33 @@ public class TreeSolution {
     }
 
     /**
-     * 前序遍历，中序遍历，后序遍历更加容易的解法：
+     * 前序遍历，中序遍历，后序遍历更加容易的解法：这种方式比较奇怪。不用去刻意练习。
      * https://leetcode.cn/problems/binary-tree-inorder-traversal/solutions/25220/yan-se-biao-ji-fa-yi-chong-tong-yong-qie-jian-ming/
      * 前序：加入栈的顺序是右左根（根左右的反向）。
      * 中序，加入栈的顺序是右根左（左根右的反向）。
      * 后序，加入栈的顺序是根右左（左右根的反向）。
-     *
+     * <p>
      * 思路：
      * 使用颜色标记节点的状态，新节点为白色，已访问的节点为灰色。
      * 如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈，中序遍历
      * 如果遇到的节点为灰色，则将节点的值输出。
-     *
+     * <p>
      * 这种方法本质上是给 TreeNode 类添加了一个访问控制变量，对于没访问过的节点，先放入栈中，第二次访问的时候再出栈。
      */
     public List<Integer> middleTraversal(TreeNode root) {
-        if(root == null) return new ArrayList<Integer>();
+        if (root == null) return new ArrayList<Integer>();
 
         List<Integer> res = new ArrayList<>();
         Stack<ColorNode> stack = new Stack<>();
-        stack.push(new ColorNode(root,"white"));
+        stack.push(new ColorNode(root, "white"));
 
-        while(!stack.empty()){
+        while (!stack.empty()) {
             ColorNode cn = stack.pop();
-            if(cn.color.equals("white")){
+            if (cn.color.equals("white")) {
                 // 中序遍历
-                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
-                stack.push(new ColorNode(cn.node,"gray"));
-                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
+                if (cn.node.right != null) stack.push(new ColorNode(cn.node.right, "white"));
+                stack.push(new ColorNode(cn.node, "gray"));
+                if (cn.node.left != null) stack.push(new ColorNode(cn.node.left, "white"));
                 // 前序遍历 右左根
                 // 后序遍历 根右左
             } else {
@@ -144,20 +160,21 @@ public class TreeSolution {
 
         return res;
     }
+
     // 前序遍历
     public List<Integer> beforeTraversal(TreeNode root) {
-        if(root == null) return new ArrayList<Integer>();
+        if (root == null) return new ArrayList<Integer>();
 
         List<Integer> res = new ArrayList<>();
         Stack<ColorNode> stack = new Stack<>();
-        stack.push(new ColorNode(root,"white"));
+        stack.push(new ColorNode(root, "white"));
 
-        while(!stack.empty()){
+        while (!stack.empty()) {
             ColorNode cn = stack.pop();
-            if(cn.color.equals("white")){
-                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
-                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
-                stack.push(new ColorNode(cn.node,"gray"));
+            if (cn.color.equals("white")) {
+                if (cn.node.right != null) stack.push(new ColorNode(cn.node.right, "white"));
+                if (cn.node.left != null) stack.push(new ColorNode(cn.node.left, "white"));
+                stack.push(new ColorNode(cn.node, "gray"));
                 // 前序遍历 右左根
                 // 后序遍历 根右左
             } else {
@@ -167,40 +184,31 @@ public class TreeSolution {
 
         return res;
     }
+
     // 后序遍历
     public List<Integer> afterTraversal(TreeNode root) {
-        if(root == null) return new ArrayList<Integer>();
+        if (root == null) return new ArrayList<Integer>();
 
         List<Integer> res = new ArrayList<>();
         Stack<ColorNode> stack = new Stack<>();
-        stack.push(new ColorNode(root,"white"));
+        stack.push(new ColorNode(root, "white"));
 
-        while(!stack.empty()){
+        while (!stack.empty()) {
             ColorNode cn = stack.pop();
-            if(cn.color.equals("white")){
-                stack.push(new ColorNode(cn.node,"gray"));
-                if(cn.node.right != null) stack.push(new ColorNode(cn.node.right,"white"));
-                if(cn.node.left != null)stack.push(new ColorNode(cn.node.left,"white"));
+            if (cn.color.equals("white")) {
+                stack.push(new ColorNode(cn.node, "gray"));
+                if (cn.node.right != null) stack.push(new ColorNode(cn.node.right, "white"));
+                if (cn.node.left != null) stack.push(new ColorNode(cn.node.left, "white"));
             } else {
                 res.add(cn.node.val);
             }
         }
 
         return res;
-    }
-
-    static class ColorNode {
-        TreeNode node;
-        String color;
-
-        public ColorNode(TreeNode node,String color){
-            this.node = node;
-            this.color = color;
-        }
     }
 
     /**
-     * 面试题47：二叉树剪枝
+     * 面试题47：二叉树剪枝 <a href="https://leetcode.cn/problems/pOCWxh/description/">...</a>
      * 给你二叉树的根结点 root ，此外树的每个结点的值要么是 0 ，要么是 1 。
      * 返回移除了所有不包含 1 的子树的原二叉树。
      * <p>
@@ -225,6 +233,7 @@ public class TreeSolution {
 
     /**
      * 面试题49：从根节点到叶节点的路径数字之和
+     * <a href="https://leetcode.cn/problems/sum-root-to-leaf-numbers/description/">...</a>
      * <p>
      * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。每条从根节点到叶节点的路径都代表一个数字：
      * <p>
@@ -271,19 +280,19 @@ public class TreeSolution {
     }
 
     /**
-     * 面试图52：展平二叉搜索树
+     * 面试图52：展平二叉搜索树 <a href="https://leetcode.cn/problems/NYBBNL/description/">...</a>
      * <p>
      * 将一个二叉搜索树，展平
      * <p>
      * 解法：其实就是一个中序遍历，改改。
      * /**
-     *      * Build Search Tree
-     *      *  3
-     *      * / \
-     *      *1  4
-     *      * \
-     *      *  2
-     *      */
+     * * Build Search Tree
+     * *  3
+     * * / \
+     * *1  4
+     * * \
+     * *  2
+     */
     public TreeNode increasingBST(TreeNode root) {
         if (root == null) return null;
 
@@ -335,6 +344,7 @@ public class TreeSolution {
 
         return root;
     }
+
     /**
      * 面试题53：二叉搜索树的下一个节点
      * 其实就是找到中序遍历的对应的节点的，下一个节点。
@@ -365,7 +375,8 @@ public class TreeSolution {
      * <p>
      * 解法1：先遍历一遍二叉树，然后拿到sum，然后中序遍历二叉搜索树，并记录之前所有节点的值，然后将该节点赋值成sum - total
      * 解法2：可以颠倒遍历二叉搜索树，先遍历right tree -> root -> left tree，这样就拿到了比该节点的大的和。
-     *
+     * 解法3：用递归，right -> root - > left
+     * <p>
      * 下面的方案是用的解法2：
      */
     public TreeNode convertBST(TreeNode root) {
@@ -389,51 +400,26 @@ public class TreeSolution {
     }
 
     public TreeNode convertBST1(TreeNode root) {
-        // 递归实现
-        int[] sum = {0};
+        if (root == null) {
+            return null;
+        }
+
+        dfsBST(root);
         return root;
     }
 
-    /**
-     * 面试题55: 二叉搜索树迭代器
-     * <p>
-     * 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：
-     * BSTIterator(TreeNode root) 初始化 BSTIterator 类的一个对象。BST 的根节点 root 会作为构造函数的一部分给出。
-     * 指针应初始化为一个不存在于 BST 中的数字，且该数字小于 BST 中的任何元素。
-     * boolean hasNext() 如果向指针右侧遍历存在数字，则返回 true ；否则返回 false 。
-     * int next()将指针向右移动，然后返回指针处的数字。
-     * <p>
-     * 解法1：将二叉树展平, 只有right node
-     * 解法2：中序遍历的while循环条件，if tree, 每执行一次，就是遍历一个node。if false, 就是都遍历完了。
-     * 所以：中序遍历中while循环条件可以看成迭代器的haxNext方法
-     */
-    public static class BSTIterator {
-        TreeNode cur;
-        Stack<TreeNode> stack;
-
-        public BSTIterator(TreeNode root) {
-            cur = root;
-            stack = new Stack<>();
+    void dfsBST(TreeNode node) {
+        if (node == null) {
+            return;
         }
-
-        public boolean hasNext() {
-            return cur != null || !stack.isEmpty();
-        }
-
-        public int next() {
-            while (cur != null) {
-                stack.push(cur);
-                cur = cur.left;
-            }
-            cur = stack.pop();
-            int val = cur.val;
-            cur = cur.right;
-            return val;
-        }
+        dfsBST(node.right);
+        sum += node.val;
+        node.val = sum;
+        dfsBST(node.left);
     }
 
     /**
-     * 面试题56：二叉搜索树的两个节点值之和
+     * 面试题56：二叉搜索树的两个节点值之和 <a href="https://leetcode.cn/problems/two-sum-iv-input-is-a-bst/description/">...</a>
      * <p>
      * 解法1: 利用hash 表，保存节点的值v，没遍历到一个节点，就看有没有存在k -v 的值
      * 解法2：双指针，将二叉搜索树看成一个排序数组，按照排序数组的解法。稍微麻烦
@@ -460,24 +446,17 @@ public class TreeSolution {
     }
 
     /**
-     * 面试题：TreeSet, TreeMap
-     *
-     *平衡二叉搜索树：任何两个子树的高度最大差别为1。这种特性确保了树的搜索、插入、删除等操作的时间复杂度保持在O(log n)
-     */
-
-    /**
      * 面试题114 二叉树展开为链表
-     *
+     * <p>
      * 展开后的单链表应该与二叉树 先序遍历 顺序相同。
      * <a href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/">...</a>
-     *
-     * 思路: 先序遍历结果后，然后更新left和right
+     * <p>
+     * 思路: 先序遍历结果放到list中，然后遍历这个list然后更新left和right, left 是空
      */
     public void flatten(TreeNode root) {
         List<TreeNode> list = new ArrayList<>();
         preorderTraversal(root, list);
         int size = list.size();
-        preorderTraversal(root, list);
 
         for (int i = 1; i < size; i++) {
             TreeNode prev = list.get(i - 1);
@@ -486,6 +465,13 @@ public class TreeSolution {
             prev.right = curr;
         }
     }
+
+    /**
+     * 面试题：TreeSet, TreeMap
+     *
+     *平衡二叉搜索树：任何两个子树的高度最大差别为1。这种特性确保了树的搜索、插入、删除等操作的时间复杂度保持在O(log n)
+     */
+
     private void preorderTraversal(TreeNode root, List<TreeNode> list) {
         if (root != null) {
             list.add(root);
@@ -494,13 +480,12 @@ public class TreeSolution {
         }
     }
 
-
     /**
      * 面试题226: 翻转二叉树
      * <a href="https://leetcode.cn/problems/invert-binary-tree/">...</a>
-     *
+     * <p>
      * 给一颗二叉树的根节点，要求翻转二叉树
-     *
+     * <p>
      * 解题：
      * 最常想到的思路是递归，第一次是自己做出来。
      */
@@ -514,6 +499,7 @@ public class TreeSolution {
 
         return root;
     }
+
     private void invertTreeRecursive(TreeNode node) {
         if (node == null) {
             return;
@@ -529,11 +515,11 @@ public class TreeSolution {
     /**
      * 面试题236: 二叉树的最近公共祖先
      * https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree
-     *
+     * <p>
      * 思路:
      * 1. 递归。不是很容易理解。
      * 2. 迭代法。用哈希表，存储所有节点的父节点，然后利用节点的父节点信息，从P开始不断地向上找，
-     *    并记录访问过的节点，再从q节点不断往上找，如果找到已经存在的节点，则说明是最近公共祖先。
+     * 并记录访问过的节点，再从q节点不断往上找，如果找到已经存在的节点，则说明是最近公共祖先。
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<Integer, TreeNode> parent = new HashMap<>();
@@ -574,9 +560,9 @@ public class TreeSolution {
     /**
      * 面试题437: 路径总和 III
      * <a href="https://leetcode.cn/problems/path-sum-iii/description/">...</a>
-     *
+     * <p>
      * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
-     *
+     * <p>
      * java 双重递归 思路：
      * 首先先序递归遍历每个节点，再以每个节点作为起始点递归寻找满足条件的路径。
      */
@@ -592,7 +578,7 @@ public class TreeSolution {
         if (node == null) return;
         sum = sum - node.val;
         if (sum == 0) {
-            pathNumber ++;
+            pathNumber++;
         }
         // 继续遍历左子树
         sum(node.left, sum);
@@ -600,15 +586,6 @@ public class TreeSolution {
         sum(node.right, sum);
     }
 
-    /**
-     * 面试题543: 二叉树的直径
-     *
-     * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
-     *
-     * 其实就是求某节点的左右儿子的深度，
-     *
-     */
-    private int ans = 1;
     public int diameterOfBinaryTree(TreeNode root) {
         if (root == null) {
             return 0;
@@ -647,6 +624,54 @@ public class TreeSolution {
         root1.left = mergeTrees(root1.left, root2.left);
         root1.right = mergeTrees(root1.right, root2.right);
         return root1;
+    }
+
+    static class ColorNode {
+        TreeNode node;
+        String color;
+
+        public ColorNode(TreeNode node, String color) {
+            this.node = node;
+            this.color = color;
+        }
+    }
+
+    /**
+     * 面试题55: 二叉搜索树迭代器
+     * <p>
+     * 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：
+     * BSTIterator(TreeNode root) 初始化 BSTIterator 类的一个对象。BST 的根节点 root 会作为构造函数的一部分给出。
+     * 指针应初始化为一个不存在于 BST 中的数字，且该数字小于 BST 中的任何元素。
+     * boolean hasNext() 如果向指针右侧遍历存在数字，则返回 true ；否则返回 false 。
+     * int next()将指针向右移动，然后返回指针处的数字。
+     * <p>
+     * 解法1：将二叉树展平, 只有right node
+     * 解法2：中序遍历的while循环条件，if tree, 每执行一次，就是遍历一个node。if false, 就是都遍历完了。
+     * 所以：中序遍历中while循环条件可以看成迭代器的haxNext方法
+     */
+    public static class BSTIterator {
+        TreeNode cur;
+        Stack<TreeNode> stack;
+
+        public BSTIterator(TreeNode root) {
+            cur = root;
+            stack = new Stack<>();
+        }
+
+        public boolean hasNext() {
+            return cur != null || !stack.isEmpty();
+        }
+
+        public int next() {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            int val = cur.val;
+            cur = cur.right;
+            return val;
+        }
     }
 
 

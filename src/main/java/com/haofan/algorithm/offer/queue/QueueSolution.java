@@ -1,6 +1,5 @@
 package com.haofan.algorithm.offer.queue;
 
-import com.haofan.algorithm.help.ListNode;
 import com.haofan.algorithm.help.TreeNode;
 
 import java.util.ArrayList;
@@ -9,34 +8,6 @@ import java.util.List;
 import java.util.Queue;
 
 public class QueueSolution {
-    /**
-     * 面试题41：滑动窗口的平均值
-     * <p>
-     * 实现 MovingAverage 类：
-     * <p>
-     * MovingAverage(int size) 用窗口大小 size 初始化对象。
-     * double next(int val) 成员函数 next每次调用的时候都会往滑动窗口增加一个整数，请计算并返回数据流中最后 size 个值的移动平均值，即滑动窗口里所有数字的平均值。
-     */
-    public static class MovingAverage {
-        private Queue<Integer> nums;
-        private int capacity;
-        private int sum;
-
-        public MovingAverage(int size) {
-            nums = new LinkedList<>();
-            capacity = size;
-        }
-
-        public double next(int val) {
-            nums.offer(val);
-            sum += val;
-            if (nums.size() > capacity) {
-                sum -= nums.poll();
-            }
-            return (double) sum / nums.size();
-        }
-    }
-
     /**
      * 面试题42：二叉树的广度优先遍历
      *
@@ -61,73 +32,6 @@ public class QueueSolution {
             }
         }
         return result;
-    }
-
-    /**
-     * 面试题43：在完全二叉树中添加节点
-     * <p>
-     * 完全二叉树是每一层, 除最后一层外, 都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
-     * <p>
-     * 更容易理解：
-     * <a href="https://leetcode.cn/problems/NaqhDT/solutions/1689235/wang-wan-quan-er-cha-shu-tian-jia-jie-di-4wl4/">...</a>
-     *
-     * <p>
-     * 实现数据结构 CBTInserter 有如下三种方法：
-     * <p>
-     * CBTInserter (Node root) 使用头节点为root 的给定树初始化该数据结构, 这里初始化的目的其实是为了能够选取出能作为candidate的节点
-     * <p>
-     * 对于一个完全二叉树，只有倒数第二层（如果存在）最右侧的若干个节点，以及最后一层的全部节点可以再添加子节点，其余的节点都已经拥有两个子节点。
-     * 我们只需要在初始时找到这些节点即可。
-     *
-     * <p>
-     * CBTInserter->insert (val) 向树中插入一个新节点，节点类型为 TreeNode，值为 val 。使树保持完全二叉树的状态，并返回插入的新节点的父节点的值；
-     * <p>
-     * CBTInserter.get_root () 将返回树的头节点。
-     */
-    public static class CBTInserter {
-        private Queue<TreeNode> candidate = new LinkedList<>();
-        private TreeNode root;
-
-        public CBTInserter(TreeNode root) {
-            this.root = root;
-
-            // 广度优先遍历完全二叉树
-            Queue<TreeNode> queue = new LinkedList<>();
-            queue.offer(root);
-
-            while (!queue.isEmpty()) {
-                TreeNode node = queue.poll();
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-                // 其中有一个是空的, 则赋值给candidate
-                if (!(node.left != null && node.right != null)) {
-                    candidate.offer(node);
-                }
-            }
-        }
-
-        public int insert(int v) {
-            TreeNode child = new TreeNode(v);
-            TreeNode node = candidate.peek();
-            int ret = node.val;
-            if (node.left == null) {
-                node.left = child;
-            } else {
-                node.right = child;
-                candidate.poll();
-            }
-
-            candidate.offer(child);
-            return ret;
-        }
-
-        public TreeNode getRoot() {
-            return this.root;
-        }
     }
 
     /**
@@ -211,9 +115,8 @@ public class QueueSolution {
         return result;
     }
 
-
     /**
-     * 二叉树层序遍历，
+     * 二叉树层序遍历，和上面的那个题目类似
      * https://leetcode.cn/problems/binary-tree-level-order-traversal/description/
      * 输入：root = [3,9,20,null,null,15,7]
      * 输出：[[3],[9,20],[15,7]]
@@ -261,7 +164,6 @@ public class QueueSolution {
 
         while (!queue1.isEmpty()) {
             TreeNode node = queue1.poll();
-            // 先遍历right，这个很重要
             if (node.left != null) {
                 queue2.offer(node.left);
             }
@@ -316,5 +218,100 @@ public class QueueSolution {
             }
         }
         return view;
+    }
+
+    /**
+     * 面试题41：滑动窗口的平均值
+     * <p>
+     * 实现 MovingAverage 类：
+     * <p>
+     * MovingAverage(int size) 用窗口大小 size 初始化对象。
+     * double next(int val) 成员函数 next每次调用的时候都会往滑动窗口增加一个整数，请计算并返回数据流中最后 size 个值的移动平均值，即滑动窗口里所有数字的平均值。
+     */
+    public static class MovingAverage {
+        private Queue<Integer> nums;
+        private int capacity;
+        private int sum;
+
+        public MovingAverage(int size) {
+            nums = new LinkedList<>();
+            capacity = size;
+        }
+
+        public double next(int val) {
+            nums.offer(val);
+            sum += val;
+            if (nums.size() > capacity) {
+                sum -= nums.poll();
+            }
+            return (double) sum / nums.size();
+        }
+    }
+
+    /**
+     * 面试题43：在完全二叉树中添加节点
+     * <p>
+     * 完全二叉树是每一层, 除最后一层外, 都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
+     * <p>
+     * 更容易理解：
+     * <a href="https://leetcode.cn/problems/NaqhDT/solutions/1689235/wang-wan-quan-er-cha-shu-tian-jia-jie-di-4wl4/">...</a>
+     *
+     * <p>
+     * 实现数据结构 CBTInserter 有如下三种方法：
+     * <p>
+     * CBTInserter (Node root) 使用头节点为root 的给定树初始化该数据结构, 这里初始化的目的其实是为了能够选取出能作为candidate的节点
+     * <p>
+     * 对于一个完全二叉树，只有倒数第二层（如果存在）最右侧的若干个节点，以及最后一层的全部节点可以再添加子节点，其余的节点都已经拥有两个子节点。
+     * 我们只需要在初始时找到这些节点即可。
+     *
+     * <p>
+     * CBTInserter->insert (val) 向树中插入一个新节点，节点类型为 TreeNode，值为 val 。使树保持完全二叉树的状态，并返回插入的新节点的父节点的值；
+     * <p>
+     * CBTInserter.get_root () 将返回树的头节点。
+     */
+    public static class CBTInserter {
+        private Queue<TreeNode> candidate = new LinkedList<>();
+        private TreeNode root;
+
+        public CBTInserter(TreeNode root) {
+            this.root = root;
+
+            // 广度优先遍历完全二叉树
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+
+            while (!queue.isEmpty()) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                // 其中有一个是空的, 则赋值给candidate
+                if (!(node.left != null && node.right != null)) {
+                    candidate.offer(node);
+                }
+            }
+        }
+
+        public int insert(int v) {
+            TreeNode child = new TreeNode(v);
+            TreeNode node = candidate.peek();
+            int ret = node.val;
+            if (node.left == null) {
+                node.left = child;
+            } else {
+                node.right = child;
+                candidate.poll();
+            }
+
+            candidate.offer(child);
+            return ret;
+        }
+
+        public TreeNode get_root() {
+            return this.root;
+        }
     }
 }

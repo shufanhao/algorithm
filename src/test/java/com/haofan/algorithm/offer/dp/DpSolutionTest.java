@@ -3,7 +3,7 @@ package com.haofan.algorithm.offer.dp;
 import com.haofan.algorithm.help.TreeNode;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DpSolutionTest {
 
@@ -42,11 +42,12 @@ class DpSolutionTest {
 
     @Test
     void uniquePathsWithObstacles() {
-        assertEquals(2, dp.uniquePathsWithObstacles(new int[][]{{0,0,0},{0,1,0},{0,0,0}}));
+        assertEquals(2, dp.uniquePathsWithObstacles(new int[][]{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}}));
     }
+
     @Test
     void minPathSum() {
-        assertEquals(7, dp.minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        assertEquals(7, dp.minPathSum(new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}));
     }
 
     @Test
@@ -56,7 +57,7 @@ class DpSolutionTest {
 
     @Test
     void maxProfit() {
-        int[] prices = new int[]{7,1,5,3,6,4};
+        int[] prices = new int[]{7, 1, 5, 3, 6, 4};
         assertEquals(5, dp.maxProfit(prices));
 
         assertEquals(5, dp.maxProfit1(prices));
@@ -65,7 +66,7 @@ class DpSolutionTest {
 
     @Test
     void maximalSquare() {
-        char[][] matrix = new char[][]{{'0','1'},{'1','0'}};
+        char[][] matrix = new char[][]{{'0', '1'}, {'1', '0'}};
         assertEquals(1, dp.maximalSquare(matrix));
     }
 
@@ -81,11 +82,11 @@ class DpSolutionTest {
 
     @Test
     void lengthOfLIS() {
-        assertEquals(4, dp.lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
+        assertEquals(4, dp.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18}));
     }
 
     @Test
     void findLengthOfLCIS() {
-        assertEquals(3, dp.findLengthOfLCIS(new int[]{1,3,5,4,7}));
+        assertEquals(3, dp.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
     }
 }

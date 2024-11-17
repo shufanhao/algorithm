@@ -84,9 +84,9 @@ public class BinarySolution {
      * 题目4:
      * <a href="https://leetcode.cn/problems/single-number-ii/description/">...</a>
      * <p>
-     *
+     * <p>
      * 感觉用一个hash map 更简单，但是有多余的Space.
-     *
+     * <p>
      * 输入一个整数数组，数组中只有一个数字出现了一次，而其他数字都出现了3次。请找出那个只出现一次的数字。
      * 例如，如果输入的数组为[0，1，0，1，0，1，100]，则只出现一次的数字是100。
      * 解法：一个整数是由32个0或1组成的。我们可以将数组中所有数字的同一位置的数位相加。
@@ -113,10 +113,10 @@ public class BinarySolution {
 
     /**
      * 题目5： 单词长度的最大乘积 https://leetcode.cn/problems/aseY1I/description/
-     *
+     * <p>
      * 给定一个字符串数组 words，请计算当两个字符串 words[i] 和 words[j] 不包含相同字符时，它们长度的乘积的最大值。
      * 假设字符串中只包含英语的小写字母。如果没有不包含相同字符的一对字符串，返回 0。
-     *
+     * <p>
      * 解法：
      * 注意题目中说了，只包含英语的小写字母，所以可以初始化一个二维数组每一列对应一个字符串，每一行长度是26，记录了是否包含单词的字母。然后再比较即可。
      */
@@ -124,7 +124,7 @@ public class BinarySolution {
         boolean[][] flags = new boolean[words.length][26];
         // 初始化这个二维数组, 单词中有个字母的对应列，赋值为true
         for (int i = 0; i < words.length; i++) {
-            for (char c: words[i].toCharArray()) {
+            for (char c : words[i].toCharArray()) {
                 flags[i][c - 'a'] = true;
             }
         }
@@ -132,8 +132,8 @@ public class BinarySolution {
         // 遍历
         int result = 0;
         for (int i = 0; i < words.length; i++) {
-            for (int j = 1; j< words.length; j++) {
-                int k=0;
+            for (int j = 1; j < words.length; j++) {
+                int k = 0;
                 for (; k < 26; k++) {
                     if (flags[i][k] && flags[j][k]) {
                         break;

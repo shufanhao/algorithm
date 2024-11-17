@@ -2,12 +2,11 @@ package com.haofan.algorithm.offer.sort;
 
 import com.haofan.algorithm.help.ListNode;
 import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class SortSolutionTest {
     private SortSolution sort = new SortSolution();
@@ -26,7 +25,7 @@ class SortSolutionTest {
 
     @Test
     void relativeSortArray() {
-        System.out.println(Arrays.toString(sort.relativeSortArray(new int[]{2,3,1,3,2,4,6,7,9}, new int[]{2,1,4})));
+        System.out.println(Arrays.toString(sort.relativeSortArray(new int[]{2, 3, 1, 3, 2, 4, 6, 7, 9}, new int[]{2, 1, 4})));
     }
 
     @Test
@@ -50,7 +49,7 @@ class SortSolutionTest {
 
     @Test
     void reconstructQueue() {
-        int[][] arrays = new int[][]{{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
+        int[][] arrays = new int[][]{{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}};
         sort.reconstructQueue(arrays);
     }
 }

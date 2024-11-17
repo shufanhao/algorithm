@@ -8,15 +8,16 @@ public class BackTracking {
 
     /**
      * 面试题77: 组合问题
-     *
+     * <p>
      * https://leetcode.cn/problems/combinations/description/
-     *
+     * <p>
      * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
-     *
+     * <p>
      * 解法：经典的回溯法去解决问题
      */
     List<List<Integer>> result = new ArrayList<>();
     LinkedList<Integer> path = new LinkedList<>();
+
     public List<List<Integer>> combine(int n, int k) {
         backtracking(n, k, 1);
         return result;

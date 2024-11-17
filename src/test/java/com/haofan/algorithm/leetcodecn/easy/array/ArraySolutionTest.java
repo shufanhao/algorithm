@@ -1,12 +1,11 @@
 package com.haofan.algorithm.leetcodecn.easy.array;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Time;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ArraySolutionTest {
     private ArraySolution array = new ArraySolution();
@@ -111,13 +110,13 @@ class ArraySolutionTest {
 
     @Test
     void findMaxAverage() {
-        int[] arr = {1,12,-5,-6,50,3};
+        int[] arr = {1, 12, -5, -6, 50, 3};
         assertEquals(12.75, array.findMaxAverage(arr, 4));
     }
 
     @Test
     void removeDuplicates() {
-        int[] arr = {0,0,1,1,1,2,2,3,3,4};
+        int[] arr = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         System.out.println(array.removeDuplicates(arr));
     }
 }

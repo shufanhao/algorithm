@@ -30,8 +30,8 @@ public class ListSolutionMedium {
         int[] input1 = {0, 8, 4, 5};
         int[] input2 = {1, 8, 4, 5};
 
-       // common.printList(list.getIntersectionNode(common.createList(input1),
-      //          common.createList(input2)), "题目3：");
+        // common.printList(list.getIntersectionNode(common.createList(input1),
+        //          common.createList(input2)), "题目3：");
     }
 
     /**

@@ -1,6 +1,10 @@
 package com.haofan.algorithm.leetcodecn.easy.array;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.haofan.algorithm.help.Common.swap;
 
@@ -109,7 +113,7 @@ public class ArraySolution {
             nums[i] = temp[i];
         }*/
 
-        k = k%nums.length;
+        k = k % nums.length;
         // 解法2：
         reverse(nums, 0, nums.length - 1 - k);
         reverse(nums, nums.length - k, nums.length - 1);
@@ -158,7 +162,7 @@ public class ArraySolution {
 
     /**
      * 题目7： 加一 <a href="https://leetcode.cn/problems/plus-one/">...</a>
-     *
+     * <p>
      * 自己做出来
      */
     public int[] plusOne(int[] digits) {
@@ -274,10 +278,10 @@ public class ArraySolution {
 
         // 对调列元素
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len/2; j++) {
+            for (int j = 0; j < len / 2; j++) {
                 int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][len - j -1];
-                matrix[i][len - j -1] = temp;
+                matrix[i][j] = matrix[i][len - j - 1];
+                matrix[i][len - j - 1] = temp;
             }
         }
     }
@@ -316,17 +320,16 @@ public class ArraySolution {
     /**
      * 题目13： <a href="https://leetcode.cn/problems/maximum-average-subarray-i/">...</a>
      * 给一个由 n 个元素组成的整数数组 nums 和一个整数 k 。
-     *
+     * <p>
      * 自己做出来的
      * <p>
      * 请你找出平均数最大且 长度为 k 的连续子数组，并输出该最大平均数。
-     *
+     * <p>
      * 输入：nums = [1,12,-5,-6,50,3], k = 4
      * 输出：12.75
      * 解释：最大平均数 (12-5-6+50)/4 = 51/4 = 12.75
-     *
+     * <p>
      * 关键的是：sum_i = sums_i-1 - nums[i-k]+ nums[i] 这样可以节省time
-     *
      */
     public double findMaxAverage(int[] nums, int k) {
         int sum = 0;
@@ -334,7 +337,7 @@ public class ArraySolution {
             sum += nums[i];
         }
         int maxSum = sum;
-        for (int i = k; i < nums.length ; i++) {
+        for (int i = k; i < nums.length; i++) {
             sum = sum - nums[i - k] + nums[i];
             maxSum = Math.max(maxSum, sum);
         }

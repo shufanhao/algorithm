@@ -1,11 +1,7 @@
 package com.haofan.algorithm.offer.tree;
 
 import com.haofan.algorithm.help.TreeNode;
-import com.sun.source.tree.Tree;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,9 +51,10 @@ class TreeSolutionTest {
 
     @Test
     void increasingBST() {
-        TreeNode root = tree.increasingBST(TreeNode.buildSearchTree());
+        TreeNode root = tree.increasingBST1(TreeNode.buildSearchTree());
         assertEquals(1, root.val);
     }
+
     @Test
     void inorderSuccessor() {
         assertEquals(null, tree.inorderSuccessor(TreeNode.buildSearchTree(), TreeNode.buildSearchTree().right));
@@ -82,8 +79,10 @@ class TreeSolutionTest {
 
     @Test
     void flatten() {
-        TreeNode root = new TreeNode(0);
+        TreeNode root = TreeNode.buildSearchTree();
         tree.flatten(root);
+        assertNull(root.left);
+        assertEquals(3, root.val);
     }
 
     @Test
