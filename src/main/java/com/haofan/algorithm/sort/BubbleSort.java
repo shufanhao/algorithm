@@ -10,12 +10,10 @@ public class BubbleSort {
     /**
      * 首先比较第1个和第2个数，将小数放前，大数放后。
      * 然后比较第2个数和第3个数，将小数放前，大数放后，如此继续，直至比较最后两个数，将小数放前，大数放后。
+     * 最后是大数在最后面，所以内层循环应该是num.length - 1 - j
      * 重复第一趟步骤，直至全部排序完成。
      */
-    public static void sort(int num[]) {
-        if (num == null && num.length == 0) {
-            return;
-        }
+    public static int[] sort(int[] num) {
         // 外层循环控制排序趟数
         for (int j = 0; j < num.length - 1; j++) {
             // 内层循环控制每一趟排序多少次
@@ -25,12 +23,7 @@ public class BubbleSort {
                 }
             }
         }
-    }
-
-    public static void main(String args[]) {
-        int[] nums = {3, 4, 1, 5, 6};
-        sort(nums);
-        System.out.println(Arrays.toString(nums));
+        return num;
     }
 }
 

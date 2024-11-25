@@ -1,7 +1,11 @@
 package com.haofan.algorithm.offer.sort;
 
 import com.haofan.algorithm.help.ListNode;
+import com.haofan.algorithm.sort.BubbleSort;
+import com.haofan.algorithm.sort.MergeSort;
+import com.haofan.algorithm.sort.QuickSort;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -12,10 +16,29 @@ class SortSolutionTest {
     private SortSolution sort = new SortSolution();
 
     @Test
+    void bubbleSort() {
+        Assertions.assertArrayEquals(new int[]{1, 2, 3, 4}, BubbleSort.sort(new int[]{2, 1, 4, 3}));
+    }
+
+    @Test
+    void quickSort() {
+        int[] array = new int[]{3, 4, 1, 5, 6};
+        new QuickSort().quickSort(array, 0, 4);
+        Assertions.assertArrayEquals(new int[]{1, 3, 4, 5, 6}, array);
+    }
+
+    @Test
+    void mergeSort() {
+        int[] arr = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+        MergeSort.sort(arr);
+        Assertions.assertArrayEquals(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, arr);
+    }
+
+    @Test
     void merge() {
         // intervals = [[1,3],[8,10],[2,6]，[15,18]]
         int[][] result = sort.merge(new int[][]{{1, 3}, {8, 10}, {2, 6}, {15, 18}});
-        Assert.assertEquals(3, result.length);
+        Assertions.assertEquals(3, result.length);
     }
 
     @Test
@@ -25,14 +48,7 @@ class SortSolutionTest {
 
     @Test
     void relativeSortArray() {
-        System.out.println(Arrays.toString(sort.relativeSortArray(new int[]{2, 3, 1, 3, 2, 4, 6, 7, 9}, new int[]{2, 1, 4})));
-    }
-
-    @Test
-    void quickSort() {
-        int[] raw = new int[]{3, 5, 4, 7, 6};
-        sort.quickSort(raw, 0, 4);
-        System.out.println(Arrays.toString(raw));
+        Assertions.assertArrayEquals(new int[]{2, 2, 1, 4, 3, 3, 6, 7, 9}, sort.relativeSortArray(new int[]{2, 3, 1, 3, 2, 4, 6, 7, 9}, new int[]{2, 1, 4}));
     }
 
     @Test

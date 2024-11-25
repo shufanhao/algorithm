@@ -44,7 +44,6 @@ public class HeapSolution {
         }
 
         int[] intArray = new int[result.size()];
-
         for (int i = 0; i < result.size(); i++) {
             intArray[i] = result.get(i);
         }
@@ -72,7 +71,7 @@ public class HeapSolution {
 
         public KthLargest(int k, int[] nums) {
             size = k;
-            minHeap = new PriorityQueue<>();
+            minHeap = new PriorityQueue<>(k);
             for (int num : nums) {
                 add(num);
             }

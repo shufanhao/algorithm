@@ -20,11 +20,32 @@ public class TreeSolution {
      *
      * <a href="https://leetcode.cn/problems/diameter-of-binary-tree/description/">...</a>
      * <p>
-     * 二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
+     * 二叉树的 直径 是指树中任意两个节点之间最长路径的长度。这条路径可能经过也可能不经过根节点 root 。
      * <p>
      * 其实就是左右儿子的深度相加然后减一
      */
     private int ans = 1;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        depth(root);
+        return ans - 1;
+    }
+
+    private int depth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        // 左儿子深度
+        int left = depth(node.left);
+        // 右儿子深度
+        int right = depth(node.right);
+
+        ans = Math.max(ans, left + right + 1);
+        // 返回以该节点为根的最大深度。
+        return Math.max(left, right) + 1;
+    }
 
     /**
      * 面试题1：二叉树的广度优先遍历。中序，前序和后序遍历 用递归法
@@ -584,28 +605,6 @@ public class TreeSolution {
         sum(node.left, sum);
         // 继续遍历右子树
         sum(node.right, sum);
-    }
-
-    public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        depth(root);
-        return ans - 1;
-    }
-
-    private int depth(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-        // 左儿子深度
-        int left = depth(node.left);
-        // 右儿子深度
-        int right = depth(node.right);
-
-        ans = Math.max(ans, left + right + 1);
-        // 返回以该节点为根的最大深度。
-        return Math.max(left, right) + 1;
     }
 
     /**

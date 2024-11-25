@@ -1,7 +1,5 @@
 package com.haofan.algorithm.sort;
 
-import java.util.Arrays;
-
 //https://www.cnblogs.com/chengxiao/p/6194356.html
 public class MergeSort {
     /**
@@ -10,15 +8,7 @@ public class MergeSort {
      * 注意整个逻辑：
      * 分：就是递归去分。
      * 治：就是merge 两个有序元素
-     *
-     * @param args
      */
-    public static void main(String args[]) {
-        int[] arr = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        sort(arr);
-        System.out.println(Arrays.toString(arr));
-    }
-
     public static void sort(int[] arr) {
         // 创建temp
         int[] temp = new int[arr.length];

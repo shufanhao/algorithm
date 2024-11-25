@@ -197,4 +197,20 @@ class PracticeTest {
     void findTarget() {
         assertFalse(p.findTarget(TreeNode.buildSearchTree(), 2));
     }
+
+    @Test
+    void topKFrequent() {
+        Assertions.assertArrayEquals(new int[]{1, 2}, p.topKFrequent(new int[]{1, 2, 2, 1, 3, 1}, 2));
+    }
+
+    @Test
+    void search() {
+        Assertions.assertEquals(1, p.search(new int[]{1, 2, 3, 4, 5}, 2));
+    }
+
+    @Test
+    void peakIndexInMountainArray() {
+        Assertions.assertEquals(2, p.peakIndexInMountainArray(new int[]{1, 3, 5, 4, 2}));
+    }
+
 }

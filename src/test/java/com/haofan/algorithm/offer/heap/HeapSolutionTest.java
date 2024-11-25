@@ -17,6 +17,6 @@ public class HeapSolutionTest {
 
     @Test
     void topKFrequent() {
-        Assertions.assertEquals(List.of(2, 1), heap.topKFrequent(new int[]{1, 2, 2, 1, 3, 1}, 2));
+        Assertions.assertArrayEquals(new int[]{2, 1}, heap.topKFrequent(new int[]{1, 2, 2, 1, 3, 1}, 2));
     }
 }

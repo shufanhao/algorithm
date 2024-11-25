@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -1130,4 +1131,172 @@ public class Practice {
         root1.right = mergeTrees(root1.right, root2.right);
         return root1;
     }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> numToCount = new HashMap<>();
+        Arrays.stream(nums).forEach(num -> numToCount.put(num, numToCount.getOrDefault(num, 0) + 1));
+
+        Queue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>(
+                (e1, e2) -> e1.getValue() - e2.getValue()
+        );
+
+        for (Map.Entry<Integer, Integer> entry : numToCount.entrySet()) {
+            if (heap.size() < k) {
+                heap.offer(entry);
+            } else if (heap.peek().getValue() < entry.getValue()) {
+                heap.poll();
+                heap.offer(entry);
+            }
+        }
+
+        int[] res = new int[k];
+        int index = k - 1;
+        while (!heap.isEmpty()) {
+            Map.Entry<Integer, Integer> entry = heap.poll();
+            res[index--] = entry.getKey();
+        }
+        return res;
+    }
+
+
+    public static class KthLargest {
+        Queue<Integer> queue;
+        int topK;
+
+        public KthLargest(int k, int[] nums) {
+            this.topK = k;
+            queue = new PriorityQueue<>(topK);
+            Arrays.stream(nums).forEach(num -> queue.add(num));
+        }
+
+        public int add(int val) {
+            queue.offer(val);
+            if (queue.size() > topK) {
+                queue.poll();
+            }
+
+            return queue.peek();
+        }
+    }
+
+    // 1, 2, 3, 4, 5, 6, target 2
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int middle = (left + right) / 2;
+            if (nums[middle] < target) {
+                left = middle + 1;
+            } else if (nums[middle] > target) {
+                right = middle - 1;
+            } else {
+                return middle;
+            }
+        }
+        return 0;
+    }
+
+    public int peakIndexInMountainArray(int[] nums) {
+        int left = 0;
+        int right = nums.length - 2;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
+                return mid;
+            }
+
+            if (nums[mid] > nums[mid - 1]) {
+                left = mid + 1;
+            } else {
+                right = mid + 1;
+            }
+        }
+
+        return nums.length;
+    }
+
+
+    public int[] bubbleSort(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = 0; j < nums.length - 1 - i; j++) {
+                if (nums[j] > nums[j + 1]) {
+                    swap(nums, j, j + 1);
+                }
+            }
+        }
+        return nums;
+    }
+
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (e1, e2) -> (e1[0] - e2[0]));
+        List<int[]> merged = new ArrayList<>();
+
+        int i = 0;
+        while (i < intervals.length) {
+            int[] temp = new int[]{intervals[i][0], intervals[i][1]};
+            int j = i + 1;
+            while (j < intervals.length && intervals[j][0] <= temp[1]) {
+                temp[1] = Math.max(temp[1], intervals[j][1]);
+                j++;
+            }
+            merged.add(temp);
+            i = j;
+        }
+
+        int[][] res = new int[merged.size()][];
+        return merged.toArray(res);
+    }
+
+
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int[] counts = new int[1001];
+        for (int i = 0; i < arr1.length; i++) {
+            counts[arr1[i]]++;
+        }
+
+        int i = 0;
+        for (int num : arr2) {
+            while (counts[num] > 0) {
+                arr1[i++] = num;
+                counts[num]--;
+            }
+        }
+
+        // 赋值arr1剩下的元素，也就是counts不等于0的数字。
+        for (int num = 0; num < counts.length; num++) {
+            while (counts[num] > 0) {
+                arr1[i++] = num;
+                counts[num]--;
+            }
+        }
+
+        return arr1;
+    }
+
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        // 这样的话，是头顶元素是最小的值。
+        Queue<ListNode> minHeap = new PriorityQueue<>((n1, n2) -> (n1.val - n2.val));
+        for (ListNode node : lists) {
+            minHeap.offer(node);
+        }
+
+        while (!minHeap.isEmpty()) {
+            // 最小的一个元素
+            ListNode least = minHeap.poll();
+            cur.next = least;
+            cur = least;
+
+            if (least.next != null) {
+                minHeap.offer(least.next);
+            }
+        }
+
+        return dummy.next;
+    }
+
 }

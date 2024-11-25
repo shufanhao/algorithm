@@ -10,6 +10,8 @@ import java.util.PriorityQueue;
 public class SortSolution {
     /**
      * 面试题1：合并区间
+     *
+     * <a href="https://leetcode.cn/problems/merge-intervals/description/">...</a>
      * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
      * <p>
      * 输入：intervals = [
@@ -52,7 +54,7 @@ public class SortSolution {
      * 面试题2：计数排序
      * <p>
      * 解法：先统计每个数组中每个整数在数组中出现的次数，然后按照从小到大顺序填入数组中。
-     * 如: [2, 3, 2, 3, 2, 1]，1出现了1次，2出现3次，3出现2次。，所以依次在数组中填入1个1，,3个2，,2个3。
+     * 如: [2, 3, 2, 3, 2, 1]，1出现了1次，2出现3次，3出现2次，所以依次在数组中填入1个1，,3个2，,2个3。
      * 是不是 放到map中更加简单呢？
      */
     public int[] sortArray(int[] nums) {
@@ -88,7 +90,7 @@ public class SortSolution {
      * 两个数组，arr1 和arr2，arr2中的元素各不相同，arr2 中的每个元素都出现在arr1中。
      * <p>
      * 对 arr1中的元素进行排序，使 arr1 中项的相对顺序和arr2中的相对顺序相同。未在arr2中出现过的元素需要按照升序放在arr1的末尾。
-     * 假设数组中的元素都是0-1000范围内
+     * 假设数组中的元素都是0-1000范围内，这是关键，所以可以用计数排序.
      * <p>
      * 思路：计数排序。
      */
@@ -98,6 +100,8 @@ public class SortSolution {
             counts[num]++;
         }
 
+        // 根据arr2的数组的内容，给arr1赋值，因为要根据的是arr1的顺序。
+        // arr2中出现过的元素需要按照升序放在arr1的末尾。
         int i = 0;
         for (int num : arr2) {
             while (counts[num] > 0) {
@@ -106,7 +110,7 @@ public class SortSolution {
             }
         }
 
-        // arr2中出现过的元素需要按照升序放在arr1的末尾。
+        // 这里是赋值arr1中剩下的元素，也就是counts里不等于0的数字。
         for (int num = 0; num < counts.length; num++) {
             while (counts[num] > 0) {
                 arr1[i++] = num;
@@ -115,92 +119,6 @@ public class SortSolution {
         }
         return arr1;
     }
-
-    /**
-     * 面试题4：快速排序
-     * <p>
-     * 思路：分治法。
-     * <a href="https://www.bilibili.com/video/BV1j841197rQ/">...</a>
-     * <p>
-     * 基本思想是 找出一个基准元素，然后排序完后，基准元素左边都比基准小，基本右边，都比基准大。
-     * 思路：左右指针，找出第一个元素是基准元素，然后右指针开始左移，直到找到一个比基准元素小的，然后交换位置
-     * ，然后左指针开始右移，直到找到一个比基准元素大的，然后交换位置，最终，基准元素左边都比基准小，右边，都比基准大。
-     */
-    public void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
-            // pi是partition的索引，arr[pi]现在位于正确的位置
-            int pi = partition(arr, low, high);
-
-            // 分别对基准值前后的子数组进行排序
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
-
-    // 这个函数用于分区操作，返回基准值的最终位置
-    private int partition(int[] arr, int low, int high) {
-        int pivot = arr[low]; // 选择第一个元素作为基准值
-        while (low < high) {
-            // 从后向前找第一个小于等于pivot的元素
-            while (low < high && arr[high] > pivot) {
-                high--;
-            }
-            // 将这个元素放到它应该在的位置
-            arr[low] = arr[high];
-
-            // 从前向后找第一个大于pivot的元素
-            while (low < high && arr[low] <= pivot) {
-                low++;
-            }
-            // 将这个元素放到它应该在的位置
-            arr[high] = arr[low];
-        }
-
-        // 将基准值放到中间
-        arr[low] = pivot;
-        return low;
-    }
-
-   /* public int[] sortArrayQuick(int[] nums) {
-        quickSort(nums, 0, nums.length - 1);
-        return nums;
-    }
-
-    private void quickSort(int[] nums, int start, int end) {
-        if (start < end) {
-            // 通过 partition 方法，进行分组
-            int priot = partition(nums, start, end);
-            quickSort(nums, start, priot - 1);
-            quickSort(nums, priot + 1, end);
-        }
-    }
-
-    private int partition(int[] nums, int start, int end) {
-        int random = new Random().nextInt(end - start + 1) + start;
-        // 把random 位置的值交换到数组的尾部
-        swap(nums, random, end);
-
-        // 小指针
-        int small = start - 1;
-        for (int i = start; i < end; i++) {
-            if (nums[i] < nums[end]) {
-                // 小指针向右移动
-                small++;
-                swap(nums, random, end);
-            }
-        }
-
-        small++;
-        swap(nums, small, end);
-        return small;
-    }
-*/
-    /**
-     * 面试题5：归并排序 数组
-     * 参考MergeSort
-     */
-
-    // TODO
 
     /**
      * 面试题77：排序链表
@@ -261,6 +179,8 @@ public class SortSolution {
 
     /**
      * 面试题78: 合并排序链表
+     *
+     * <a href="https://leetcode.cn/problems/merge-k-sorted-lists/description/">...</a>
      * <p>
      * 输入k个排序的链表，请将他们合并成一个排序的链表。
      * <p>
