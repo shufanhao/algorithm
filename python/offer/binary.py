@@ -22,7 +22,3 @@ def addBinary(a: str, b: str) -> str:
 
 if __name__ == '__main__':
     print(addBinary("1111", "1000"))
-
-
-
-

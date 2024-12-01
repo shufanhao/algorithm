@@ -8,7 +8,6 @@ public class QuickSort {
      * 所有比基准大的元素都在基准的右边。这样，基准元素就处于了它在排序后数组中的正确位置。
      * 接下来，我们递归地对基准左边和右边的子数组进行同样的操作。
      * 看这个解释：<a href="https://blog.csdn.net/flin666/article/details/129478364">...</a>
-     *
      */
     public void quickSort(int[] arr, int low, int high) {
         if (low >= high) {
@@ -25,7 +24,7 @@ public class QuickSort {
                 j--;
             }
             // 从前往后找，找到第一个大于temp的基准元素的值
-            while (arr[i] <= temp && j> i) {
+            while (arr[i] <= temp && j > i) {
                 i++;
             }
             // 交换元素，后是3, 1, 4, 5 ,6

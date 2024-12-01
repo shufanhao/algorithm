@@ -25,6 +25,7 @@ public class TreeSolution {
      * 其实就是左右儿子的深度相加然后减一
      */
     private int ans = 1;
+
     public int diameterOfBinaryTree(TreeNode root) {
         if (root == null) {
             return 0;
@@ -489,8 +490,8 @@ public class TreeSolution {
 
     /**
      * 面试题：TreeSet, TreeMap
-     *
-     *平衡二叉搜索树：任何两个子树的高度最大差别为1。这种特性确保了树的搜索、插入、删除等操作的时间复杂度保持在O(log n)
+     * <p>
+     * 平衡二叉搜索树：任何两个子树的高度最大差别为1。这种特性确保了树的搜索、插入、删除等操作的时间复杂度保持在O(log n)
      */
 
     private void preorderTraversal(TreeNode root, List<TreeNode> list) {

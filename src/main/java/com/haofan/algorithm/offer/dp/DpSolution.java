@@ -1,6 +1,5 @@
 package com.haofan.algorithm.offer.dp;
 
-
 import com.haofan.algorithm.help.TreeNode;
 
 import java.util.Arrays;
@@ -41,8 +40,9 @@ public class DpSolution {
     public int minCostClimbingStaris(int[] cost) {
         int len = cost.length;
         int[] dp = new int[len + 1];
+        // 你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯，所以dp[0], dp[1] 都可以设置成0
         dp[0] = 0;
-        dp[1] = 1;
+        dp[1] = 0;
 
         for (int i = 2; i <= cost.length; i++) {
             dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
@@ -74,7 +74,7 @@ public class DpSolution {
     }
 
     /**
-     * 面试题213：打家劫舍II
+     * 面试题213：打家劫舍II <a href="https://leetcode.cn/problems/PzWKhm/description/">...</a>
      * <p>
      * 分析：和上面的题目类似，区别在于小偷不能连续进入 第0个房屋和第n-1个房屋。那么问题可以分解成
      * 取：0 -> n -2 ，取出最大值
@@ -129,6 +129,20 @@ public class DpSolution {
         return Math.max(f.getOrDefault(root, 0), g.getOrDefault(root, 0));
     }
 
+    private void dfs(TreeNode node, Map<TreeNode, Integer> f, Map<TreeNode, Integer> g) {
+        if (node == null) {
+            return;
+        }
+
+        dfs(node.left, f, g);
+        dfs(node.right, f, g);
+
+        // 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加。
+        f.put(node, node.val + g.getOrDefault(node.left, 0) + g.getOrDefault(node.right, 0));
+
+        // o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
+        g.put(node, Math.max(f.getOrDefault(node.left, 0), g.getOrDefault(node.left, 0)) + Math.max(f.getOrDefault(node.right, 0), g.getOrDefault(node.right, 0)));
+    }
 
     /**
      * 面试题62：不同路径
@@ -358,21 +372,6 @@ public class DpSolution {
         return maxans;
     }
 
-    private void dfs(TreeNode node, Map<TreeNode, Integer> f, Map<TreeNode, Integer> g) {
-        if (node == null) {
-            return;
-        }
-
-        dfs(node.left, f, g);
-        dfs(node.right, f, g);
-
-        // 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和为 l 和 r 不被选中的最大权值和相加。
-        f.put(node, node.val + g.getOrDefault(node.left, 0) + g.getOrDefault(node.right, 0));
-
-        // o 不被选中时，o的左右孩子可以被选中也可以不被选中，所以g(0) = max{f(l), g(l)} + max{f(r),g(r)}
-        g.put(node, Math.max(f.getOrDefault(node.left, 0), g.getOrDefault(node.left, 0)) + Math.max(f.getOrDefault(node.right, 0), g.getOrDefault(node.right, 0)));
-    }
-
     /**
      * 面试题221：最大正方形
      * <a href="https://leetcode.cn/problems/maximal-square/description/">...</a>
@@ -416,7 +415,7 @@ public class DpSolution {
      * https://programmercarl.com/0518.零钱兑换II.html#总结
      * 给你一个整数数组 coins，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
      * <p>
-     * 计算并返回可以凑成总金额所需的 最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1 。
+     * 计算并返回可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
      * <p>
      * 例子：amount = 5, coins = [1, 2, 5]
      * <p>

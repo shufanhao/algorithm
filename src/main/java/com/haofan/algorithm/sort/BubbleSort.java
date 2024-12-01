@@ -1,7 +1,5 @@
 package com.haofan.algorithm.sort;
 
-import java.util.Arrays;
-
 import static com.haofan.algorithm.help.Common.swap;
 
 //https://www.cnblogs.com/shen-hua/p/5422676.html

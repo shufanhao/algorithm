@@ -3,8 +3,6 @@ package com.haofan.algorithm.offer.heap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 public class HeapSolutionTest {
 
     private HeapSolution.KthLargest kthLargest = new HeapSolution.KthLargest(2, new int[]{4, 5, 8, 2});

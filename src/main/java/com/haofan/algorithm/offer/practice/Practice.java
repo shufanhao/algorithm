@@ -25,6 +25,8 @@ public class Practice {
     int sum = 0;
     int pathNumber;
     int ans = 0;
+    List<List<Integer>> result = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
 
     private static int getInt(char c) {
         return c == '1' ? 1 : 0;
@@ -1158,27 +1160,6 @@ public class Practice {
         return res;
     }
 
-
-    public static class KthLargest {
-        Queue<Integer> queue;
-        int topK;
-
-        public KthLargest(int k, int[] nums) {
-            this.topK = k;
-            queue = new PriorityQueue<>(topK);
-            Arrays.stream(nums).forEach(num -> queue.add(num));
-        }
-
-        public int add(int val) {
-            queue.offer(val);
-            if (queue.size() > topK) {
-                queue.poll();
-            }
-
-            return queue.peek();
-        }
-    }
-
     // 1, 2, 3, 4, 5, 6, target 2
     public int search(int[] nums, int target) {
         int left = 0;
@@ -1216,7 +1197,6 @@ public class Practice {
         return nums.length;
     }
 
-
     public int[] bubbleSort(int[] nums) {
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = 0; j < nums.length - 1 - i; j++) {
@@ -1248,7 +1228,6 @@ public class Practice {
         return merged.toArray(res);
     }
 
-
     public int[] relativeSortArray(int[] arr1, int[] arr2) {
         int[] counts = new int[1001];
         for (int i = 0; i < arr1.length; i++) {
@@ -1274,7 +1253,6 @@ public class Practice {
         return arr1;
     }
 
-
     public ListNode mergeKLists(ListNode[] lists) {
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
@@ -1299,4 +1277,67 @@ public class Practice {
         return dummy.next;
     }
 
+    public List<List<Integer>> combine(int n, int k) {
+        backtracking(n, k, 1);
+        return result;
+    }
+
+    private void backtracking(int n, int k, int startIndex) {
+        // 终止条件
+        if (path.size() == 2) {
+            result.add(new ArrayList<>(path));
+        }
+
+        // 单层循环
+        for (int i = startIndex; i <= n; i++) {
+            path.add(i);
+            backtracking(n, k, startIndex + 1);
+            path.removeLast();
+        }
+    }
+
+    public int fib(int n) {
+        if (n <= 1) return n;
+
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        int[] dp = new int[cost.length + 1];
+        dp[0] = 0;
+        dp[1] = 0;
+
+        for (int i = 2; i <= cost.length; i++) {
+            dp[i] = Math.min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1]);
+        }
+
+        return dp[cost.length];
+    }
+
+    public static class KthLargest {
+        Queue<Integer> queue;
+        int topK;
+
+        public KthLargest(int k, int[] nums) {
+            this.topK = k;
+            queue = new PriorityQueue<>(topK);
+            Arrays.stream(nums).forEach(num -> queue.add(num));
+        }
+
+        public int add(int val) {
+            queue.offer(val);
+            if (queue.size() > topK) {
+                queue.poll();
+            }
+
+            return queue.peek();
+        }
+    }
 }

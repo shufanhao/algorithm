@@ -54,7 +54,7 @@ public class SearchSolution {
      * 面试题69：山峰数组的顶部
      * 给定由整数组成的山峰数组 arr ，返回任何满足 arr[0] < arr[1] < ... arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1] 的下标 i，即山峰顶部。
      * <p>
-     * arr = [1,3,5,4,2] 输出2
+     * arr = [1,3,5,4,2] 输出index: 2
      */
     public int peakIndexInMountainArray(int[] nums) {
         int left = 1;
@@ -83,7 +83,7 @@ public class SearchSolution {
      * <p>
      * 解法：如果不是排序数组的话，那么可以通过异或，最后的结果就是只出现了一次的数字。但是时间复杂度是O(n)，因为是排序数组，则可以考虑O(logn)的解法
      * 通过两两分组，{1, 1}，{2, 2}, {3, 4}, {4, 5}, {5} 可以发现，找到第一个分组中不相同的数字，就是要求找到的只出现一次的数字。
-     *
+     * <p>
      * 所有可以用二分查找: 分成6组，
      */
     public int singleNonDuplicate(int[] nums) {
