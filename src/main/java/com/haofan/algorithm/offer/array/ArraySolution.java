@@ -51,6 +51,8 @@ public class ArraySolution {
 
     /**
      * 题目7: 数组中和为0的3个数字
+     *
+     * <a href="https://leetcode.cn/problems/3sum/">...</a>
      * 输入一个数组，如何找出数组中所有和为0的3个数字的三元组？需要注意的是，返回值中不得包含重复的三元组。
      * 例如，在数组[-1，0，1，2，-1，-4]中有两个三元组的和为0，它们分别是[-1，0，1]和[-1，-1，2]，其中[-1, -1, 2]是不行的。
      * 不包含重复的数组的意思就是：三个数字中不能相同。在三数之和确定的情况下，只要确定第一个和第二个数不相同即可。
@@ -102,8 +104,37 @@ public class ArraySolution {
         }
         return result;
     }
+    public List<List<Integer>> threeSumViaMap(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
+        // init map
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
 
+        for (int i = 0; i < nums.length; i++) {
+            // skip duplicate
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            for (int j = i+1; j < nums.length; j++) {
+                // skip duplicate
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+
+                int target = - nums[i] - nums[j];
+                // map.get(target) > j 很关键
+                if (map.containsKey(target) && map.get(target) > j) {
+                    res.add(List.of(nums[i], nums[j], target));
+                }
+            }
+        }
+
+        return res;
+    }
     /**
      * 题目8: 和大于或等于k的最短子数组
      * 输入一个正整数组成的数组和一个正整数k，请问数组中和大于或等于k的连续子数组的最短长度是多少？如果不存在所有数字之和大于或等于k的子数组，

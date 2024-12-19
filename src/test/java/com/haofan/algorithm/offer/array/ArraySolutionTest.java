@@ -27,6 +27,10 @@ class ArraySolutionTest {
     void threeSum() {
         int[] nums = {-1, 0, 1, 2, -1, -4};
         System.out.println("Three sum: " + Arrays.toString(array.threeSum(nums).toArray()));
+        System.out.println("Three sum: " + Arrays.toString(array.threeSumViaMap(nums).toArray()));
+
+        final String metricName = String.format("%scert %s remaining days to expire", "haofan: ", "/app/test");
+        System.out.println(metricName);
     }
 
     @Test

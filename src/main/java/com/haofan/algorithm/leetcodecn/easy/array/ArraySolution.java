@@ -224,6 +224,22 @@ public class ArraySolution {
         return null;
     }
 
+    // https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/description/?envType=study-plan-v2&envId=top-interview-150
+    public int[] twoSumII(int[] numbers, int target) {
+        int l = 0;
+        int r = numbers.length - 1;
+        while (l < r) {
+            if ((numbers[l] + numbers[r]) > target) {
+                r--;
+            } else if ((numbers[l] + numbers[r]) < target) {
+                l++;
+            } else {
+                return new int[]{l+1, r+1};
+            }
+        }
+
+        return null;
+    }
     /**
      * 题目10：
      * 有效的数独：<a href="https://blog.csdn.net/biezhihua/article/details/79648015">...</a>

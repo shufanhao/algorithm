@@ -35,12 +35,6 @@ public class ArraySolutionMediumTest {
         Assertions.assertTrue(solution.canJump(new int[]{3, 2, 1, 0, 4}));
     }
 
-    @Test
-    void threeSum() {
-        int nums_1[] = {-1, 0, 1, 2, -1, -4};
-        List<List<Integer>> listList = solution.threeSum(nums_1);
-        System.out.println("题目1：" + Arrays.toString(listList.toArray()));
-    }
 
     @Test
     void setZeroes() {
@@ -79,7 +73,8 @@ public class ArraySolutionMediumTest {
 
     @Test
     void increasingTriplet() {
-        int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
+        // int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
+        int numsIssue6[] = {2,1,5,0,4,6};
         System.out.println("题目6：" + solution.increasingTriplet(numsIssue6));
     }
 

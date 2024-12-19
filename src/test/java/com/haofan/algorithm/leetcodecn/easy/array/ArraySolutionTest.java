@@ -74,6 +74,12 @@ class ArraySolutionTest {
     }
 
     @Test
+    void twoSumII() {
+        int[] twosSumArr = {-1, 0};
+        System.out.println("题目9： 两数之和 " + Arrays.toString(array.twoSumII(twosSumArr, -1)));
+    }
+
+    @Test
     void isValidSudoku() {
         char[][] a = {
                 {'.', '8', '7', '6', '5', '4', '3', '2', '1'},

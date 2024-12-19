@@ -213,4 +213,19 @@ class PracticeTest {
         Assertions.assertEquals(2, p.peakIndexInMountainArray(new int[]{1, 3, 5, 4, 2}));
     }
 
+    @Test
+    void setZeroes() {
+        int nums_2[][] = {
+                {0, 1, 2, 0},
+                {3, 4, 5, 2},
+                {1, 3, 1, 5}};
+        p.setZeroes(nums_2);
+        System.out.println("题目2：");
+        for (int i = 0; i < nums_2.length; i++) {
+            for (int j = 0; j < nums_2[i].length; j++) {
+                System.out.print(nums_2[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }

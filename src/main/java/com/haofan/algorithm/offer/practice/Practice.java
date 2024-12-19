@@ -344,28 +344,31 @@ public class Practice {
         int[] rowsZero = new int[matrix.length];
         int[] columnZero = new int[matrix[0].length];
 
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (matrix[i][j] == 0) {
-                    rowsZero[0] = 1;
+                    rowsZero[i] = 1;
                     columnZero[j] = 1;
                 }
             }
         }
 
-        // 遍历每一行和每一个列
-        for (int i = 0; i < rowsZero.length; i++) {
+        // 设置这一行的所有数据都是0
+        for (int i = 0; i < m; i++) {
             if (rowsZero[i] == 1) {
-                for (int j = 0; j < matrix[0].length; j++) {
+                for (int j = 0; j < n; j++) {
                     matrix[i][j] = 0;
                 }
             }
         }
 
-        for (int i = 0; i < columnZero.length; i++) {
+        // 设置这一列的所有数据都是0
+        for (int i = 0; i < n; i++) {
             if (columnZero[i] == 1) {
-                for (int j = 0; j < matrix.length; j++) {
-                    matrix[i][j] = 0;
+                for (int j = 0; j < m; j++) {
+                    matrix[j][i] = 0;
                 }
             }
         }
@@ -1339,5 +1342,42 @@ public class Practice {
 
             return queue.peek();
         }
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        boolean[] chars = new boolean[s.length()];
+
+        int longest = 1;
+        int right = 0;
+        int left = 0;
+
+        while (left < s.length()) {
+            while (right < s.length() && !chars[s.charAt(right)]) {
+                chars[s.charAt(right)] = true;
+                longest = Math.max(longest, right - left + 1);
+                right++;
+            }
+
+            chars[s.charAt(left)] = false;
+            left++;
+        }
+        return longest;
+    }
+
+    public boolean increasingTriplet(int[] nums) {
+        if (nums.length < 3) return false;
+
+        int first = Integer.MAX_VALUE;
+        int second = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] <= first) {
+                first = nums[i];
+            } else if (nums[i] <= second) {
+                second = nums[i];
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 }
