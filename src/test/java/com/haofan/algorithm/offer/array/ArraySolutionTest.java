@@ -98,4 +98,10 @@ class ArraySolutionTest {
     void findUnsortedSubarray() {
         assertEquals(5, array.findUnsortedSubarray(new int[]{2, 6, 4, 8, 10, 9, 15}));
     }
+
+    @Test
+    void minAnagramLength() {
+        assertEquals(2, array.minAnagramLength("abba"));
+        // assertEquals(4, array.minAnagramLength("cdef"));
+    }
 }

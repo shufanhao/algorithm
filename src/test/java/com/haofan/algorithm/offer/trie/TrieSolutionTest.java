@@ -19,6 +19,6 @@ class TrieSolutionTest {
 
     @Test
     void minValidStrings() {
-        System.out.println(trie.minValidStrings(new String[]{"abc","aaaaa","bcdef"}, "aabcdabc"));
+        Assertions.assertEquals(3, trie.minValidStrings(new String[]{"abc","aaaaa","bcdef"}, "aabcdabc"));
     }
 }

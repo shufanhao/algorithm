@@ -362,20 +362,45 @@ public class ArraySolution {
     }
 
     /**
-     * 题目14: 删除有序数组中的重复项
+     * 题目14: 删除有序数组中的重复项 <a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/description/">...</a>
      * 分别用两个指针，i,j 去移动，不相等的话，指针i++
      */
     public int removeDuplicates(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        int i = 0;
-        for (int j = 0; j < nums.length; j++) {
-            if (nums[i] != nums[j]) {
-                i++;
-                nums[i] = nums[j];
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            // 只有不相等的时候，才继续移动
+            if (nums[slow] != nums[fast]) {
+                slow++;
+                nums[slow] = nums[fast];
             }
         }
-        return i + 1;
+        return slow + 1;
+    }
+
+    // https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii
+    // 和上一个问题类似，逻辑基本一样。
+    public int removeDuplicatesII(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length < 3) {
+            return nums.length;
+        }
+
+        // 慢指针从第 3 个位置开始（允许的重复次数为 2）
+        int slow = 2;
+        for (int fast = 2; fast < nums.length; fast++) {
+            // 如果 fast 指向的元素与 slow-2 不同，说明是新元素，可以保留
+            if (nums[slow -2] != nums[fast]) {
+                // 更新 slow 指针位置的值
+                nums[slow] = nums[fast];
+                // 慢指针向前移动
+                slow ++;
+            }
+        }
+        return slow;
     }
 }

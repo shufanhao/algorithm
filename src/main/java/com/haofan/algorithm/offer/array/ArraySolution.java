@@ -514,4 +514,46 @@ public class ArraySolution {
 
         return high > low ? high - low + 1 : 0;
     }
+
+    // 每日一题：https://leetcode.cn/problems/minimum-length-of-anagram-concatenation/
+    // 枚举方法
+    public int minAnagramLength(String s) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        int len = s.length();
+
+        // 遍历所有可能的分割长度 i
+        for (int i = 1; i <= len; i++) {
+            if (len % i != 0) { // 必须是 len 的因子
+                continue;
+            }
+
+            // 检查是否可以用长度 i 分割成若干变位词
+            if (isValid(s, i)) {
+                return i; // 找到最小长度，直接返回
+            }
+        }
+        return len;
+    }
+
+    private boolean isValid(String s, int length) {
+        int[] baseFreq = new int[26]; // 记录第一个子串的字符频次
+        for (int i = 0; i < length; i++) {
+            baseFreq[s.charAt(i) - 'a']++;
+        }
+
+        // 滑动窗口验证后续子串是否与第一个子串匹配, 只需要和第一个子串比较即可。
+        for (int start = length; start < s.length(); start += length) {
+            int[] currentFreq = new int[26];
+            for (int i = start; i < start + length; i++) {
+                currentFreq[s.charAt(i) - 'a']++;
+            }
+
+            if (!Arrays.equals(baseFreq, currentFreq)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

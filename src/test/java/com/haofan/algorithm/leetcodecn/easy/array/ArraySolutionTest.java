@@ -125,4 +125,10 @@ class ArraySolutionTest {
         int[] arr = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
         System.out.println(array.removeDuplicates(arr));
     }
+
+    @Test
+    void removeDuplicatesII() {
+        int[] arr = {1, 1, 1, 2, 2, 3};
+        System.out.println(array.removeDuplicatesII(arr));
+    }
 }
