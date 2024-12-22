@@ -2,11 +2,16 @@ package com.haofan.algorithm.offer.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ArraySolution {
     /**
@@ -555,5 +560,105 @@ public class ArraySolution {
             }
         }
         return true;
+    }
+
+    // https://leetcode.cn/problems/sort-the-students-by-their-kth-score/description/
+    // 自己写的：
+    public int[][] sortTheStudents(int[][] score, int k) {
+        if (score[0].length < k) {
+            return score;
+        }
+
+        // key score, value: student
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < score.length; i++) {
+            map.put(score[i][k], i);
+        }
+
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                return o2.getKey() - o1.getKey();
+            }
+        });
+
+        Map<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
+        for (Map.Entry<Integer, Integer> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        sortedMap.forEach((key, valve) -> System.out.println(key + ": " + valve));
+
+        int[][] res = new int[score.length][score[0].length];
+
+        int row = 0;
+        for (Map.Entry<Integer, Integer> entry : sortedMap.entrySet()) {
+            // key: score
+            // value: student
+            for (int col = 0; col < score[0].length; col++) {
+                res[row][col] = score[entry.getValue()][col];
+            }
+            row++;
+        }
+
+        return res;
+    }
+
+    public int[][] sortTheStudentsII(int[][] score, int k) {
+        // 官方解题:
+        Arrays.sort(score, (u, v) -> v[k] - u[k]);
+        return score;
+    }
+
+    // https://leetcode.cn/problems/sort-integers-by-the-power-value/
+    // 自己做出来。
+    public int getKth(int lo, int hi, int k) {
+        Map<Integer, Integer> map = new HashMap();
+        int num = lo;
+        while (num <= hi) {
+            map.put(num, getPower(num));
+            num ++;
+        }
+        // sort by value
+
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                if (o1.getValue() != o2.getValue()) {
+                    return o1.getValue() - o2.getValue();
+                } else {
+                    return o1.getKey() - o2.getKey();
+                }
+            }
+        });
+
+        return list.get(k -1).getKey();
+    }
+
+    private int getPower(int num) {
+        int i = 0;
+        while (num > 1) {
+            if (num % 2 == 0) {
+                num= num / 2;
+            } else {
+                num = 3 * num + 1;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    // leetcode 官方解题：https://leetcode.cn/problems/sort-integers-by-the-power-value/solutions/168355/jiang-zheng-shu-an-quan-zhong-pai-xu-by-leetcode-s/
+    private int getPowerII(int num) {
+        if (num == 1) {
+            return 0;
+        } else if ((num & 1) != 0 ) {
+            return getPower(num * 3 + 1) + 1;
+        } else {
+            return getPower(num / 2) + 1;
+        }
     }
 }

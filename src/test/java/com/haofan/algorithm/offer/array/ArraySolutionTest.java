@@ -104,4 +104,15 @@ class ArraySolutionTest {
         assertEquals(2, array.minAnagramLength("abba"));
         // assertEquals(4, array.minAnagramLength("cdef"));
     }
+
+    @Test
+    void sortTheStudents() {
+        int[][] students = new int[][]{{10,6,9,1},{7,5,11,2},{4,8,3,15}};
+        array.sortTheStudents(students, 2);
+    }
+
+    @Test
+    void getKth() {
+        assertEquals(148, array.getKth(144, 163, 5));
+    }
 }
