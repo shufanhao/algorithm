@@ -315,4 +315,19 @@ public class StringSolution {
         return currentString;
     }
 
+    // https://leetcode.cn/problems/existence-of-a-substring-in-a-string-and-its-reverse/description/
+    public boolean isSubstringPresent(String s) {
+        if (s == null || s.length() < 2) {
+            return false;
+        }
+
+        String reversedS = new StringBuilder(s).reverse().toString();
+        for (int i = 0; i < s.length() - 1; i++) {
+            String temp = s.substring(i, i + 2);
+            if (reversedS.contains(temp)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -2,7 +2,6 @@ package com.haofan.algorithm.offer.array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.TreeSet;
 
 public class ArraySolution {
     /**
@@ -109,6 +108,7 @@ public class ArraySolution {
         }
         return result;
     }
+
     public List<List<Integer>> threeSumViaMap(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         Map<Integer, Integer> map = new HashMap<>();
@@ -124,13 +124,13 @@ public class ArraySolution {
                 continue;
             }
 
-            for (int j = i+1; j < nums.length; j++) {
+            for (int j = i + 1; j < nums.length; j++) {
                 // skip duplicate
                 if (j > i + 1 && nums[j] == nums[j - 1]) {
                     continue;
                 }
 
-                int target = - nums[i] - nums[j];
+                int target = -nums[i] - nums[j];
                 // map.get(target) > j 很关键
                 if (map.containsKey(target) && map.get(target) > j) {
                     res.add(List.of(nums[i], nums[j], target));
@@ -140,6 +140,7 @@ public class ArraySolution {
 
         return res;
     }
+
     /**
      * 题目8: 和大于或等于k的最短子数组
      * 输入一个正整数组成的数组和一个正整数k，请问数组中和大于或等于k的连续子数组的最短长度是多少？如果不存在所有数字之和大于或等于k的子数组，
@@ -619,7 +620,7 @@ public class ArraySolution {
         int num = lo;
         while (num <= hi) {
             map.put(num, getPower(num));
-            num ++;
+            num++;
         }
         // sort by value
 
@@ -635,14 +636,14 @@ public class ArraySolution {
             }
         });
 
-        return list.get(k -1).getKey();
+        return list.get(k - 1).getKey();
     }
 
     private int getPower(int num) {
         int i = 0;
         while (num > 1) {
             if (num % 2 == 0) {
-                num= num / 2;
+                num = num / 2;
             } else {
                 num = 3 * num + 1;
             }
@@ -655,10 +656,50 @@ public class ArraySolution {
     private int getPowerII(int num) {
         if (num == 1) {
             return 0;
-        } else if ((num & 1) != 0 ) {
+        } else if ((num & 1) != 0) {
             return getPower(num * 3 + 1) + 1;
         } else {
             return getPower(num / 2) + 1;
+        }
+    }
+
+    // https://leetcode.cn/problems/exam-room/solutions/2036518/kao-chang-jiu-zuo-by-leetcode-solution-074y/
+    // 有些难度，不是很理解。通过TreeSet
+    static class ExamRoom {
+        // 考场中最后一个座位的编号（n-1）。
+        private int R;
+        // 一个有序集合，用于存储当前已被占用的座位编号。TreeSet, 自动保持元素的升序排列。在这里用于高效查找座位的邻居位置
+        private TreeSet<Integer> seats = new TreeSet<>();
+
+        public ExamRoom(int n) {
+            R = n - 1;
+        }
+
+        public int seat() {
+            // q 是上一个座位编号；s 是当前选择的最佳座位编号。
+            int q = 0, s = 0;
+            // max 记录当前最大距离。如果考场为空，选择最后一个座位编号（R）。
+            int max = seats.isEmpty() ? R : seats.first();
+            // 遍历已占用的座位集合。
+            for (int p : seats) {
+                //  计算当前两个座位之间的中点距离。
+                int avg = (p - q) / 2;
+                // 如果当前距离比最大距离大，则更新最佳座位编号。
+                if (max < avg) {
+                    s = q + (max = avg);
+                }
+                q = p;
+            }
+            // 检查最后一个座位到最后一名学生之间的距离。
+            if (max < R - q) {
+                s = R;
+            }
+            seats.add(s);
+            return s;
+        }
+
+        public void leave(int p) {
+            seats.remove(p);
         }
     }
 }

@@ -19,10 +19,10 @@ public class TrieSolution {
         Arrays.fill(dp, Integer.MAX_VALUE); // Initialize dp array to a large number
         // dp[0] 表示不需要任何字符串都能构建一个空的目标字符串
         // 假设目标字符串为 target = "abc"，那么：
-	    // dp[0] 表示构建空字符串的最小字符串数量，这个值为 0。
-	    // dp[1] 表示构建前 1 个字符（"a"）的最小字符串数量。
-	    // dp[2] 表示构建前 2 个字符（"ab"）的最小字符串数量。
-	    // dp[3] 表示构建完整目标字符串（"abc"）的最小字符串数量。
+        // dp[0] 表示构建空字符串的最小字符串数量，这个值为 0。
+        // dp[1] 表示构建前 1 个字符（"a"）的最小字符串数量。
+        // dp[2] 表示构建前 2 个字符（"ab"）的最小字符串数量。
+        // dp[3] 表示构建完整目标字符串（"abc"）的最小字符串数量。
 
         dp[0] = 0; // No strings needed to form an empty string
 

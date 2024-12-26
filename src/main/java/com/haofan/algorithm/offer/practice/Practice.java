@@ -1324,26 +1324,6 @@ public class Practice {
         return dp[cost.length];
     }
 
-    public static class KthLargest {
-        Queue<Integer> queue;
-        int topK;
-
-        public KthLargest(int k, int[] nums) {
-            this.topK = k;
-            queue = new PriorityQueue<>(topK);
-            Arrays.stream(nums).forEach(num -> queue.add(num));
-        }
-
-        public int add(int val) {
-            queue.offer(val);
-            if (queue.size() > topK) {
-                queue.poll();
-            }
-
-            return queue.peek();
-        }
-    }
-
     public int lengthOfLongestSubstring(String s) {
         boolean[] chars = new boolean[s.length()];
 
@@ -1379,5 +1359,25 @@ public class Practice {
             }
         }
         return false;
+    }
+
+    public static class KthLargest {
+        Queue<Integer> queue;
+        int topK;
+
+        public KthLargest(int k, int[] nums) {
+            this.topK = k;
+            queue = new PriorityQueue<>(topK);
+            Arrays.stream(nums).forEach(num -> queue.add(num));
+        }
+
+        public int add(int val) {
+            queue.offer(val);
+            if (queue.size() > topK) {
+                queue.poll();
+            }
+
+            return queue.peek();
+        }
     }
 }

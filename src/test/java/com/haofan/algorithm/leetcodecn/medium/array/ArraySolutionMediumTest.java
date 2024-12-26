@@ -74,7 +74,7 @@ public class ArraySolutionMediumTest {
     @Test
     void increasingTriplet() {
         // int numsIssue6[] = {0, 4, 2, 1, 0, -1, -3};
-        int numsIssue6[] = {2,1,5,0,4,6};
+        int numsIssue6[] = {2, 1, 5, 0, 4, 6};
         System.out.println("题目6：" + solution.increasingTriplet(numsIssue6));
     }
 

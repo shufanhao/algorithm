@@ -234,12 +234,13 @@ public class ArraySolution {
             } else if ((numbers[l] + numbers[r]) < target) {
                 l++;
             } else {
-                return new int[]{l+1, r+1};
+                return new int[]{l + 1, r + 1};
             }
         }
 
         return null;
     }
+
     /**
      * 题目10：
      * 有效的数独：<a href="https://blog.csdn.net/biezhihua/article/details/79648015">...</a>
@@ -394,11 +395,11 @@ public class ArraySolution {
         int slow = 2;
         for (int fast = 2; fast < nums.length; fast++) {
             // 如果 fast 指向的元素与 slow-2 不同，说明是新元素，可以保留
-            if (nums[slow -2] != nums[fast]) {
+            if (nums[slow - 2] != nums[fast]) {
                 // 更新 slow 指针位置的值
                 nums[slow] = nums[fast];
                 // 慢指针向前移动
-                slow ++;
+                slow++;
             }
         }
         return slow;

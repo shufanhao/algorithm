@@ -48,4 +48,10 @@ class StringSolutionTest {
     void decodeString() {
         assertEquals("accaccacc", offer.decodeString("3[a2[c]]"));
     }
+
+    @Test
+    void isSubstringPresent() {
+        assertTrue(offer.isSubstringPresent("leetcode"));
+        assertFalse(offer.isSubstringPresent("abcd"));
+    }
 }

@@ -626,6 +626,34 @@ public class TreeSolution {
         return root1;
     }
 
+    // https://leetcode.cn/problems/same-tree/
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // 确定终止条件是什么。
+        if (p == null && q == null) {
+            return true;
+        } else if (p == null || q == null) {
+            return false;
+        } else if (p.val != q.val) {
+            return false;
+        }
+
+        // 单层递归的条件是什么
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    // https://leetcode.cn/problems/path-sum/
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }
+
     static class ColorNode {
         TreeNode node;
         String color;
@@ -673,6 +701,4 @@ public class TreeSolution {
             return val;
         }
     }
-
-
 }

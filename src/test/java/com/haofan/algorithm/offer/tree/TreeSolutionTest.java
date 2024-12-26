@@ -112,4 +112,14 @@ class TreeSolutionTest {
     void mergeTrees() {
         assertEquals(20, tree.mergeTrees(TreeNode.buildTreeNode(), TreeNode.buildTreeNode()).val);
     }
+
+    @Test
+    void isSameTree() {
+        assertTrue(tree.isSameTree(TreeNode.buildTreeNode(), TreeNode.buildTreeNode()));
+    }
+
+    @Test
+    void hasPathSum() {
+        assertTrue(tree.hasPathSum(TreeNode.buildTreeNode(), 19));
+    }
 }

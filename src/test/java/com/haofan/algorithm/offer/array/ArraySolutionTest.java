@@ -107,12 +107,20 @@ class ArraySolutionTest {
 
     @Test
     void sortTheStudents() {
-        int[][] students = new int[][]{{10,6,9,1},{7,5,11,2},{4,8,3,15}};
+        int[][] students = new int[][]{{10, 6, 9, 1}, {7, 5, 11, 2}, {4, 8, 3, 15}};
         array.sortTheStudents(students, 2);
     }
 
     @Test
     void getKth() {
         assertEquals(148, array.getKth(144, 163, 5));
+    }
+
+    @Test
+    void examRoom() {
+        ArraySolution.ExamRoom room = new ArraySolution.ExamRoom(10);
+        assertEquals(0, room.seat());
+        assertEquals(9, room.seat());
+        assertEquals(4, room.seat());
     }
 }
