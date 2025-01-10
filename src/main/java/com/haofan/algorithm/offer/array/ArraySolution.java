@@ -702,4 +702,67 @@ public class ArraySolution {
             seats.remove(p);
         }
     }
+
+    // https://leetcode.cn/problems/find-occurrences-of-an-element-in-an-array/
+    // nums: [1,3,1,7], queries = [1,3,2,4], x = 1
+    // 自己做出来的
+    public int[] occurrencesOfElement(int[] nums, int[] queries, int x) {
+        if (queries == null || queries.length == 0 || nums == null || nums.length == 0) {
+            return new int[]{-1};
+        }
+
+        // store: x index of array: {0, 2}
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == x) {
+                list.add(i);
+            }
+        }
+
+        int[] res = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            if (queries[i] > list.size()) {
+                res[i] = -1;
+            } else {
+                res[i] = list.get(queries[i] - 1);
+            }
+        }
+        return res;
+    }
+
+    // https://leetcode.cn/problems/remove-element/?envType=study-plan-v2&envId=top-interview-150
+    // Input: nums = [0,1,2,2,3,0,4,2], val = 2
+    // Output: 5, nums = [0,1,4,0,3,_,_,_]
+    public int removeElement(int[] nums, int val) {
+        int cur = 0;
+        for (int i = 0; i < nums.length; i++) {
+            // 一定是不等于。
+            if (nums[i] != val) {
+                nums[cur++] = nums[i];
+            }
+        }
+        return cur;
+    }
+
+    // https://leetcode.cn/problems/split-the-array/
+    public boolean isPossibleToSplit(int[] nums) {
+        int[] count=new int[101];
+        for (int num : nums) {
+            count[num]++;
+            if(count[num]>2)return false;
+        }
+        return true;
+    }
+
+    // https://leetcode.cn/problems/h-index/?envType=study-plan-v2&envId=top-interview-150
+    // 有点儿坑，通过逆序，就比较容易理解。
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int h = 0, i = citations.length - 1;
+        while (i >= 0 && citations[i] > h) {
+            h++;
+            i--;
+        }
+        return h;
+    }
 }

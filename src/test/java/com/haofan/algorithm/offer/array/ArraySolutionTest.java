@@ -123,4 +123,29 @@ class ArraySolutionTest {
         assertEquals(9, room.seat());
         assertEquals(4, room.seat());
     }
+
+    @Test
+    void occurrencesOfElement() {
+        int[] nums = new int[]{1,3,1,7};
+        int[] queries = new int[]{1,3,2,4};
+        assertArrayEquals(new int[]{0,-1,2,-1}, array.occurrencesOfElement(nums, queries, 1));
+    }
+
+    @Test
+    void removeElement() {
+        // nums = [0,1,2,2,3,0,4,2], val = 2
+        // assertEquals(2, array.removeElement(new int[]{3,2,2,3}, 3));
+
+        assertEquals(1, array.removeElement(new int[]{1}, 1));
+    }
+
+    @Test
+    void isPossibleToSplit() {
+        assertTrue(array.isPossibleToSplit(new int[]{1,1,2,2,3,4}));
+    }
+
+    @Test
+    void hIndex() {
+        assertEquals(3, array.hIndex(new int[]{3,0,6,1,5}));
+    }
 }

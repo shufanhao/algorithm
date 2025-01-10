@@ -2,6 +2,7 @@ package com.haofan.algorithm.offer.queue;
 
 import com.haofan.algorithm.help.TreeNode;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -313,5 +314,57 @@ public class QueueSolution {
         public TreeNode get_root() {
             return this.root;
         }
+    }
+
+    public static class Node {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
+
+    // https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/?envType=study-plan-v2&envId=top-interview-150
+    // 思路是通过层序遍历来解决
+    public Node connect(Node root) {
+        Queue<Node> queue = new LinkedList<>();
+
+        if (root != null) {
+            queue.offer(root);
+        }
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node last = null;
+            for (int i = 1; i <= size; ++i) {
+                Node node = queue.poll();
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+
+                // 这个地方有些技巧，这样就避免了再把层序遍历的每一层都放在一个List里了。
+                if (i != 1) {
+                    last.next = node;
+                }
+                last = node;
+            }
+
+        }
+        return root;
     }
 }

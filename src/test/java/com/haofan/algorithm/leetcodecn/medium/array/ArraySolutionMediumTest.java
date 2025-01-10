@@ -35,6 +35,10 @@ public class ArraySolutionMediumTest {
         Assertions.assertTrue(solution.canJump(new int[]{3, 2, 1, 0, 4}));
     }
 
+    @Test
+    public void jump() {
+        Assertions.assertEquals(2, solution.jump(new int[]{2,3,1,1,4}));
+    }
 
     @Test
     void setZeroes() {

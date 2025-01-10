@@ -369,7 +369,7 @@ public class ArraySolutionMedium {
     /**
      * 面试题55: 跳跃游戏
      * <a href="https://leetcode.cn/problems/jump-game/description/">...</a>
-     * <p>
+     * <p> 贪心算法
      * 思路：看下最远能到的位置是否大于等于数组中的最后一个位置，即可。
      */
     public boolean canJump(int[] nums) {
@@ -383,6 +383,35 @@ public class ArraySolutionMedium {
             }
         }
         return false;
+    }
+
+    // https://leetcode.cn/problems/jump-game-ii/?
+    // 还是贪心算法，但是比较难， 解题：https://programmercarl.com/0045.跳跃游戏II.html#总结
+    public int jump(int[] nums) {
+        if (nums == null || nums.length == 0 || nums.length == 1) {
+            return 0;
+        }
+        //记录跳跃的次数
+        int count=0;
+        //当前的覆盖最大区域
+        int curDistance = 0;
+        //最大的覆盖区域
+        int maxDistance = 0;
+        for (int i = 0; i < nums.length; i++) {
+            //在可覆盖区域内更新最大的覆盖区域
+            maxDistance = Math.max(maxDistance,i+nums[i]);
+            //说明当前一步，再跳一步就到达了末尾
+            if (maxDistance>=nums.length-1){
+                count++;
+                break;
+            }
+            //走到当前覆盖的最大区域时，更新下一步可达的最大区域
+            if (i==curDistance){
+                curDistance = maxDistance;
+                count++;
+            }
+        }
+        return count;
     }
 }
 
