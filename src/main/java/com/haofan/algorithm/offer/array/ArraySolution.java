@@ -765,4 +765,74 @@ public class ArraySolution {
         }
         return h;
     }
+
+    // https://leetcode.cn/problems/minimum-operations-to-exceed-threshold-value-i/
+    public int minOperations(int[] nums, int k) {
+        return (int) Arrays.stream(nums).filter(num -> num < k).count();
+    }
+
+    // https://leetcode.cn/problems/gas-station
+
+    /**
+     * - 核心思路是从某个加油站出发，如果能够到达下一个加油站且剩余油量更多或者刚好够，就继续前进；如果剩余油量不足以到达下一个加油站，就从下一个加油站重新开始尝试。
+     *
+     * 有点儿不是很理解呢。
+     * - 具体步骤如下：
+     *
+     * - 首先初始化一些变量，包括总油量、当前油量、起始加油站索引等。
+     *
+     * - 然后遍历加油站数组，计算从当前站到下一站后的剩余油量（当前站油量减去到下一站的油耗），并更新总油量和当前油量。
+     *
+     * - 如果在某一站剩余油量小于0，说明从当前起始站出发无法完成行程，将起始站索引更新为下一站，同时重置当前油量为0。
+     *
+     * - 通过这样不断尝试和调整起始站，最终如果能够遍历完所有加油站且总油量大于等于0，就找到了可行的起始站；否则返回 -1。
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int totalGas = 0;
+        int currentGas = 0;
+        int startStation = 0;
+
+        for (int i = 0; i < gas.length; i++) {
+            totalGas += gas[i] - cost[i];
+            currentGas += gas[i] - cost[i];
+
+            if (currentGas < 0) {
+                startStation = i + 1;
+                currentGas = 0;
+            }
+        }
+
+        return totalGas >= 0? startStation : -1;
+    }
+
+    // https://leetcode.cn/problems/candy/?envType=study-plan-v2&envId=top-interview-150
+
+    /**
+     * 思路：两次遍历
+     * 左规则：当 ratings[i−1]<ratings[i] 时，i 号学生的糖果数量将比 i−1 号孩子的糖果数量多。
+     * 右规则：当 ratings[i]>ratings[i+1] 时，i 号学生的糖果数量将比 i+1 号孩子的糖果数量多。
+     */
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        int[] left = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (i >0 && ratings[i] > ratings[i - 1]) {
+                left[i] = left[i - 1] + 1;
+            } else {
+                left[i] = 1;
+            }
+        }
+
+        int right = 0, ret = 0;
+        for (int i = n -1; i >= 0; i--) {
+            if (i < n - 1 && ratings[i] > ratings[i + 1]) {
+                right ++;
+            } else {
+                right = 1;
+            }
+            // 取最大值
+            ret += Math.max(left[i], right);
+        }
+        return ret;
+    }
 }

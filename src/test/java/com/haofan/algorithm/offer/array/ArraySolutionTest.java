@@ -148,4 +148,19 @@ class ArraySolutionTest {
     void hIndex() {
         assertEquals(3, array.hIndex(new int[]{3,0,6,1,5}));
     }
+
+    @Test
+    void minOperations() {
+        assertEquals(0, array.minOperations(new int[]{1,1,2,4,9}, 1));
+    }
+
+    @Test
+    void canCompleteCircuit() {
+        assertEquals(3, array.canCompleteCircuit(new int[]{1,2,3,4,5}, new int[]{3,4,5,1,2}));
+    }
+
+    @Test
+    void candy() {
+        assertEquals(4, array.candy(new int[]{1, 2, 2}));
+    }
 }

@@ -3,6 +3,7 @@ package com.haofan.algorithm.offer.string;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class StringSolution {
@@ -329,5 +330,59 @@ public class StringSolution {
             }
         }
         return false;
+    }
+
+    /**
+     * 罗马数字转整数:
+     * <a href="https://leetcode.cn/problems/roman-to-integer/description/?envType=study-plan-v2&envId=top-interview-15">...</a>
+     */
+    public int romanToInt(String s) {
+        Map<Character, Integer> roman = new HashMap<>();
+        roman.put('I', 1);
+        roman.put('V', 5);
+        roman.put('X', 10);
+        roman.put('L', 50);
+        roman.put('C', 100);
+        roman.put('D', 500);
+        roman.put('M', 1000);
+
+        char[] chars = s.toCharArray();
+        int ans = 0;
+        for (int i = 0; i < chars.length ; i++) {
+            int value = roman.get(s.charAt(i));
+            if (i < chars.length - 1 && value < roman.get(s.charAt(i + 1))) {
+                ans -= value;
+            } else {
+                ans += value;
+            }
+        }
+
+        return ans;
+    }
+
+    /**
+     * 整数转罗马数字: https://leetcode.cn/problems/integer-to-roman/solutions/774611/zheng-shu-zhuan-luo-ma-shu-zi-by-leetcod-75rs/?envType=study-plan-v2&envId=top-interview-150
+     *
+     * 思路：
+     */
+    public String intToRoman(int num) {
+        // 从大到小的排列, 列出所有可能得值
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] symbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+
+        StringBuffer roman = new StringBuffer();
+        for (int i = 0; i < values.length; i++) {
+            int value = values[i];
+            // 非常巧妙
+            String symbol = symbols[i];
+            while (num >= value) {
+                num -= value;
+                roman.append(symbol);
+            }
+            if (num == 0) {
+                break;
+            }
+        }
+        return roman.toString();
     }
 }

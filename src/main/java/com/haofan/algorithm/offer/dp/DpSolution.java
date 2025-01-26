@@ -467,4 +467,44 @@ public class DpSolution {
         return dp[n];
     }
 
+    /**
+     * 接雨水: https://leetcode.cn/problems/trapping-rain-water/
+     *
+     * 常规思路：
+     * 从左到右遍历height：
+     *    初始化 left_max = 0, right_max = 0
+     * 从height[0]，当前位置寻找最大值 left_max = max(height[j], left_max)
+     * 从当前位置到height 末端寻找最大值 right_max = max(height[j], right_max)
+     * ans = ans + min(left_max, right_max) - height[i]
+     * 时间复杂度O(nxn)，
+     *
+     *所以可以用动态规划，先把从左到右看的最大值求出来，再从右到左最大值求出来
+     */
+    public int trap(int[] height) {
+        int n = height.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        // 从左往右看最大值
+        int[] leftMax = new int[n];
+        leftMax[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        }
+
+        // 从右往左看最大值
+        int[] rightMax = new int[n];
+        rightMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0 ; i--) {
+            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return ans;
+    }
+
 }

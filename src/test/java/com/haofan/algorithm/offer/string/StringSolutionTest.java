@@ -54,4 +54,14 @@ class StringSolutionTest {
         assertTrue(offer.isSubstringPresent("leetcode"));
         assertFalse(offer.isSubstringPresent("abcd"));
     }
+
+    @Test
+    void romanToInt() {
+        assertEquals(1994, offer.romanToInt("MCMXCIV"));
+    }
+
+    @Test
+    void intToRoman() {
+        assertEquals("MCMXCIV", offer.intToRoman(1994));
+    }
 }

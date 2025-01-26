@@ -89,4 +89,9 @@ class DpSolutionTest {
     void findLengthOfLCIS() {
         assertEquals(3, dp.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
     }
+
+    @Test
+    void trap() {
+        assertEquals(9, dp.trap(new int[]{4,2,0,3,2,5}));
+    }
 }
