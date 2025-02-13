@@ -64,4 +64,15 @@ class StringSolutionTest {
     void intToRoman() {
         assertEquals("MCMXCIV", offer.intToRoman(1994));
     }
+
+    @Test
+    void lengthOfLastWord() {
+        // assertEquals(4, offer.lengthOfLastWord("   fly me   to   the moon  "));
+        assertEquals(1, offer.lengthOfLastWord("a"));
+    }
+
+    @Test
+    void reverseWords() {
+        assertEquals("world hello", offer.reverseWords("  hello world  "));
+    }
 }

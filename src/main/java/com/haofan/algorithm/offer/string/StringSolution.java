@@ -385,4 +385,48 @@ public class StringSolution {
         }
         return roman.toString();
     }
+
+    // 比较简单
+    // https://leetcode.cn/problems/length-of-last-word/
+    public int lengthOfLastWord(String s) {
+        int len = s.length();
+        int ans = 0;
+        for (int i = len - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ' && ans > 0) {
+                return ans;
+            }
+
+            if (s.charAt(i) != ' ') {
+                ans++;
+            }
+
+        }
+        return ans;
+    }
+
+    // https://leetcode.cn/problems/reverse-words-in-a-string
+    // 双指针 实现O(1)，通过stringbuilder 的s.insert方法实现在一直插入头部
+    public String reverseWords(String s) {
+        s = s.trim();
+        StringBuilder sb = new StringBuilder();
+
+        int i = 0;
+        int j = 0;
+        while (i < s.length() && j < s.length()) {
+            while (j < s.length() && s.charAt(j) != ' ') j++;
+            // 在第0位插入元素
+            sb.insert(0,s.substring(i,j));
+            i = j;
+            while(i<s.length() && s.charAt(i) == ' '){
+                i++;
+            }
+            if(i!=j){
+                sb.insert(0,' ');
+            }
+
+            j = i;
+        }
+
+        return sb.toString();
+    }
 }
