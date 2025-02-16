@@ -163,4 +163,11 @@ class ArraySolutionTest {
     void candy() {
         assertEquals(4, array.candy(new int[]{1, 2, 2}));
     }
+
+    @Test
+    void spiralOrder() {
+        int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+
+        assertEquals(Arrays.asList(1,2,3,6,9,8,7,4,5), array.spiralOrder(matrix));
+    }
 }

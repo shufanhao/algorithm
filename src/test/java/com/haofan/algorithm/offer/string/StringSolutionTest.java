@@ -75,4 +75,25 @@ class StringSolutionTest {
     void reverseWords() {
         assertEquals("world hello", offer.reverseWords("  hello world  "));
     }
+
+    @Test
+    void convert() {
+//        assertEquals("PAHNAPLSIIGYIR", offer.convert("PAYPALISHIRING", 3));
+//        assertEquals("PINALSIGYAHRPI", offer.convert("PAYPALISHIRING", 4));
+//        assertEquals("A", offer.convert("A", 1));
+
+        assertEquals("AB", offer.convert("AB", 1));
+    }
+
+    @Test
+    void isSubsequence() {
+        assertFalse(offer.isSubsequence("axc", "ahbgdc"));
+        assertTrue(offer.isSubsequence("abc", "ahbgdc"));
+    }
+
+    @Test
+    void findSubstring() {
+        offer.findSubstring("barfoofoobarthefoobarman", new String[]{"bar","foo","the"});
+        // offer.findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"});
+    }
 }
