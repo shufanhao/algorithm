@@ -835,4 +835,106 @@ public class ArraySolution {
         }
         return ret;
     }
+
+    /**
+     * Spiral Matrix <a href="https://leetcode.cn/problems/spiral-matrix/">...</a>
+     * 定义4个指针, left, right, top, bottom
+     * left -> right: 顶部一层遍历完，往下移动top ++
+     * 上 -> 下：遍历完右侧 right --;
+     * 从右到左：判断是否top <= bottom
+     * 从下到上：
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+
+        int m = matrix.length, n = matrix[0].length;
+        int left = 0, right = n - 1, top = 0, bottom = m - 1;
+        while (left <= right && top <= bottom) {
+            // 从左到右
+            for (int i = left; i <= right; i++) {
+                ans.add(matrix[top][i]);
+            }
+            top++;
+
+            // 从上到下
+            for (int i = top; i <=bottom ; i++) {
+                ans.add(matrix[i][right]);
+            }
+            right--;
+
+            // 从右到左
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    ans.add(matrix[bottom][i]);
+                }
+            }
+            bottom--;
+
+            // 从下到上
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    ans.add(matrix[i][left]);
+                }
+            }
+            left++;
+        }
+        return ans;
+    }
+
+    /**
+     * Leetcode 289: Game of Life
+     * <a href="https://leetcode.cn/problems/game-of-life/">...</a>
+     *
+     * 思路：如果你直接根据规则更新原始数组，那么就做不到题目中说的同步更新。
+     * 假设你直接将更新后的细胞状态填入原始数组，那么当前轮次其他细胞状态的更新就会引用到当前轮已更新细胞的状态，
+     * 但实际上每一轮更新需要依赖上一轮细胞的状态，是不能用这一轮的细胞状态来更新的
+     *
+     * 解决方法是: 复制一份原始数组，复制的那一份永远不修改，只作为更新规则的引用。这样原始数组的细胞值就不会被污染了。
+     */
+    public void gameOfLife(int[][] board) {
+        // copy board
+        int row = board.length;
+        int column = board[0].length;
+        int[][] copyBoard = new int[row][column];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                copyBoard[i][j] = board[i][j];
+            }
+        }
+
+        // 遍历数组，去获取每一个细胞，周围8个邻居有多少个是活的，并且根据规则更新原数组
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                // x, y, 一共9个元素
+                //{x-1, y-1}, {x-1, y}, {x-1, y+1}
+                //{x, y -1}, {x, y}, {x, y+1}
+                //{x+1, y-1}, {x+1, y}, {x+1, y+1}
+                int liveNeighbors = 0;
+                for (int dx = -1; dx <=1; dx++) {
+                    for (int dy = -1; dy <=1; dy++) {
+                        if (dx ==0 && dy == 0) continue;
+                        int newX = i + dx;
+                        int newY = j + dy;
+
+                        if ((newX < row && newX >=0) && (newY < column && newY >=0) && (copyBoard[newX][newY] == 1)) {
+                            liveNeighbors +=1;
+                        }
+                    }
+                }
+
+                // Apply rules 1 & 3
+                if (copyBoard[i][j] == 1) {
+                    if ((liveNeighbors < 2) || (liveNeighbors > 3)) {
+                        board[i][j] = 0;
+                    }
+                } else {
+                    // Apply rule 4
+                    if (liveNeighbors == 3) {
+                        board[i][j] = 1;
+                    }
+                }
+            }
+        }
+    }
 }

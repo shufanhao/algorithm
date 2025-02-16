@@ -1,10 +1,14 @@
 package com.haofan.algorithm.offer.string;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class StringSolution {
 
@@ -386,8 +390,10 @@ public class StringSolution {
         return roman.toString();
     }
 
-    // 比较简单
-    // https://leetcode.cn/problems/length-of-last-word/
+    /**
+     * 最后一个单词的长度 <a href="https://leetcode.cn/problems/length-of-last-word/">...</a>
+     * 比较简单
+     */
     public int lengthOfLastWord(String s) {
         int len = s.length();
         int ans = 0;
@@ -404,8 +410,11 @@ public class StringSolution {
         return ans;
     }
 
-    // https://leetcode.cn/problems/reverse-words-in-a-string
-    // 双指针 实现O(1)，通过stringbuilder 的s.insert方法实现在一直插入头部
+
+    /**
+     * 反转字符串中的单词 <a href="https://leetcode.cn/problems/reverse-words-in-a-string">...</a>
+     * 双指针 实现O(1)，通过stringbuilder 的s.insert方法实现在一直插入头部
+     **/
     public String reverseWords(String s) {
         s = s.trim();
         StringBuilder sb = new StringBuilder();
@@ -428,5 +437,115 @@ public class StringSolution {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * 判断子序列 <a href="https://leetcode.cn/problems/zigzag-conversion>...</a>
+     * // 自己做出来的。
+     */
+    public String convert(String s, int numRows) {
+        int len = s.length();
+        // int numColumns = 2 * (len / (2 * numRows - 2)) + 1;
+        int numColumns = len;
+        char[][] zChar = new char[numRows][numColumns];
+
+        int row = 0, column = 0, i = 0;
+        while (i < len) {
+            if (row <=0 ) {
+                row = 0;
+            }
+            while (row < numRows && i < len) {
+                zChar[row++][column] = s.charAt(i++);
+            }
+
+            row = numRows - 1;
+            while (row > 1 && i < len) {
+                zChar[--row][++column] = s.charAt(i++);
+            }
+            row--;
+            column++;
+        }
+
+        StringBuilder ans = new StringBuilder();
+        for (char[] chars : zChar) {
+            for (int y = 0; y < zChar[0].length; y++) {
+                if (chars[y] != '\u0000') {
+                    ans.append(chars[y]);
+                }
+            }
+        }
+        return ans.toString();
+    }
+
+    /**
+     * 判断子序列：<a href="https://leetcode.cn/problems/is-subsequence/">...</a>
+     * 双指针, 自己写出来
+     */
+    public boolean isSubsequence(String s, String t) {
+        int n = s.length(), m = t.length();
+        int i = 0, j = 0;
+        while (i < n && j < m) {
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+        return i == n;
+    }
+
+    /**
+     * <a href="https://leetcode.cn/problems/substring-with-concatenation-of-all-words/">...</a>
+     * <p>
+     * substring with concatenation of all words
+     *
+     * 自己一开始写了一版，然后test case可以过，但是超时了，然后问了chatGPT帮我优化了，优化后稍微有些不好理解呢。
+     *
+     */
+    public List<Integer> findSubstring(String s, String[] words) {
+        // wordLen: 3
+        int wordLen = words[0].length();
+        int totalLen = words.length * wordLen;
+
+        List<Integer> ans = new ArrayList<>();
+
+        // 初始化wordCount
+        Map<String, Integer> wordCount = new HashMap<>();
+        for (String word : words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+
+        for (int i = 0; i < wordLen; i++) {
+            int left = i, right = i, count = 0;
+            Map<String, Integer> windowMap = new HashMap<>();
+
+            while (right + wordLen <= s.length()) {
+                String word = s.substring(right, right + wordLen);
+                right += wordLen;
+
+                if (wordCount.containsKey(word)) {
+                    windowMap.put(word, windowMap.getOrDefault(word, 0) + 1);
+                    count++;
+
+                    // 如果当前单词的出现次数超过 `words` 中的次数，需要收缩窗口
+                    while (windowMap.get(word) > wordCount.get(word)) {
+                        String leftWord = s.substring(left, left + wordLen);
+                        windowMap.put(leftWord, windowMap.get(leftWord) - 1);
+                        left += wordLen;
+                        count--;
+                    }
+
+                    // 如果窗口长度等于总单词长度，说明匹配成功
+                    if (count == words.length) {
+                        ans.add(left);
+                    }
+                } else {
+                    // 如果遇到不在 words 中的单词，直接重置窗口
+                    windowMap.clear();
+                    count = 0;
+                    left = right;
+                }
+            }
+        }
+        return ans;
     }
 }

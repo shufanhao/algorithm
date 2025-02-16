@@ -295,4 +295,116 @@ public class HashSolution {
             tail.prev = node;
         }
     }
+
+
+    /**
+     * leetcode 383: Ransom Note
+     * <a href="https://leetcode.cn/problems/ransom-note">...</a>
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] chars = new int[26];
+
+        for(char c : magazine.toCharArray()) {
+            chars[c - 'a'] ++;
+        }
+
+        for(char c : ransomNote.toCharArray()) {
+            chars[c - 'a'] --;
+            // < 0，说明不能的。
+            if ((chars[c - 'a']) < 0){
+                return false;
+            }
+        }
+       return true;
+    }
+
+    /**
+     * leetcode 205: Isomorphic Strings
+     * <a href="https://leetcode.cn/problems/isomorphic-strings/description">...</a>
+     *
+     * 一定要双向映射才可以，单向映射不可靠。
+     */
+    public boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length()) return false;
+
+        Map<Character, Character> sToT = new HashMap<>();
+        Map<Character, Character> tToS = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c1 = s.charAt(i);
+            char c2 = t.charAt(i);
+
+            // 检查 s -> t 的映射是否一致
+            if (sToT.containsKey(c1) && sToT.get(c1) != c2) return false;
+            // 检查 t -> s 的映射是否一致
+            if (tToS.containsKey(c2) && tToS.get(c2) != c1) return false;
+
+            // 建立映射关系
+            sToT.put(c1, c2);
+            tToS.put(c2, c1);
+        }
+
+        return true;
+    }
+
+    /**
+     * Leetcode 290: https://leetcode.cn/problems/word-pattern
+     *
+     * 和上面的题目类似
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split(" ");
+        if (words.length != pattern.length()) {
+            return false;
+        }
+
+        Map<Character, String> patternToWords = new HashMap<>();
+        Map<String, Character> wordsToPattern = new HashMap<>();
+
+        for (int i = 0; i < words.length; i++) {
+            char c = pattern.charAt(i);
+            String word = words[i];
+
+            if (patternToWords.containsKey(c) && !patternToWords.get(c).equals(word)) {
+                return false;
+            }
+            if (wordsToPattern.containsKey(word) && !wordsToPattern.get(word).equals(c)) {
+                return false;
+            }
+
+            // 建立映射关系
+            patternToWords.put(c, word);
+            wordsToPattern.put(word, c);
+        }
+
+        return true;
+    }
+
+    /**
+     * 202. Happy Number <a href="https://leetcode.cn/problems/happy-number">...</a>
+     *
+     * 注意避免循环
+     */
+    public boolean isHappy(int n) {
+        Set<Integer> seen = new HashSet<>();
+        while (n != 1 && !seen.contains(n)) {
+            seen.add(n);
+            n = getNext(n);
+        }
+
+        return n == 1;
+
+    }
+
+    private int getNext(int n) {
+        // split each element
+        int sum = 0;
+        while (n != 0) {
+            // 取模运算，取出最后一位
+            int digit = n % 10;
+            n /= 10;
+            sum = sum + digit * digit;
+        }
+        return sum;
+    }
 }
