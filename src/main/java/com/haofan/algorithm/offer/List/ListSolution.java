@@ -2,6 +2,10 @@ package com.haofan.algorithm.offer.List;
 
 import com.haofan.algorithm.help.ListNode;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ListSolution {
     /**
      * 理解哨兵节点
@@ -365,4 +369,122 @@ public class ListSolution {
         return false;
     }
 
+    static class NodeT {
+        int val;
+        NodeT next;
+        NodeT random;
+
+        public NodeT(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
+
+    /**
+     * 138. <a href="https://leetcode.cn/problems/copy-list-with-random-pointer/">...</a>
+     *
+     * Copy List with Random Pointer
+     *
+     * 思路：HashMap 建立新旧节点映射，key是旧节点，先遍历一遍初始化链表及val值，并创建hash表，再遍历一遍，根据
+     * 哈希表处理random
+     */
+    public NodeT copyRandomList(NodeT head) {
+        NodeT preHead = new NodeT(0);
+        NodeT p = head, q = preHead;
+
+        Map<NodeT, NodeT> map = new HashMap<>();
+        // 第一次遍历链表，复制节点值并建立修旧节点映射
+        while (p != null) {
+            q.next = new NodeT(p.val);
+            q = q.next;
+            map.put(p, q);
+            p = p.next;
+        }
+
+        // 第二次遍历链表，根据map处理random指针
+        p = head;
+        q = preHead.next;
+        while (p != null) {
+            if (p.random != null) {
+                q.random = map.get(p.random);
+            }
+            p = p.next;
+            q = q.next;
+        }
+
+        return preHead.next;
+    }
+
+    /**
+     * <a href="https://leetcode.cn/problems/reverse-linked-list-ii/solutions/634701/fan-zhuan-lian-biao-ii-by-leetcode-solut-teyq/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     */
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+
+        ListNode pre = dummyNode;
+
+        // 1. 虚拟node 走left - 1
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+
+        // 2. pre 再走right - left + 1
+        ListNode rightNode = pre;
+        for (int i = 0; i < right - left + 1; i++) {
+            rightNode = rightNode.next;
+        }
+
+        // 3. 切断一个子链表
+        ListNode leftNode = pre.next;
+        ListNode curr = rightNode.next;
+
+        // 切断链表
+        pre.next = null;
+        rightNode.next = null;
+
+        // 4. revere 截断的链表
+        reverseList(leftNode);
+
+        // 5. 接回到原来的链表
+        pre.next = rightNode;
+        leftNode.next = curr;
+        return dummyNode.next;
+    }
+
+    /**
+     * 面试题 82. Remove Duplicates from Sorted List II
+     *
+     * <a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii">...</a>
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode pre = dummy;
+        ListNode current = head;
+
+        while (current != null) {
+            // skip duplicates nodes
+            while (current.next != null && current.val == current.next.val) {
+                current = current.next;
+            }
+
+            // no duplicate, 这个地方比较有技巧
+            if (pre.next == current) {
+                pre = pre.next;
+            } else {
+                // skip duplicate
+                pre.next = current.next;
+            }
+            current = current.next;
+        }
+
+        return dummy.next;
+    }
 }

@@ -1,6 +1,8 @@
 package com.haofan.algorithm.offer.stack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 public class StackSolution {
@@ -52,7 +54,7 @@ public class StackSolution {
                 case "/":
                     int num1 = stack.pop();
                     int num2 = stack.pop();
-                    stack.push(calculate(num1, num2, token));
+                    stack.push(calculate(num2, num1, token));
                     break;
                 default:
                     stack.push(Integer.parseInt(token));
@@ -135,5 +137,48 @@ public class StackSolution {
             }
         }
         return stack.isEmpty();
+    }
+
+    /**
+     * 71. Simplify Path <a href="https://leetcode.cn/problems/simplify-path">...</a>
+     *
+     * 自己写出，还是比较容易理解
+     */
+    public String simplifyPath(String path) {
+        // single .
+        //  double ..
+        // // or ///...
+        // others: directory
+        String[] paths = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for (String p : paths) {
+            System.out.printf(p);
+            if (p.equals(".") || p.isEmpty()) {
+                // single . 
+                // nothing
+                continue;
+            } else if (p.equals("..")) {
+                // double .. 返回上一级目录
+                if (!stack.empty()) {
+                    stack.pop();
+                }
+            } else {
+                // other case
+                stack.push(p);
+            }
+        }
+
+        // 拼接字符串
+        List<String> list = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            list.add(0, stack.pop());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (String element : list) {
+            sb.append("/").append(element);
+        }
+
+        return sb.length() > 0 ? sb.toString() : "/";
     }
 }

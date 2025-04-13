@@ -90,4 +90,10 @@ class ListNodeTest {
         node.next.next = node;
         Assertions.assertTrue(list.hasCycle(node));
     }
+
+    @Test
+    void deleteDuplicates() {
+        ListNode res = list.deleteDuplicates(ListNode.arrayToList(new int[]{1, 2, 3, 3, 4, 4, 5}));
+        assertArrayEquals(new int[]{1, 2, 5}, ListNode.listToArray(res));
+    }
 }
