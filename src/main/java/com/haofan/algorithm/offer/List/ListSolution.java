@@ -3,8 +3,8 @@ package com.haofan.algorithm.offer.List;
 import com.haofan.algorithm.help.ListNode;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ListSolution {
     /**
@@ -486,5 +486,79 @@ public class ListSolution {
         }
 
         return dummy.next;
+    }
+
+    /**
+     * 面试题61: Rotate List <a href="https://leetcode.cn/problems/rotate-list/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     *
+     * 自己写的稍微复杂一点儿。
+     *
+     * 其实是可以通过：
+     * 找到链表的尾节点，并将其与头节点连接，形成一个环。
+     * 计算需要旋转的步数 position = k % length。
+     * 找到新的尾节点，它是从头节点开始的第 length - position - 1 个节点。
+     * 将链表断开，返回新的头节点。
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null) {
+            return head;
+        }
+
+        // get the length of this list
+        int length = 0;
+        ListNode node = head;
+        while (node != null) {
+            length++;
+            node = node.next;
+        }
+
+        int position = k % length;
+
+        Map<Integer, Integer> map = new TreeMap<>();
+
+        node = head;
+        for (int i = 0; i < length && node != null; i++) {
+            map.put((i + position) % length, node.val);
+            node = node.next;
+        }
+
+        ListNode rotatedDummy = new ListNode(-1);
+        ListNode rotatedNode = rotatedDummy;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            rotatedNode.next = new ListNode(entry.getValue());
+            rotatedNode = rotatedNode.next;
+        }
+
+        return rotatedDummy.next;
+    }
+
+    /**
+     * 86. Partition List <a href="https://leetcode.cn/problems/partition-list/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     */
+    public ListNode partition(ListNode head, int x) {
+        if (head == null) {
+            return head;
+        }
+
+        // < x
+        ListNode dummyHead1 = new ListNode(-1);
+        ListNode node1 = dummyHead1;
+        // >x
+        ListNode dummyHead2 = new ListNode(-1);
+        ListNode node2 = dummyHead2;
+
+        ListNode node = head;
+        while (node != null) {
+            if (node.val < x) {
+                node1.next = new ListNode(node.val);
+                node1 = node1.next;
+            } else {
+                node2.next = new ListNode(node.val);
+                node2 = node2.next;
+            }
+            node = node.next;
+        }
+        node1.next = dummyHead2.next;
+        return dummyHead1.next;
     }
 }
