@@ -1,5 +1,7 @@
 package com.haofan.algorithm.offer.stack;
 
+import com.haofan.algorithm.help.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -179,6 +181,6 @@ public class StackSolution {
             sb.append("/").append(element);
         }
 
-        return sb.length() > 0 ? sb.toString() : "/";
+        return !sb.isEmpty() ? sb.toString() : "/";
     }
 }

@@ -122,4 +122,11 @@ class TreeSolutionTest {
     void hasPathSum() {
         assertTrue(tree.hasPathSum(TreeNode.buildTreeNode(), 19));
     }
+
+    @Test
+    void buildTree() {
+        int[] preorder = {3, 9, 20, 15, 7};
+        int[] inorder = {9, 3, 15, 20, 7};
+        tree.buildTree(preorder, inorder);
+    }
 }
