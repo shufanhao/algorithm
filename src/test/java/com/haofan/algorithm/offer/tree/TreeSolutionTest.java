@@ -127,6 +127,19 @@ class TreeSolutionTest {
     void buildTree() {
         int[] preorder = {3, 9, 20, 15, 7};
         int[] inorder = {9, 3, 15, 20, 7};
-        tree.buildTree(preorder, inorder);
+        tree.buildTreeFromPreOrderInOrder(preorder, inorder);
+    }
+
+    @Test
+    void buildTreeFromInOrderPostOrder() {
+        int[] inorder = {9,3,15,20,7};
+        int[] postorder = {9,15,7,20,3};
+
+        tree.buildTreeFromInOrderPostOrder(inorder, postorder);
+    }
+
+    @Test
+    void countNodes() {
+        assertEquals(6, tree.countNodes(TreeNode.buildCompleteTree()));
     }
 }

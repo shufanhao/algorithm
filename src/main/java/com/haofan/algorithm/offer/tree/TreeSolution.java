@@ -85,7 +85,7 @@ public class TreeSolution {
     }
 
     /**
-     * 面试题2：二叉树的广度优先遍历。中序，前序和后序遍历 用迭代法。其中前序遍历和后序遍历差不多。
+     * 面试题2：二叉树的深度优先遍历。中序，前序和后序遍历 用迭代法。其中前序遍历和后序遍历差不多。
      * <p>
      * 把递归代码改写成迭代的代码常用到stack，
      */
@@ -665,7 +665,9 @@ public class TreeSolution {
     }
 
     /**
-     * 面试题55: 二叉搜索树迭代器
+     * 面试题55: 二叉搜索树迭代器 binary-search-tree-iterator
+     *
+     * <a href="https://leetcode.cn/problems/binary-search-tree-iterator/description/?envType=study-plan-v2&envId=top-interview-150">...</a>
      * <p>
      * 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：
      * BSTIterator(TreeNode root) 初始化 BSTIterator 类的一个对象。BST 的根节点 root 会作为构造函数的一部分给出。
@@ -710,12 +712,12 @@ public class TreeSolution {
      * <p>
      * 有点儿难度。
      */
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    public TreeNode buildTreeFromPreOrderInOrder(int[] preorder, int[] inorder) {
         if (preorder == null || preorder.length == 0) return null;
-        return buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+        return buildTreeFromPreOrderInOrder(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 
-    public TreeNode buildTree(int[] preorder, int pLeft, int pRight, int[] inorder, int iLeft, int iRight) {
+    public TreeNode buildTreeFromPreOrderInOrder(int[] preorder, int pLeft, int pRight, int[] inorder, int iLeft, int iRight) {
         if (pLeft > pRight || iLeft > iRight) {
             return null;
         }
@@ -731,8 +733,8 @@ public class TreeSolution {
         //	•	index 是根节点在中序中的位置。
         //	•	所以，index - iLeft 就是左子树的长度（即有几个节点）。
         int count = index - iLeft;
-        root.left = buildTree(preorder, pLeft + 1, pLeft + 1 + count - 1, inorder, iLeft, index - 1);
-        root.right = buildTree(preorder, pLeft + 1 + count, pRight, inorder, index + 1, iRight);
+        root.left = buildTreeFromPreOrderInOrder(preorder, pLeft + 1, pLeft + 1 + count - 1, inorder, iLeft, index - 1);
+        root.right = buildTreeFromPreOrderInOrder(preorder, pLeft + 1 + count, pRight, inorder, index + 1, iRight);
         return root;
     }
 
@@ -741,5 +743,81 @@ public class TreeSolution {
             if (inorder[i] == target) return i;
         }
         return -1;
+    }
+
+    /**
+     * 面试题106: 从中序遍历和后序遍历构造二叉树
+     *
+     * <a href="https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     * <p>
+     * 思路：
+     * 1. 后序遍历的最后一个元素是根节点， 在postorder中，最后一个元素是整个树的根节点。
+     * 2. 在中序遍历中找到根节点的位置，然后将数组分为左右子树。
+     */
+    private Map<Integer, Integer> inorderMap;
+
+    public TreeNode buildTreeFromInOrderPostOrder(int[] inorder, int[] postorder) {
+        inorderMap = new HashMap<>();
+        // 将中序遍历的值和索引存入哈希表
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        return buildTreeHelper(postorder, 0, inorder.length - 1, postorder.length - 1);
+    }
+
+    private TreeNode buildTreeHelper(int[] postorder, int inStart, int inEnd, int postIndex) {
+        if (inStart > inEnd) {
+            return null;
+        }
+
+        // 当前子树的根节点是后序遍历的最后一个元素
+        int rootVal = postorder[postIndex];
+        TreeNode root = new TreeNode(rootVal);
+
+        // 在中序遍历中找到根节点的位置
+        int rootIdx = inorderMap.get(rootVal);
+
+        // 递归构造右子树和左子树（注意顺序：先左后右，因为后序遍历是左->右->根）
+        // 但由于 postIndex 是从后往前递减的，我们需要先处理右子树
+        // 因此需要调整递归顺序和 postIndex 的传递
+        root.right = buildTreeHelper(postorder, rootIdx + 1, inEnd, postIndex - 1);
+        root.left = buildTreeHelper(postorder, inStart, rootIdx - 1, postIndex - 1 - (inEnd - rootIdx));
+
+        return root;
+    }
+
+    /**
+     * 面试题 222： Count complete tree nodes
+     *
+     * 思路：
+     * 如果左子树和右子树的高度相等，说明树是完全平衡的（即最后一层也是满的），那么节点总数为 2
+     * ^h+1,−1，其中 h 是树的高度。
+     * 如果左子树和右子树的高度不相等，说明树不是完全平衡的，我们需要递归地计算左子树和右子树的节点数量。
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int leftHeight = getHeight(root, true);
+        int rightHeight = getHeight(root, false);
+
+        // 如果左右高度相等，说明是完全平衡的，不需要递归计算
+        if (leftHeight == rightHeight) {
+            // 就是因为有个这个条件，所以时间复杂度是< O(n)
+            return (1 << (leftHeight)) - 1; // 2^h - 1
+        } else {
+            // 不是完全平衡的，需要递归计算左子树和右子树的节点数。
+            return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+    }
+
+    private int getHeight(TreeNode node, boolean isLeft) {
+        int height = 0;
+        while (node != null) {
+            height ++;
+            node = isLeft ? node.left : node.right;
+        }
+        return height;
     }
 }

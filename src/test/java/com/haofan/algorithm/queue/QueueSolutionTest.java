@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 class QueueSolutionTest {
 
@@ -68,5 +69,11 @@ class QueueSolutionTest {
     @Test
     void rightSideView() {
         Assertions.assertArrayEquals(new Object[]{10, 20, 7}, queue.rightSideView(TreeNode.buildTreeNode()).toArray());
+    }
+
+    @Test
+    void zigzagLevelOrder() {
+        List<List<Integer>> res = queue.zigzagLevelOrder(TreeNode.buildTreeNode());
+        Assertions.assertArrayEquals(new Object[]{15, 7}, res.get(2).toArray());
     }
 }

@@ -4,6 +4,7 @@ import com.haofan.algorithm.help.TreeNode;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -366,5 +367,42 @@ public class QueueSolution {
 
         }
         return root;
+    }
+
+    /**
+     * 题目103：二叉树的锯齿形层次遍历
+     * <a href="https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     * 思路：
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) {
+            return new LinkedList<>();
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int j = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> temp = new LinkedList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                temp.add(node.val);
+            }
+            j++;
+            if (j % 2 == 0) {
+                Collections.reverse(temp);
+            }
+            res.add(temp);
+        }
+
+        return res;
     }
 }

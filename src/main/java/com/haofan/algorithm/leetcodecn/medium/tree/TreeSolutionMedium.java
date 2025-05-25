@@ -17,8 +17,6 @@ public class TreeSolutionMedium {
         TreeSolution easy = new TreeSolution();
         System.out.println("题目1：" + medium.inorderTraversal(TreeNode.buildTreeNode()));
 
-        System.out.println("题目2：" + medium.zigzagLevelOrder(TreeNode.buildTreeNode()));
-
         System.out.println("题目4：");
         medium.connect(medium.buildTreeLinkNode());
 
@@ -52,34 +50,6 @@ public class TreeSolutionMedium {
             root = root.right;
         }
         return list;
-    }
-
-    /**
-     * 题目2：二叉树的锯齿形层次遍历
-     * 思路：
-     */
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> lists = new ArrayList<>();
-        if (root == null) return lists;
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        int j = 1;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> temp = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                TreeNode first = queue.poll();
-                temp.add(first.val);
-                if (first.left != null) queue.offer(first.left);
-                if (first.right != null) queue.offer(first.right);
-            }
-            if (j % 2 == 0) {
-                Collections.reverse(temp);
-            }
-            j++;
-            lists.add(temp);
-        }
-        return lists;
     }
 
     /**
