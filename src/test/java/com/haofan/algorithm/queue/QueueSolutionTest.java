@@ -5,8 +5,14 @@ import com.haofan.algorithm.offer.queue.QueueSolution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 class QueueSolutionTest {
@@ -20,29 +26,6 @@ class QueueSolutionTest {
         movingAverage.next(2);
         Assertions.assertEquals(2, movingAverage.next(3));
 
-        System.out.println(getMaxTeamNaive(new Integer[]{6, 6, 4, 3, 2}));
-
-
-    }
-
-    // Solution 1: 每次选择最top 3 的三个team，然后再排序。
-    // Time Complexity: O(m * nlogn). Here m is the max numbers of teams and n is the no.of states.
-    // Additional Space Complexity: O(1)
-    int getMaxTeamNaive(Integer[] players) {
-        if (players == null || players.length < 3) {
-            return 0;
-        }
-
-        int count = 0;
-        Arrays.sort(players, Collections.reverseOrder());
-        while (players[0] > 0 && players[1] > 0 && players[2] > 0) {
-            count++;
-            players[0] -= 1;
-            players[1] -= 1;
-            players[2] -= 1;
-            Arrays.sort(players, Collections.reverseOrder());
-        }
-        return count;
     }
 
     @Test
@@ -73,7 +56,23 @@ class QueueSolutionTest {
 
     @Test
     void zigzagLevelOrder() {
+        final Calendar calendar = Calendar.getInstance();
+        final Date currentDate = calendar.getTime();
+        final LocalDateTime currentLocalDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        calendar.add(Calendar.HOUR_OF_DAY, -4*24);
+        final Date thresholdDate = calendar.getTime();
+        final String formattedThresholdDate = getFormattedDate(thresholdDate, "yyyy/MM/dd HH:mm:ss");
+        final LocalDateTime thresholdLocalDateTime = thresholdDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
         List<List<Integer>> res = queue.zigzagLevelOrder(TreeNode.buildTreeNode());
         Assertions.assertArrayEquals(new Object[]{15, 7}, res.get(2).toArray());
+
+
+    }
+
+    public static String getFormattedDate(Date date, String pattern) {
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        return formatter.format(date);
     }
 }
