@@ -1,6 +1,7 @@
 package com.haofan.algorithm.offer.tree;
 
 import com.haofan.algorithm.help.TreeNode;
+import com.sun.source.tree.Tree;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -141,5 +142,15 @@ class TreeSolutionTest {
     @Test
     void countNodes() {
         assertEquals(6, tree.countNodes(TreeNode.buildCompleteTree()));
+    }
+
+    @Test
+    void getMinimumDifference() {
+        tree.getMinimumDifference(TreeNode.buildSearchTree());
+    }
+
+    @Test
+    void kthSmallest() {
+        assertEquals(2, tree.kthSmallest(TreeNode.buildSearchTree(),2));
     }
 }

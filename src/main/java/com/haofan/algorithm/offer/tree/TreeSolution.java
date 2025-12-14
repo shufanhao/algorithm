@@ -812,6 +812,31 @@ public class TreeSolution {
         }
     }
 
+    /**
+     * 面试题530: Minimum Absolute Difference in BST
+     *
+     * 就一个中序遍历
+     *
+     */
+    public int getMinimumDifference(TreeNode root) {
+        List<Integer> nodes = new ArrayList<>();
+        dfsGetMinimumDifference(root, nodes);
+        int minium = Integer.MAX_VALUE;
+        for (int i = 1; i < nodes.size(); i++) {
+            minium = Math.min(minium, nodes.get(i) - nodes.get(i - 1));
+        }
+
+        return minium;
+    }
+
+    private void dfsGetMinimumDifference(TreeNode node, List<Integer> nodes) {
+        if (node != null) {
+            dfsGetMinimumDifference(node.left, nodes);
+            nodes.add(node.val);
+            dfsGetMinimumDifference(node.right, nodes);
+        }
+    }
+
     private int getHeight(TreeNode node, boolean isLeft) {
         int height = 0;
         while (node != null) {
@@ -820,4 +845,56 @@ public class TreeSolution {
         }
         return height;
     }
+
+    /**
+     * 230. Kth Smallest Element in a BST
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> nodes = new ArrayList<>();
+        dfsKthSmallest(root, nodes);
+        return nodes.get(k - 1);
+    }
+
+    private void dfsKthSmallest(TreeNode node, List<Integer> nodes) {
+        if (node != null) {
+            dfsKthSmallest(node.left, nodes);
+            nodes.add(node.val);
+            dfsKthSmallest(node.right, nodes);
+        }
+    }
+
+    /**
+     * 题目98： 验证二叉搜索树（左子树的节点值都小于node的值，右子树节点的值都大于node值）
+     * 思路：<a href="https://blog.csdn.net/sgbfblog/article/details/7771096">...</a>
+     * 1. 暴力搜索法：搜索左子树是否小于node值，搜索右子树是否大于node值
+     * 2. 利用中序遍历，一棵二叉搜索树的中序遍历后，其节点的值是从小到大排序的
+     */
+    private int last = Integer.MIN_VALUE;
+    public boolean isValidBSTRefursive(TreeNode root) {
+        if (root == null) return true;
+        if (!isValidBSTRefursive(root.left)) return false;
+        if (root.val <= last) return false;
+        last = root.val;
+        if (!isValidBSTRefursive(root.right)) return false;
+        return true;
+    }
+
+    public boolean isValidBSTStack(TreeNode root) {
+        if (root == null) return true;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null; //
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                // 遍历左子树
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();// 取到最后一个节点
+            if (pre != null && root.val <= pre.val) return false;
+            pre = root;
+            root = root.right;
+        }
+        return true;
+    }
+
 }
