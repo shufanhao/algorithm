@@ -41,6 +41,18 @@ public class Trie {
         return true;
     }
 
+    public TrieNode getRoot() {
+        return root;
+    }
+
+    public TrieNode[] getChildren() {
+        return root.children;
+    }
+
+    public boolean isEnd() {
+        return root.isWorld;
+    }
+
     // Trie data structure.
     public static class TrieNode {
         // 子节点可能有多个，子节点的index是对应的char, value是TrieNode

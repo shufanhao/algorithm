@@ -153,4 +153,10 @@ class TreeSolutionTest {
     void kthSmallest() {
         assertEquals(2, tree.kthSmallest(TreeNode.buildSearchTree(),2));
     }
+
+    @Test
+    void sortedArrayToBST() {
+        int[] nums = {-10, -3, 0, 5, 9};
+        tree.sortedArrayToBST(nums);
+    }
 }

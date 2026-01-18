@@ -897,4 +897,26 @@ public class TreeSolution {
         return true;
     }
 
+    /**
+     * 题目109：将有序数组转成高度平衡的二叉搜索树（二叉树每个节点的左右两个子树的高度差的绝对值不超过1）
+     * <a href="https://leetcode.cn/problems/convert-sorted-list-to-binary-search-tree/description/">...</a>
+     * 思路：注意是升序的数组
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return null;
+        }
+        return sortedArrayToBST(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode sortedArrayToBST(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+        int mid = (left + right) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = sortedArrayToBST(nums, left, mid - 1);
+        root.right = sortedArrayToBST(nums, mid + 1, right);
+        return root;
+    }
 }
