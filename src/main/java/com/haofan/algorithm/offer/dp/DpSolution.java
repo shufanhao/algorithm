@@ -507,4 +507,64 @@ public class DpSolution {
         return ans;
     }
 
+    // Sub-array
+    /**
+     * 题目53：Maximum Subarray
+     * <a href="https://leetcode.cn/problems/maximum-subarray/solutions/228009/zui-da-zi-xu-he-by-leetcode-solution">...</a>
+     * 子数组最少包含一个元素，返回其最大和
+     */
+    public int maxSubArray(int[] nums) {
+        int maxNormal = nums[0];
+        int curMax = 0;
+        for (int x : nums) {
+            // 包含当前元素的，最大值。
+            curMax = Math.max(x, curMax + x);
+            // 最大值，可以不包含当前元素
+            maxNormal = Math.max(curMax, maxNormal);
+        }
+        return maxNormal;
+    }
+
+    /**
+     *
+     * <a href="https://leetcode.cn/problems/maximum-sum-circular-subarray/submissions/693877077/?envType=study-plan-v2&envId=top-interview-150">...</a>
+     * 思路：
+     *
+     * 计算：
+     * max_normal: 普通最大子数组
+     * min_normal: 普通最小子数组
+     *
+     * 计算: total = sum(nums)
+     *
+     * 如果 max_normal < 0, 说明每个元素都是负数, return max_normal
+     * 否则返回 max(max_normal, total - min_normal) 这个地方比较巧妙
+     */
+    public int maxSubarraySumCircular(int[] nums) {
+        int total = 0;
+        int maxNormal = nums[0];
+        int minNormal = nums[0];
+        int curMax = 0;
+        int curMin = 0;
+
+        for (int x : nums) {
+            total += x;
+
+            // 计算最大子数组和
+            // 计算最多，最小子数组和， 到当前元素为止，包含当前元素的连续子数组的最大和
+            curMax = Math.max(x, curMax + x);
+            // 到当前元素为止，出现过的最大的连续数组的元素，可以不包含当前元素。
+            maxNormal = Math.max(curMax, maxNormal);
+
+            // 计算最小子数组和
+            curMin = Math.min(x, curMin + x);
+            minNormal = Math.min(curMin, minNormal);
+        }
+
+        // 如果 maxSum < 0，说明全是负数，不能用环形（否则会返回0
+        if (maxNormal < 0) {
+            return maxNormal;
+        }
+
+        return Math.max(maxNormal, total - minNormal);
+    }
 }

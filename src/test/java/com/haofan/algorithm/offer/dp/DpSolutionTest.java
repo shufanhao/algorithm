@@ -94,4 +94,16 @@ class DpSolutionTest {
     void trap() {
         assertEquals(9, dp.trap(new int[]{4,2,0,3,2,5}));
     }
+
+    @Test
+    void maxSubArray() {
+        int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        assertEquals(6, dp.maxSubArray(nums));
+    }
+
+    @Test
+    void maxSubarraySumCircular() {
+        int[] nums = new int[]{1,-2,3,-2};
+        assertEquals(3, dp.maxSubarraySumCircular(nums));
+    }
 }
